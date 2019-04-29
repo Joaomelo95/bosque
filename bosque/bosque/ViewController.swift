@@ -21,10 +21,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loadTrees(createTree: false)
-        for tree in trees {
-            self.createTree()
-        }
+        self.loadTrees(createTree: false, completion: { () in
+            DispatchQueue.main.async {
+                for tree in self.trees {
+                    self.createTree()
+                    self.yAxis += 10
+                }
+            }
+        })
     }
     
     @IBAction func updateTreeCount(_ sender: Any) {
@@ -40,11 +44,11 @@ class ViewController: UIViewController {
             guard record != nil else { return }
             print("new tree saved")
             print("trees.count na saveTree \(self.trees.count)")
-            self.loadTrees(createTree: true)
+            self.loadTrees(createTree: true, completion: {})
         }
     }
     
-    public func loadTrees(createTree: Bool) {
+    public func loadTrees(createTree: Bool, completion: @escaping () -> Void) {
         print("entrou no load")
         let query = CKQuery(recordType: "Tree", predicate: NSPredicate(value: true))
         self.publicDB.perform(query, inZoneWith: nil) { (records, _) in
@@ -58,6 +62,7 @@ class ViewController: UIViewController {
                     self.yAxis += 10
                 }
             }
+            completion()
         }
     }
     
