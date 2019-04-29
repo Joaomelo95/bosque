@@ -13,6 +13,8 @@
 		B50CDCB12264CA8D00671642 /* bosque.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B50CDCAF2264CA8D00671642 /* bosque.xcdatamodeld */; };
 		B50CDCB32264CA8E00671642 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50CDCB22264CA8E00671642 /* Assets.xcassets */; };
 		B50CDCB62264CA8E00671642 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50CDCB42264CA8E00671642 /* LaunchScreen.storyboard */; };
+		B5DB3B0F22772EC400DFE34C /* Main.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5DB3B0E22772EC400DFE34C /* Main.sks */; };
+		B5DB3B1122773D3F00DFE34C /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB3B1022773D3F00DFE34C /* MainScene.swift */; };
 		B5FCDD4B22665E5A00D60558 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FCDD4A22665E5A00D60558 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +27,8 @@
 		B50CDCB22264CA8E00671642 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B50CDCB52264CA8E00671642 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B50CDCB72264CA8E00671642 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5DB3B0E22772EC400DFE34C /* Main.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Main.sks; sourceTree = "<group>"; };
+		B5DB3B1022773D3F00DFE34C /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		B5FCDD4822665E5500D60558 /* bosque.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bosque.entitlements; sourceTree = "<group>"; };
 		B5FCDD4A22665E5A00D60558 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -65,6 +69,8 @@
 				B50CDCA82264CA8D00671642 /* AppDelegate.swift */,
 				B50CDCAA2264CA8D00671642 /* ViewController.swift */,
 				B50CDCAC2264CA8D00671642 /* Main.storyboard */,
+				B5DB3B1022773D3F00DFE34C /* MainScene.swift */,
+				B5DB3B0E22772EC400DFE34C /* Main.sks */,
 				B50CDCB22264CA8E00671642 /* Assets.xcassets */,
 				B50CDCB42264CA8E00671642 /* LaunchScreen.storyboard */,
 				B50CDCB72264CA8E00671642 /* Info.plist */,
@@ -149,6 +155,7 @@
 			files = (
 				B50CDCB62264CA8E00671642 /* LaunchScreen.storyboard in Resources */,
 				B50CDCB32264CA8E00671642 /* Assets.xcassets in Resources */,
+				B5DB3B0F22772EC400DFE34C /* Main.sks in Resources */,
 				B50CDCAE2264CA8D00671642 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B50CDCAB2264CA8D00671642 /* ViewController.swift in Sources */,
+				B5DB3B1122773D3F00DFE34C /* MainScene.swift in Sources */,
 				B50CDCA92264CA8D00671642 /* AppDelegate.swift in Sources */,
 				B50CDCB12264CA8D00671642 /* bosque.xcdatamodeld in Sources */,
 			);

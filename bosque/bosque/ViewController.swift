@@ -7,48 +7,74 @@
 
 
 import UIKit
+import SpriteKit
 import CloudKit
 
 class ViewController: UIViewController {
     
+    // Variáveis do CloudKit
     var container = CKContainer.default()
     var publicDB = CKContainer.default().publicCloudDatabase
     var treeInsert = "new tree"
     var trees = [CKRecord]()
+    
+    // Variáveis para criação das circunferências
     var xAxis = 187.5
     var yAxis = 333.5
+    
+    // Variáveis da SKView
+    @IBOutlet weak var mainSKView: SKView!
+    var cam: SKCameraNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Carregar a SKScene
+        let scene = SKScene(fileNamed: "Main.sks")
+        scene?.scaleMode = .aspectFill
+        self.mainSKView.presentScene(scene)
+        
+        self.cam = SKCameraNode()
+        self.mainSKView.scene?.camera = cam
+        cam?.name = "camera"
+        self.mainSKView.scene?.addChild(cam!)
+        
+        // Carregar as árvores
         self.loadTrees(createTree: false, completion: { () in
             DispatchQueue.main.async {
                 for tree in self.trees {
                     self.createTree()
+                    // Atualizar a localização das árvores
                     self.yAxis += 10
                 }
             }
         })
     }
     
+    // Função do botão
     @IBAction func updateTreeCount(_ sender: Any) {
         self.saveTree(string: self.treeInsert)
     }
     
+    // Função para salvar árvores
     func saveTree(string: String) {
+        // Cria o record da árvore
         let newTree = CKRecord(recordType: "Tree")
         newTree.setValue(string, forKey: "treeInTheWoods")
         
+        // Salva na cloud
         self.publicDB.save(newTree) { (record, error) in
             print(error)
             guard record != nil else { return }
             print("new tree saved")
             print("trees.count na saveTree \(self.trees.count)")
+            // Recarrega para atualizar
             self.loadTrees(createTree: true, completion: {})
         }
     }
     
-    public func loadTrees(createTree: Bool, completion: @escaping () -> Void) {
+    // Função para carregar as árvore
+    func loadTrees(createTree: Bool, completion: @escaping () -> Void) {
         print("entrou no load")
         let query = CKQuery(recordType: "Tree", predicate: NSPredicate(value: true))
         self.publicDB.perform(query, inZoneWith: nil) { (records, _) in
@@ -66,6 +92,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // Função para gerar circunferências
     func createTree() {
         let circularPath = UIBezierPath(arcCenter: .zero, radius: 40.0, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
         let treeImage = CAShapeLayer()

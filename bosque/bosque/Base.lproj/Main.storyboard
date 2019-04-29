@@ -18,6 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="28C-UX-xXl">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </skView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J55-hl-XZZ">
                                 <rect key="frame" x="144" y="566" width="86" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -28,8 +31,17 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="28C-UX-xXl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="6Nc-Ig-2Db"/>
+                            <constraint firstItem="28C-UX-xXl" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ZJn-Ib-uUy"/>
+                            <constraint firstItem="28C-UX-xXl" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rmq-Eh-i1d"/>
+                            <constraint firstItem="28C-UX-xXl" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="vLv-4Q-cva"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mainSKView" destination="28C-UX-xXl" id="bYy-ei-EkR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
