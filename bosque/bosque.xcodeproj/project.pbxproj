@@ -66,17 +66,41 @@
 			isa = PBXGroup;
 			children = (
 				B5FCDD4822665E5500D60558 /* bosque.entitlements */,
-				B50CDCA82264CA8D00671642 /* AppDelegate.swift */,
-				B50CDCAA2264CA8D00671642 /* ViewController.swift */,
-				B50CDCAC2264CA8D00671642 /* Main.storyboard */,
-				B5DB3B1022773D3F00DFE34C /* MainScene.swift */,
-				B5DB3B0E22772EC400DFE34C /* Main.sks */,
-				B50CDCB22264CA8E00671642 /* Assets.xcassets */,
-				B50CDCB42264CA8E00671642 /* LaunchScreen.storyboard */,
-				B50CDCB72264CA8E00671642 /* Info.plist */,
 				B50CDCAF2264CA8D00671642 /* bosque.xcdatamodeld */,
+				B50CDCB72264CA8E00671642 /* Info.plist */,
+				B55A0B1522788A5D00DE04A3 /* Application */,
+				B55A0B1722788AB700DE04A3 /* Interfaces */,
+				B55A0B1622788A7A00DE04A3 /* Controllers */,
+				B50CDCB22264CA8E00671642 /* Assets.xcassets */,
 			);
 			path = bosque;
+			sourceTree = "<group>";
+		};
+		B55A0B1522788A5D00DE04A3 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				B50CDCA82264CA8D00671642 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		B55A0B1622788A7A00DE04A3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B50CDCAA2264CA8D00671642 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B55A0B1722788AB700DE04A3 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				B50CDCB42264CA8E00671642 /* LaunchScreen.storyboard */,
+				B50CDCAC2264CA8D00671642 /* Main.storyboard */,
+				B5DB3B0E22772EC400DFE34C /* Main.sks */,
+				B5DB3B1022773D3F00DFE34C /* MainScene.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		B5FCDD4922665E5A00D60558 /* Frameworks */ = {
