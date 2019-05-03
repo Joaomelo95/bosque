@@ -27,6 +27,7 @@ class MainScene: SKScene {
     var firstAreaNode = SKNode()
     var secondAreaNode = SKNode()
     
+    // Inicializador
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         
@@ -56,7 +57,7 @@ class MainScene: SKScene {
         // Roda as ações
         cam?.run(zoomAction)
         cam?.run(moveAction)
-
+        
         // Permite clicar as áreas novamente
         area1IsTouchable = true
         area2IsTouchable = true
@@ -80,7 +81,7 @@ class MainScene: SKScene {
         
         if firstAreaNode.contains(touchLocation) && area1IsTouchable {
             // Define a área que está sendo selecionada
-            areaSelected = 1
+            areaSelectedGlobal = 1
             
             // Desativa a possibilidade de tocar em outra área
             area1IsTouchable = false
@@ -106,7 +107,7 @@ class MainScene: SKScene {
         
         if secondAreaNode.contains(touchLocation) && area2IsTouchable {
             // Define a área que está sendo selecionada
-            areaSelected = 2
+            areaSelectedGlobal = 2
             
             // Desativa a possibilidade de tocar em outra área
             area1IsTouchable = false
@@ -147,22 +148,26 @@ class MainScene: SKScene {
             treeNode.fillColor = SKColor.green
         }
         
-        if areaSelected == 1 {
-            self.randomNumber(node: self.firstAreaNode)
-            treeNode.position = CGPoint(x: CGFloat(self.xMax), y: CGFloat(self.yMax))
+        // Define a posição da árvore
+        if area == 1 {
+            treeNode.position = CGPoint(x: x, y: y)
             self.firstAreaNode.addChild(treeNode)
         }
         
-        if areaSelected == 2 {
-            self.randomNumber(node: self.secondAreaNode)
-            treeNode.position = CGPoint(x: CGFloat(self.xMax), y: CGFloat(self.yMax))
+        if area == 2 {
+            treeNode.position = CGPoint(x: x, y: y)
             self.secondAreaNode.addChild(treeNode)
         }
     }
     
     // Função para gerar números aleatórios
-    func randomNumber(node: SKNode) {
-        self.xMax = Float.random(in: -Float(node.frame.width)/6 ... Float(node.frame.width)/6)
-        self.yMax = Float.random(in: -Float(node.frame.height)/6 ... Float(node.frame.height)/6)
+    func randomNumber(areaSelected: Int) {
+        if areaSelected == 1 {
+            self.xMax = Float.random(in: -Float(self.firstAreaNode.frame.width)/6 ... Float(self.firstAreaNode.frame.width)/6)
+            self.yMax = Float.random(in: -Float(self.firstAreaNode.frame.height)/6 ... Float(self.firstAreaNode.frame.height)/6)
+        } else if areaSelected == 2 {
+            self.xMax = Float.random(in: -Float(self.secondAreaNode.frame.width)/6 ... Float(self.secondAreaNode.frame.width)/6)
+            self.yMax = Float.random(in: -Float(self.secondAreaNode.frame.height)/6 ... Float(self.secondAreaNode.frame.height)/6)
+        }
     }
 }

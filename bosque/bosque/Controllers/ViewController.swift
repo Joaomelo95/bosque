@@ -11,7 +11,7 @@ import SpriteKit
 import CloudKit
 
 // Variável que localiza a área de ONG selecionada
-var areaSelected: Int = 0
+var areaSelectedGlobal: Int = 0
 
 class ViewController: UIViewController {
     
@@ -60,7 +60,6 @@ class ViewController: UIViewController {
     }
     
     // Variáveis para o posicionamento das árvores
-    var frameSize: CGRect = CGRect()
     var xMax: Float = 0.0
     var yMax: Float = 0.0
     
@@ -108,9 +107,9 @@ class ViewController: UIViewController {
                     self.loadingTreeColor = tree["color"]!
                     self.loadingTreePositionX = tree["positionX"]!
                     self.loadingTreePositionY = tree["positionY"]!
-                    self.loadingAreaSelected = tree["areaSelected"]!
+                    areaSelectedGlobal = tree["areaSelected"]!
                     if let scene = (self.mainSKView.scene as? MainScene) {
-                        scene.createTree(color: self.savingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: self.loadingAreaSelected)
+                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal)
                     }
                 }
             }
@@ -121,32 +120,36 @@ class ViewController: UIViewController {
     @IBAction func redTreeButton(_ sender: Any) {
         self.savingTreeColor = "red"
         if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.createTree(color: "red", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelected)
-            self.saveTree(color: self.savingTreeColor, area: areaSelected, positionX: scene.xMax, positionY: scene.yMax)
+            scene.randomNumber(areaSelected: areaSelectedGlobal)
+            scene.createTree(color: "red", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
         }
     }
     
     @IBAction func blueTreeButton(_ sender: Any) {
         self.savingTreeColor = "blue"
         if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.createTree(color: "blue", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelected)
-            self.saveTree(color: self.savingTreeColor, area: areaSelected, positionX: scene.xMax, positionY: scene.yMax)
+            scene.randomNumber(areaSelected: areaSelectedGlobal)
+            scene.createTree(color: "blue", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
         }
     }
     
     @IBAction func yellowTreeButton(_ sender: Any) {
         self.savingTreeColor = "yellow"
         if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.createTree(color: "yellow", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelected)
-            self.saveTree(color: self.savingTreeColor, area: areaSelected, positionX: scene.xMax, positionY: scene.yMax)
+            scene.randomNumber(areaSelected: areaSelectedGlobal)
+            scene.createTree(color: "yellow", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
         }
     }
     
     @IBAction func greenTreeButton(_ sender: Any) {
         self.savingTreeColor = "green"
         if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.createTree(color: "green", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelected)
-            self.saveTree(color: self.savingTreeColor, area: areaSelected, positionX: scene.xMax, positionY: scene.yMax)
+            scene.randomNumber(areaSelected: areaSelectedGlobal)
+            scene.createTree(color: "green", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
         }
     }
     
@@ -177,7 +180,8 @@ class ViewController: UIViewController {
                 if createTree {
                     print(records)
                     if let scene = (self.mainSKView.scene as? MainScene) {
-                        scene.createTree(color: self.savingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: self.loadingAreaSelected)
+                        scene.randomNumber(areaSelected: areaSelectedGlobal)
+                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal)
                     }
                 }
             }
