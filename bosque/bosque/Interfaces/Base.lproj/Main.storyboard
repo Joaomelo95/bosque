@@ -76,6 +76,26 @@
                                     <action selector="deleteButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4wu-ag-iv8"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CJP-ES-aY6">
+                                <rect key="frame" x="123" y="66" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5c9-lB-n5k">
+                                <rect key="frame" x="150" y="231" width="74" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Saiba mais"/>
+                                <connections>
+                                    <action selector="ONGAboutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yNe-zL-kgl"/>
+                                    <segue destination="dQC-WU-5g6" kind="presentation" id="SjI-ME-J8t"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dl7-6m-MKP">
+                                <rect key="frame" x="41" y="202" width="292" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -87,6 +107,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="ONGAboutButtonLayout" destination="5c9-lB-n5k" id="ts6-Z5-llm"/>
+                        <outlet property="ONGDescriptionLabel" destination="dl7-6m-MKP" id="f7N-hm-rMG"/>
+                        <outlet property="ONGIconImageView" destination="CJP-ES-aY6" id="H21-wB-DsL"/>
                         <outlet property="backButtonLayout" destination="3TF-JR-d3X" id="Uew-MI-0oj"/>
                         <outlet property="deleteButton" destination="Rxd-fQ-sym" id="NWz-Ac-Rtt"/>
                         <outlet property="mainSKView" destination="28C-UX-xXl" id="bYy-ei-EkR"/>
@@ -96,6 +119,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="53.600000000000001" y="27.436281859070466"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="4BE-82-dSD">
+            <objects>
+                <viewController id="dQC-WU-5g6" customClass="DetailViewController" customModule="bosque" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6Fb-Za-7dF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ux-AG-xb5">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2Ux-AG-xb5" firstAttribute="leading" secondItem="w5h-dN-Zcb" secondAttribute="leading" id="FWx-Am-7vN"/>
+                            <constraint firstItem="2Ux-AG-xb5" firstAttribute="bottom" secondItem="w5h-dN-Zcb" secondAttribute="bottom" id="biR-HO-IpI"/>
+                            <constraint firstItem="2Ux-AG-xb5" firstAttribute="trailing" secondItem="w5h-dN-Zcb" secondAttribute="trailing" id="kAs-g3-2zf"/>
+                            <constraint firstItem="2Ux-AG-xb5" firstAttribute="top" secondItem="w5h-dN-Zcb" secondAttribute="top" id="uAw-NL-GRi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="w5h-dN-Zcb"/>
+                    </view>
+                    <connections>
+                        <outlet property="WKWebView" destination="2Ux-AG-xb5" id="w0V-aV-Rwk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p3K-Me-Bsd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="885.60000000000002" y="26.53673163418291"/>
         </scene>
     </scenes>
 </document>

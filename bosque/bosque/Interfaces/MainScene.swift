@@ -40,8 +40,16 @@ class MainScene: SKScene {
         // Tira o botão da tela
         self.backButtonLayout.alpha = 0
         
+        // Ajusta a View Controller para ser acessada
         let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
+        
+        // Tira a treeSelectionView
         viewController.treeSelectionView.alpha = 0
+        
+        // Tira as infos das ONGs
+        viewController.ONGIconImageView.alpha = 0
+        viewController.ONGDescriptionLabel.alpha = 0
+        viewController.ONGAboutButtonLayout.alpha = 0
         
         // Configura a câmera
         let cam = self.childNode(withName: "camera")
@@ -68,68 +76,67 @@ class MainScene: SKScene {
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         
+        // Posição dos Nodes na Scene
+        let firstAreaPositionX = firstAreaNode.position.x
+        let firstAreaPositionY = firstAreaNode.position.y + 120
+        let firstAreaPosition:CGPoint = CGPoint(x: firstAreaPositionX, y: firstAreaPositionY)
+        let secondAreaPositionX = secondAreaNode.position.x
+        let secondAreaPositionY = secondAreaNode.position.y + 120
+        let secondAreaPosition:CGPoint = CGPoint(x: secondAreaPositionX, y: secondAreaPositionY)
+        
+        if firstAreaNode.contains(touchLocation) && area1IsTouchable {
+            self.selectingArea(area: 1, position: firstAreaPosition)
+        }
+        if secondAreaNode.contains(touchLocation) && area2IsTouchable {
+            self.selectingArea(area: 2, position: secondAreaPosition)
+        }
+    }
+    
+    // Função para ajustar o que acontece quando tocar na área selecionada
+    func selectingArea(area: Int, position: CGPoint) {
         // Configuração da câmera
         let cam = self.childNode(withName: "camera")
         
-        // Posição dos Nodes na Scene
-        let firstAreaPosition = firstAreaNode.position
-        let secondAreaPosition = secondAreaNode.position
-        
         // Ação de Zoom In
-        let zoomAction = SKAction.scale(to: 0.5, duration: 0.5)
+        let zoomAction = SKAction.scale(to: 0.45, duration: 0.5)
         zoomAction.timingMode = .easeInEaseOut
         
-        if firstAreaNode.contains(touchLocation) && area1IsTouchable {
-            // Define a área que está sendo selecionada
-            areaSelectedGlobal = 1
-            
-            // Desativa a possibilidade de tocar em outra área
-            area1IsTouchable = false
-            area2IsTouchable = false
-            
-            // Ajusta a View Controller para ser acessível pela Scene
-            let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
-            
-            // Faz a treeSelectionView aparecer
-            viewController.treeSelectionView.alpha = 1
-            
-            // Ação de movimento
-            let moveAction = SKAction.move(to: firstAreaPosition, duration: 0.5)
-            moveAction.timingMode = .easeInEaseOut
-            
-            // Rodar ações
-            cam?.run(moveAction)
-            cam?.run(zoomAction)
-            
-            // Back Button surge
-            self.backButtonLayout.alpha = 1
+        // Define a área que está sendo selecionada
+        areaSelectedGlobal = area
+        
+        // Desativa a possibilidade de tocar em outra área
+        area1IsTouchable = false
+        area2IsTouchable = false
+        
+        // Ajusta a View Controller para ser acessível pela Scene
+        let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
+        
+        // Faz a treeSelectionView aparecer
+        viewController.treeSelectionView.alpha = 1
+        
+        // Faz as infos das ONGs aparecerem
+        viewController.ONGIconImageView.alpha = 1
+        viewController.ONGDescriptionLabel.alpha = 1
+        viewController.ONGAboutButtonLayout.alpha = 1
+        
+        if area == 1 {
+            viewController.ONGIconImageView.image = UIImage(named: "ong1")
+            viewController.ONGDescriptionLabel.text = "Essa é a ONG 1"
+        } else if area == 2 {
+            viewController.ONGIconImageView.image = UIImage(named: "ong2")
+            viewController.ONGDescriptionLabel.text = "Essa é a ONG 2"
         }
         
-        if secondAreaNode.contains(touchLocation) && area2IsTouchable {
-            // Define a área que está sendo selecionada
-            areaSelectedGlobal = 2
-            
-            // Desativa a possibilidade de tocar em outra área
-            area1IsTouchable = false
-            area2IsTouchable = false
-            
-            // Ajusta a View Controller para ser acessível pela Scene
-            let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
-            
-            // Faz a treeSelectionView aparecer
-            viewController.treeSelectionView.alpha = 1
-            
-            // Ação de movimento
-            let moveAction = SKAction.move(to: secondAreaPosition, duration: 0.5)
-            moveAction.timingMode = .easeInEaseOut
-            
-            // Rodar ações
-            cam?.run(moveAction)
-            cam?.run(zoomAction)
-            
-            // Back Button surge
-            self.backButtonLayout.alpha = 1
-        }
+        // Ação de movimento
+        let moveAction = SKAction.move(to: position, duration: 0.5)
+        moveAction.timingMode = .easeInEaseOut
+        
+        // Rodar ações
+        cam?.run(moveAction)
+        cam?.run(zoomAction)
+        
+        // Back Button surge
+        self.backButtonLayout.alpha = 1
     }
     
     // Função para gerar nós
@@ -163,11 +170,11 @@ class MainScene: SKScene {
     // Função para gerar números aleatórios
     func randomNumber(areaSelected: Int) {
         if areaSelected == 1 {
-            self.xMax = Float.random(in: -Float(self.firstAreaNode.frame.width)/6 ... Float(self.firstAreaNode.frame.width)/6)
-            self.yMax = Float.random(in: -Float(self.firstAreaNode.frame.height)/6 ... Float(self.firstAreaNode.frame.height)/6)
+            self.xMax = Float.random(in: -Float(self.firstAreaNode.frame.width)/(Float(self.firstAreaNode.xScale)*2) ... Float(self.firstAreaNode.frame.width)/(Float(self.firstAreaNode.xScale)*2))
+            self.yMax = Float.random(in: -Float(self.firstAreaNode.frame.height)/(Float(self.firstAreaNode.yScale)*2) ... Float(self.firstAreaNode.frame.height)/(Float(self.firstAreaNode.yScale)*2))
         } else if areaSelected == 2 {
-            self.xMax = Float.random(in: -Float(self.secondAreaNode.frame.width)/6 ... Float(self.secondAreaNode.frame.width)/6)
-            self.yMax = Float.random(in: -Float(self.secondAreaNode.frame.height)/6 ... Float(self.secondAreaNode.frame.height)/6)
+            self.xMax = Float.random(in: -Float(self.secondAreaNode.frame.width)/(Float(self.secondAreaNode.xScale)*2) ... Float(self.secondAreaNode.frame.width)/(Float(self.secondAreaNode.xScale)*2))
+            self.yMax = Float.random(in: -Float(self.secondAreaNode.frame.height)/(Float(self.secondAreaNode.yScale)*2) ... Float(self.secondAreaNode.frame.height)/(Float(self.secondAreaNode.yScale)*2))
         }
     }
 }

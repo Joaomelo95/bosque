@@ -59,6 +59,27 @@ class ViewController: UIViewController {
         }
     }
     
+    // Variáveis das infos das ONGs
+    @IBOutlet weak var ONGIconImageView: UIImageView!
+    @IBOutlet weak var ONGDescriptionLabel: UILabel!
+    @IBOutlet weak var ONGAboutButtonLayout: UIButton!
+    
+    // Ajustes das infos das ONGs
+    func setONGInfos() {
+        self.ONGIconImageView.alpha = 0
+        self.ONGDescriptionLabel.alpha = 0
+        self.ONGAboutButtonLayout.alpha = 0
+    }
+    
+    // Função do "Veja mais" das ONGs
+    @IBAction func ONGAboutButton(_ sender: Any) {
+        if areaSelectedGlobal == 1 {
+            print("funfou area 1")
+        } else if areaSelectedGlobal == 2 {
+            print("funfou area 2")
+        }
+    }
+    
     // Variáveis para o posicionamento das árvores
     var xMax: Float = 0.0
     var yMax: Float = 0.0
@@ -81,8 +102,11 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Ajustes da treeSelectionView
+        // Ajustes da treeSelectionView
         self.setTreeSelectionView()
+        
+        // Ajustes das infos das ONGs
+        self.setONGInfos()
         
         // Carregar a SKScene
         let scene = SKScene(fileNamed: "Main.sks")
@@ -116,41 +140,60 @@ class ViewController: UIViewController {
         })
     }
     
+    // Função para criar alertas
+    func createAlert(treeColor: String) {
+        //Cria o alerta
+        let alert = UIAlertController(title: "Você escolheu \(treeColor)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Pagar", style: .default, handler: { action in
+            self.savingTreeColor = treeColor
+            if let scene = (self.mainSKView.scene as? MainScene) {
+                scene.randomNumber(areaSelected: areaSelectedGlobal)
+                scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+                self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Anúncio", style: .default, handler: {action in
+            self.savingTreeColor = treeColor
+            if let scene = (self.mainSKView.scene as? MainScene) {
+                scene.randomNumber(areaSelected: areaSelectedGlobal)
+                scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+                self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: {action in
+            
+        }))
+        
+        // Adicionar imagem do alerta
+        let imageAlert = UIImageView(image: UIImage(named: treeColor))
+        alert.view.addSubview(imageAlert)
+        imageAlert.translatesAutoresizingMaskIntoConstraints = false
+        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: alert.view, attribute: .centerX, multiplier: 1, constant: 0))
+        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: alert.view, attribute: .centerY, multiplier: 1, constant: -64))
+        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // Funções dos botões de árvores
+    
+    
     @IBAction func redTreeButton(_ sender: Any) {
-        self.savingTreeColor = "red"
-        if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: "red", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
-            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-        }
+        self.createAlert(treeColor: "red")
     }
     
     @IBAction func blueTreeButton(_ sender: Any) {
-        self.savingTreeColor = "blue"
-        if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: "blue", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
-            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-        }
+        self.createAlert(treeColor: "blue")
     }
     
     @IBAction func yellowTreeButton(_ sender: Any) {
-        self.savingTreeColor = "yellow"
-        if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: "yellow", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
-            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-        }
+        self.createAlert(treeColor: "yellow")
     }
     
     @IBAction func greenTreeButton(_ sender: Any) {
-        self.savingTreeColor = "green"
-        if let scene = (self.mainSKView.scene as? MainScene) {
-            scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: "green", x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
-            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-        }
+        self.createAlert(treeColor: "green")
     }
     
     // Função para salvar árvores
