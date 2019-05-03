@@ -9,6 +9,10 @@
 import SpriteKit
 
 class MainScene: SKScene {
+    // Variáveis para o posicionamento das árvores
+    var xMax: Float = 0
+    var yMax: Float = 0
+    
     // Variáveis para definir se os nodes são clicáveis
     var area1IsTouchable = true
     var area2IsTouchable = true
@@ -88,9 +92,6 @@ class MainScene: SKScene {
             // Faz a treeSelectionView aparecer
             viewController.treeSelectionView.alpha = 1
             
-            // Manda o tamanho do frame do Node para ser armazenado na View Controller
-            viewController.frameSize = self.firstAreaNode.frame
-            
             // Ação de movimento
             let moveAction = SKAction.move(to: firstAreaPosition, duration: 0.5)
             moveAction.timingMode = .easeInEaseOut
@@ -117,9 +118,6 @@ class MainScene: SKScene {
             // Faz a treeSelectionView aparecer
             viewController.treeSelectionView.alpha = 1
             
-            // Manda o tamanho do frame do Node para ser armazenado na View Controller
-            viewController.frameSize = self.firstAreaNode.frame
-            
             // Ação de movimento
             let moveAction = SKAction.move(to: secondAreaPosition, duration: 0.5)
             moveAction.timingMode = .easeInEaseOut
@@ -131,5 +129,40 @@ class MainScene: SKScene {
             // Back Button surge
             self.backButtonLayout.alpha = 1
         }
+    }
+    
+    // Função para gerar nós
+    func createTree(color: String, x: Double, y: Double, area: Int) {
+        let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
+        treeNode.name = "tree"
+        
+        // Define a cor da árvore
+        if color == "red" {
+            treeNode.fillColor = SKColor.red
+        } else if color == "blue" {
+            treeNode.fillColor = SKColor.blue
+        } else if color == "yellow" {
+            treeNode.fillColor = SKColor.yellow
+        } else if color == "green" {
+            treeNode.fillColor = SKColor.green
+        }
+        
+        if areaSelected == 1 {
+            self.randomNumber(node: self.firstAreaNode)
+            treeNode.position = CGPoint(x: CGFloat(self.xMax), y: CGFloat(self.yMax))
+            self.firstAreaNode.addChild(treeNode)
+        }
+        
+        if areaSelected == 2 {
+            self.randomNumber(node: self.secondAreaNode)
+            treeNode.position = CGPoint(x: CGFloat(self.xMax), y: CGFloat(self.yMax))
+            self.secondAreaNode.addChild(treeNode)
+        }
+    }
+    
+    // Função para gerar números aleatórios
+    func randomNumber(node: SKNode) {
+        self.xMax = Float.random(in: -Float(node.frame.width)/6 ... Float(node.frame.width)/6)
+        self.yMax = Float.random(in: -Float(node.frame.height)/6 ... Float(node.frame.height)/6)
     }
 }
