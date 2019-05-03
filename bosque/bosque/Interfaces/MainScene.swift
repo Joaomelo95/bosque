@@ -37,19 +37,8 @@ class MainScene: SKScene {
     
     // Função do Back Button
     func backButtonAction() {
-        // Tira o botão da tela
-        self.backButtonLayout.alpha = 0
-        
-        // Ajusta a View Controller para ser acessada
-        let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
-        
-        // Tira a treeSelectionView
-        viewController.treeSelectionView.alpha = 0
-        
-        // Tira as infos das ONGs
-        viewController.ONGIconImageView.alpha = 0
-        viewController.ONGDescriptionLabel.alpha = 0
-        viewController.ONGAboutButtonLayout.alpha = 0
+        // Tira os elementos da tela
+        self.reverseAnimateAreaSelection()
         
         // Configura a câmera
         let cam = self.childNode(withName: "camera")
@@ -108,24 +97,7 @@ class MainScene: SKScene {
         area1IsTouchable = false
         area2IsTouchable = false
         
-        // Ajusta a View Controller para ser acessível pela Scene
-        let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
-        
-        // Faz a treeSelectionView aparecer
-        viewController.treeSelectionView.alpha = 1
-        
-        // Faz as infos das ONGs aparecerem
-        viewController.ONGIconImageView.alpha = 1
-        viewController.ONGDescriptionLabel.alpha = 1
-        viewController.ONGAboutButtonLayout.alpha = 1
-        
-        if area == 1 {
-            viewController.ONGIconImageView.image = UIImage(named: "ong1")
-            viewController.ONGDescriptionLabel.text = "Essa é a ONG 1"
-        } else if area == 2 {
-            viewController.ONGIconImageView.image = UIImage(named: "ong2")
-            viewController.ONGDescriptionLabel.text = "Essa é a ONG 2"
-        }
+        self.animateAreaSelection(area: area)
         
         // Ação de movimento
         let moveAction = SKAction.move(to: position, duration: 0.5)
@@ -134,9 +106,48 @@ class MainScene: SKScene {
         // Rodar ações
         cam?.run(moveAction)
         cam?.run(zoomAction)
+    }
+    
+    // Função para animar os elementos entrando na tela
+    func animateAreaSelection(area: Int) {
+        // Ajusta a View Controller para ser acessada
+        let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
         
-        // Back Button surge
-        self.backButtonLayout.alpha = 1
+        UIView.animate(withDuration: 0.5) {
+            // Faz as infos das ONGs aparecerem
+            viewController.ONGIconImageView.alpha = 1
+            viewController.ONGDescriptionLabel.alpha = 1
+            viewController.ONGAboutButtonLayout.alpha = 1
+            
+            // Back Button surge
+            self.backButtonLayout.alpha = 1
+            
+            if area == 1 {
+                viewController.ONGIconImageView.image = UIImage(named: "ong1")
+                viewController.ONGDescriptionLabel.text = "Essa é a ONG 1"
+            } else if area == 2 {
+                viewController.ONGIconImageView.image = UIImage(named: "ong2")
+                viewController.ONGDescriptionLabel.text = "Essa é a ONG 2"
+            }
+        }
+        UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
+            // Faz a treeSelectionView aparecer
+            viewController.treeSelectionView.alpha = 1
+        })
+    }
+    
+    // Função para animar os elementos saindo da tela
+    func reverseAnimateAreaSelection() {
+        // Ajusta a View Controller para ser acessada
+        let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
+        
+        UIView.animate(withDuration: 0.2) {
+            self.backButtonLayout.alpha = 0
+            viewController.ONGIconImageView.alpha = 0
+            viewController.ONGDescriptionLabel.alpha = 0
+            viewController.ONGAboutButtonLayout.alpha = 0
+            viewController.treeSelectionView.alpha = 0
+        }
     }
     
     // Função para gerar nós

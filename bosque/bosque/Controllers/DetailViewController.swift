@@ -13,6 +13,7 @@ class DetailViewController: UIViewController {
     // Variável da WKWebView
     @IBOutlet weak var WKWebView: WKWebView!
     
+    // Variáveis dos sites que vamos acessar
     let URLONG1 = "https:www.omelete.com.br"
     let URLONG2 = "https:www.globo.com"
     
@@ -21,7 +22,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Qual site será acessado
         if areaSelectedGlobal == 1 {
             sendRequest(urlString: URLONG1)
         } else if areaSelectedGlobal == 2 {
@@ -33,25 +34,24 @@ class DetailViewController: UIViewController {
         WKWebView.navigationDelegate = self
     }
     
-    // Convert String into URL and load the URL
+    // Converter a String em URL e carregar a URL
     private func sendRequest(urlString: String) {
         let myURL = URL(string: urlString)
         let myRequest = URLRequest(url: myURL!)
         WKWebView.load(myRequest)
     }
     
+    // Funçao do indicador de atividade
     fileprivate func setActivityIndicator() {
-        // Configure the background containerView for the indicator
+        // Configurar o containerView de background para o indicador
         activityIndicatorContainer = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
         activityIndicatorContainer.center.x = WKWebView.center.x
-        // Need to subtract 44 because WebKitView is pinned to SafeArea
-        //   and we add the toolbar of height 44 programatically
         activityIndicatorContainer.center.y = WKWebView.center.y - 44
         activityIndicatorContainer.backgroundColor = UIColor.black
         activityIndicatorContainer.alpha = 0.8
         activityIndicatorContainer.layer.cornerRadius = 10
         
-        // Configure the activity indicator
+        // Configurar o indicador de atividade
         activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
@@ -64,6 +64,7 @@ class DetailViewController: UIViewController {
         activityIndicator.centerYAnchor.constraint(equalTo: activityIndicatorContainer.centerYAnchor).isActive = true
     }
     
+    // Ajusta a toolBar
     fileprivate func setToolBar() {
         let screenWidth = self.view.bounds.width
         let backButton = UIBarButtonItem(title: "Voltar", style: .plain, target: self, action: #selector(goBack))
@@ -77,6 +78,8 @@ class DetailViewController: UIViewController {
         toolBar.leadingAnchor.constraint(equalTo: WKWebView.leadingAnchor, constant: 0).isActive = true
         toolBar.trailingAnchor.constraint(equalTo: WKWebView.trailingAnchor, constant: 0).isActive = true
     }
+    
+    // Função para voltar à tela inicial
     @objc private func goBack() {
         if WKWebView.canGoBack {
             WKWebView.goBack()
@@ -85,7 +88,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    // Helper function to control activityIndicator's animation
+    // Função para controlar a animação do indicador de atividade
     fileprivate func showActivityIndicator(show: Bool) {
         if show {
             activityIndicator.startAnimating()
@@ -95,12 +98,13 @@ class DetailViewController: UIViewController {
         }
     }
 }
+
 extension DetailViewController: WKNavigationDelegate {
     func webView(_ WKWebView: WKWebView, didFinish navigation: WKNavigation!) {
         self.showActivityIndicator(show: false)
     }
     func webView(_ WKWebView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        // Set the indicator everytime webView started loading
+        // Ajusta o indicador toda vez que a webView começar a carregar
         self.setActivityIndicator()
         self.showActivityIndicator(show: true)
     }

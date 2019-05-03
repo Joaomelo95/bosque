@@ -100,10 +100,69 @@ class ViewController: UIViewController {
         self.treeSelectionView.alpha = 0
     }
     
+    // Variáveis dos efeitos visuais
+    @IBOutlet weak var visualEffectsView: UIVisualEffectView!
+    var effect: UIVisualEffect!
+    
+    
+    // Variáveis da greetingsView
+    @IBOutlet weak var greetingsView: UIView!
+    @IBOutlet weak var greetingsImgView: UIImageView!
+    @IBOutlet weak var ONGNameGreetingsView: UILabel!
+    @IBAction func continueGreetingsButton(_ sender: Any) {
+        self.reverseAnimateGreetingsView()
+    }
+    
+    // Ajustes da greetingsView
+    func setGreetingsView() {
+        self.greetingsView.layer.cornerRadius = 15
+        self.greetingsView.layer.masksToBounds = true
+        self.greetingsView.alpha = 0
+        self.visualEffectsView.alpha = 0
+    }
+    
+    // Função de animação do greetingsView
+    
+    func animateGreetingsView() {
+        self.greetingsView.transform = CGAffineTransform.init(scaleX:1.3, y: 1.3)
+        self.greetingsView.alpha = 0
+        
+        if areaSelectedGlobal == 1 {
+            self.greetingsImgView.image = UIImage(named: "ong1")
+            self.ONGNameGreetingsView.text = "ONG1"
+        } else if areaSelectedGlobal == 2 {
+            self.greetingsImgView.image = UIImage(named: "ong2")
+            self.ONGNameGreetingsView.text = "ONG2"
+        }
+        
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectsView.alpha = 1
+            self.visualEffectsView.effect = self.effect
+            self.greetingsView.alpha = 1
+            self.greetingsView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func reverseAnimateGreetingsView() {
+        UIView.animate(withDuration: 0.3) {
+            self.greetingsView.transform = CGAffineTransform.init(scaleX:1.3, y: 1.3)
+            self.greetingsView.alpha = 0
+            self.visualEffectsView.effect = nil
+            self.visualEffectsView.alpha = 0
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Ajustes da treeSelectionView
         self.setTreeSelectionView()
+        
+        // Ajustes da greetingsView
+        self.setGreetingsView()
+        
+        // Ajustes dos efeitos visuais
+        effect = visualEffectsView.effect
+        visualEffectsView.effect = nil
         
         // Ajustes das infos das ONGs
         self.setONGInfos()
@@ -151,6 +210,7 @@ class ViewController: UIViewController {
                 scene.randomNumber(areaSelected: areaSelectedGlobal)
                 scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
                 self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+                self.animateGreetingsView()
             }
         }))
         alert.addAction(UIAlertAction(title: "Anúncio", style: .default, handler: {action in
@@ -159,6 +219,7 @@ class ViewController: UIViewController {
                 scene.randomNumber(areaSelected: areaSelectedGlobal)
                 scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
                 self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+                self.animateGreetingsView()
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: {action in
