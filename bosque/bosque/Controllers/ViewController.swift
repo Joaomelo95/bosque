@@ -9,11 +9,12 @@
 import UIKit
 import SpriteKit
 import CloudKit
+import GoogleMobileAds
 
 // Variável que localiza a área de ONG selecionada
 var areaSelectedGlobal: Int = 0
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     //////////////////////////////////////////
     var countDelete = 0
@@ -122,7 +123,6 @@ class ViewController: UIViewController {
     }
     
     // Função de animação do greetingsView
-    
     func animateGreetingsView() {
         self.greetingsView.transform = CGAffineTransform.init(scaleX:1.3, y: 1.3)
         self.greetingsView.alpha = 0
@@ -143,6 +143,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // Função que desfaz animações do greetingsView
     func reverseAnimateGreetingsView() {
         UIView.animate(withDuration: 0.3) {
             self.greetingsView.transform = CGAffineTransform.init(scaleX:1.3, y: 1.3)
@@ -152,8 +153,44 @@ class ViewController: UIViewController {
         }
     }
     
+    // Variáveis do Google Ad Mob
+    var rewardBasedVideoInArea1: GADRewardBasedVideoAd?
+    var rewardBasedVideoInArea2: GADRewardBasedVideoAd?
+    var treeColorForAd = ""
+    
+    // Função que configura a premiação do anúncio
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
+                            didRewardUserWith reward: GADAdReward) {
+        print("Reward received with currency: \(reward.type), amount \(reward.amount).")
+        self.savingTreeColor = self.treeColorForAd
+        if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.randomNumber(areaSelected: areaSelectedGlobal)
+            scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+            self.animateGreetingsView()
+        }
+    }
+    
+    // Função que recarrega os vídeos
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
+        print("vídeos recarregados")
+    }
+    
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Configurações do Google Ad Mob
+        rewardBasedVideoInArea1 = GADRewardBasedVideoAd.sharedInstance()
+        rewardBasedVideoInArea1?.delegate = self
+        
+        rewardBasedVideoInArea2 = GADRewardBasedVideoAd.sharedInstance()
+        rewardBasedVideoInArea2?.delegate = self
+        
+        // Carrega os vídeos
+        rewardBasedVideoInArea1?.load(GADRequest(), withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
+        rewardBasedVideoInArea2?.load(GADRequest(), withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
+        
         // Ajustes da treeSelectionView
         self.setTreeSelectionView()
         
@@ -200,7 +237,7 @@ class ViewController: UIViewController {
     }
     
     // Função para criar alertas
-    func createAlert(treeColor: String) {
+    func createAlert(treeColor: String, areaSelected: Int) {
         //Cria o alerta
         let alert = UIAlertController(title: "Você escolheu \(treeColor)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
         
@@ -214,12 +251,20 @@ class ViewController: UIViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Anúncio", style: .default, handler: {action in
-            self.savingTreeColor = treeColor
-            if let scene = (self.mainSKView.scene as? MainScene) {
-                scene.randomNumber(areaSelected: areaSelectedGlobal)
-                scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
-                self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-                self.animateGreetingsView()
+            
+            // Quem anúncio vai ser mostrado
+            if areaSelected == 1 {
+                if self.rewardBasedVideoInArea1?.isReady == true {
+                    self.rewardBasedVideoInArea1?.present(fromRootViewController: self)
+                    print("anúncio da area 1")
+                    self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea1!)
+                }
+            } else if areaSelected == 2 {
+                if self.rewardBasedVideoInArea2?.isReady == true {
+                    self.rewardBasedVideoInArea2?.present(fromRootViewController: self)
+                    print("anúncio da area 2")
+                    self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea2!)
+                }
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: {action in
@@ -239,22 +284,24 @@ class ViewController: UIViewController {
     }
     
     // Funções dos botões de árvores
-    
-    
     @IBAction func redTreeButton(_ sender: Any) {
-        self.createAlert(treeColor: "red")
+        self.treeColorForAd = "red"
+        self.createAlert(treeColor: "red", areaSelected: areaSelectedGlobal)
     }
     
     @IBAction func blueTreeButton(_ sender: Any) {
-        self.createAlert(treeColor: "blue")
+        self.treeColorForAd = "blue"
+        self.createAlert(treeColor: "blue", areaSelected: areaSelectedGlobal)
     }
     
     @IBAction func yellowTreeButton(_ sender: Any) {
-        self.createAlert(treeColor: "yellow")
+        self.treeColorForAd = "yellow"
+        self.createAlert(treeColor: "yellow", areaSelected: areaSelectedGlobal)
     }
     
     @IBAction func greenTreeButton(_ sender: Any) {
-        self.createAlert(treeColor: "green")
+        self.treeColorForAd = "green"
+        self.createAlert(treeColor: "green", areaSelected: areaSelectedGlobal)
     }
     
     // Função para salvar árvores

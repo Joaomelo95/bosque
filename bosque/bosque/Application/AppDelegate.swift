@@ -8,15 +8,20 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Initialize the Google Mobile Ads SDK.
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-9302346933117667~9819510191")
+        
         return true
     }
 
