@@ -33,6 +33,8 @@ class MainScene: SKScene {
         
         self.firstAreaNode = self.childNode(withName: "area1")!
         self.secondAreaNode = self.childNode(withName: "area2")!
+        
+        self.firstAreaNode.frame
     }
     
     // Função do Back Button
