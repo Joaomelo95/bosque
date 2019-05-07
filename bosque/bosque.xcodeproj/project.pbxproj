@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B50C9D892281A664001827ED /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C9D882281A664001827ED /* IAPHelper.swift */; };
+		B50C9D8B2281A68F001827ED /* BosqueProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C9D8A2281A68F001827ED /* BosqueProducts.swift */; };
+		B50C9D8D2281B2F0001827ED /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50C9D8C2281B2F0001827ED /* StoreKit.framework */; };
 		B50CDCA92264CA8D00671642 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CDCA82264CA8D00671642 /* AppDelegate.swift */; };
 		B50CDCAB2264CA8D00671642 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50CDCAA2264CA8D00671642 /* ViewController.swift */; };
 		B50CDCAE2264CA8D00671642 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50CDCAC2264CA8D00671642 /* Main.storyboard */; };
@@ -23,6 +26,9 @@
 /* Begin PBXFileReference section */
 		4D548AF8C3FAA69A0200E098 /* Pods-bosque.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bosque.debug.xcconfig"; path = "Pods/Target Support Files/Pods-bosque/Pods-bosque.debug.xcconfig"; sourceTree = "<group>"; };
 		6E869CA94F01999F55AA1CF1 /* Pods-bosque.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bosque.release.xcconfig"; path = "Pods/Target Support Files/Pods-bosque/Pods-bosque.release.xcconfig"; sourceTree = "<group>"; };
+		B50C9D882281A664001827ED /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		B50C9D8A2281A68F001827ED /* BosqueProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BosqueProducts.swift; sourceTree = "<group>"; };
+		B50C9D8C2281B2F0001827ED /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		B50CDCA52264CA8D00671642 /* bosque.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bosque.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50CDCA82264CA8D00671642 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B50CDCAA2264CA8D00671642 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B50C9D8D2281B2F0001827ED /* StoreKit.framework in Frameworks */,
 				B5FCDD4B22665E5A00D60558 /* CloudKit.framework in Frameworks */,
 				C8FB1103463B87B276EFB5C0 /* Pods_bosque.framework in Frameworks */,
 			);
@@ -87,6 +94,8 @@
 		B55A0B1522788A5D00DE04A3 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				B50C9D882281A664001827ED /* IAPHelper.swift */,
+				B50C9D8A2281A68F001827ED /* BosqueProducts.swift */,
 				B50CDCA82264CA8D00671642 /* AppDelegate.swift */,
 			);
 			path = Application;
@@ -115,6 +124,7 @@
 		B5FCDD4922665E5A00D60558 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B50C9D8C2281B2F0001827ED /* StoreKit.framework */,
 				B5FCDD4A22665E5A00D60558 /* CloudKit.framework */,
 				D118BAB579F6A8D503E14659 /* Pods_bosque.framework */,
 			);
@@ -164,6 +174,9 @@
 					B50CDCA42264CA8D00671642 = {
 						CreatedOnToolsVersion = 10.1;
 						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -236,10 +249,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B50C9D8B2281A68F001827ED /* BosqueProducts.swift in Sources */,
 				B50CDCAB2264CA8D00671642 /* ViewController.swift in Sources */,
 				B5DB3B1122773D3F00DFE34C /* MainScene.swift in Sources */,
 				B53A0C84227CB8A700FF6743 /* DetailViewController.swift in Sources */,
 				B50CDCA92264CA8D00671642 /* AppDelegate.swift in Sources */,
+				B50C9D892281A664001827ED /* IAPHelper.swift in Sources */,
 				B50CDCB12264CA8D00671642 /* bosque.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 import CloudKit
 import GoogleMobileAds
+import StoreKit
 
 // Variável que localiza a área de ONG selecionada
 var areaSelectedGlobal: Int = 0
@@ -177,9 +178,46 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         print("vídeos recarregados")
     }
     
+    //////////////////////////////////////////
+    // Variável de produtos /Users/joaomelo/Documents/ADA/BC/bosque/bosque/bosque/Controllers/DetailViewController.swiftdo StoreKit
+    var product: SKProduct!
+    var products: [SKProduct] = []
+    
+    // Função para encontrar os produtos
+    func reload() {
+        self.products = []
+        BosqueProducts.store.requestProducts{ [weak self] success, products in
+            guard let self = self else { return }
+            if success {
+                self.products = products!
+                print("Produtos na array: \(self.products.count)")
+            }
+        }
+    }
+    
+    @objc func handlePurchaseNotification(_ notification: Notification) {
+        guard
+            let productID = notification.object as? String,
+            let index = products.index(where : { product -> Bool in
+            product.productIdentifier == productID
+        })
+        else { return }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.reload()
+    }
+    //////////////////////////////////////////
+    
     // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        //////////////////////////////////////////
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)),
+                                               name: .IAPHelperPurchaseNotification,
+                                               object: nil)
+        //////////////////////////////////////////
+        
         // Configurações do Google Ad Mob
         rewardBasedVideoInArea1 = GADRewardBasedVideoAd.sharedInstance()
         rewardBasedVideoInArea1?.delegate = self
@@ -242,6 +280,22 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         let alert = UIAlertController(title: "Você escolheu \(treeColor)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Pagar", style: .default, handler: { action in
+            
+            if treeColor == "red" {
+                //////////////////////////////////////////
+                self.product = self.products[0]
+                print(self.product)
+                BosqueProducts.store.buyProduct(self.product)
+                //////////////////////////////////////////
+                
+            } else if treeColor == "blue" {
+                
+                
+            } else if treeColor == "yellow" {
+                
+            } else if treeColor == "green" {
+                
+            }
             self.savingTreeColor = treeColor
             if let scene = (self.mainSKView.scene as? MainScene) {
                 scene.randomNumber(areaSelected: areaSelectedGlobal)
