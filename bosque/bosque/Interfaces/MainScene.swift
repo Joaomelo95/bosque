@@ -16,6 +16,7 @@ class MainScene: SKScene {
     // Variáveis para definir se os nodes são clicáveis
     var area1IsTouchable = true
     var area2IsTouchable = true
+    var bgAreaIsTouchable = false
     
     // Variável para guardar o centro da view
     var viewCenter: CGPoint = CGPoint(x: 0.0, y: 0.0)
@@ -26,6 +27,7 @@ class MainScene: SKScene {
     // Variáves dos Nodes na Scene
     var firstAreaNode = SKNode()
     var secondAreaNode = SKNode()
+    var bgAreaNode = SKNode()
     
     // Inicializador
     override func didMove(to view: SKView) {
@@ -33,8 +35,7 @@ class MainScene: SKScene {
         
         self.firstAreaNode = self.childNode(withName: "area1")!
         self.secondAreaNode = self.childNode(withName: "area2")!
-        
-        self.firstAreaNode.frame
+        self.bgAreaNode = self.childNode(withName: "bg")!
     }
     
     // Função do Back Button
@@ -58,8 +59,9 @@ class MainScene: SKScene {
         cam?.run(moveAction)
         
         // Permite clicar as áreas novamente
-        area1IsTouchable = true
-        area2IsTouchable = true
+        self.area1IsTouchable = true
+        self.area2IsTouchable = true
+        self.bgAreaIsTouchable = false
     }
     
     // Função para selecionar a área desejada
@@ -81,6 +83,11 @@ class MainScene: SKScene {
         if secondAreaNode.contains(touchLocation) && area2IsTouchable {
             self.selectingArea(area: 2, position: secondAreaPosition)
         }
+        //////////////////////////////////////////
+        if bgAreaNode.contains(touchLocation) && bgAreaIsTouchable {
+            // RESOLVER OQ FAZER NO FUTURO
+        }
+        //////////////////////////////////////////
     }
     
     // Função para ajustar o que acontece quando tocar na área selecionada
@@ -96,8 +103,8 @@ class MainScene: SKScene {
         areaSelectedGlobal = area
         
         // Desativa a possibilidade de tocar em outra área
-        area1IsTouchable = false
-        area2IsTouchable = false
+        self.area1IsTouchable = false
+        self.area2IsTouchable = false
         
         self.animateAreaSelection(area: area)
         
@@ -108,6 +115,9 @@ class MainScene: SKScene {
         // Rodar ações
         cam?.run(moveAction)
         cam?.run(zoomAction)
+        
+        // Ativa a possibilidade de tocar no background
+        self.bgAreaIsTouchable = true
     }
     
     // Função para animar os elementos entrando na tela

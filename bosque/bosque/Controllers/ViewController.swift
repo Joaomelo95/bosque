@@ -178,8 +178,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         print("vídeos recarregados")
     }
     
-    //////////////////////////////////////////
-    // Variável de produtos /Users/joaomelo/Documents/ADA/BC/bosque/bosque/bosque/Controllers/DetailViewController.swiftdo StoreKit
+    // Variável de produtos do StoreKit
     var product: SKProduct!
     var products: [SKProduct] = []
     
@@ -195,6 +194,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
     }
     
+    // Função que realiza a notificação de compra e finaliza a compra gerando uma árvore
     @objc func handlePurchaseNotification(_ notification: Notification) {
         guard
             let productID = notification.object as? String,
@@ -202,21 +202,21 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             product.productIdentifier == productID
         })
         else { return }
+        
+        self.generateTrees(treeColor: self.savingTreeColor)
     }
     
+    // viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
         self.reload()
     }
-    //////////////////////////////////////////
     
     // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        //////////////////////////////////////////
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)),
-                                               name: .IAPHelperPurchaseNotification,
-                                               object: nil)
-        //////////////////////////////////////////
+        
+        // Faz o request para puxar os produtos do StoreKit
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)), name: .IAPHelperPurchaseNotification, object: nil)
         
         // Configurações do Google Ad Mob
         rewardBasedVideoInArea1 = GADRewardBasedVideoAd.sharedInstance()
@@ -274,38 +274,48 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         })
     }
     
+    // Função para gerar árvores na tela
+    func generateTrees(treeColor: String) {
+        if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.randomNumber(areaSelected: areaSelectedGlobal)
+            scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+            self.animateGreetingsView()
+        }
+
+    }
+    
     // Função para criar alertas
     func createAlert(treeColor: String, areaSelected: Int) {
         //Cria o alerta
         let alert = UIAlertController(title: "Você escolheu \(treeColor)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Pagar", style: .default, handler: { action in
-            
+            // Define a árvore e gera o pedido de compra
             if treeColor == "red" {
-                //////////////////////////////////////////
-                self.product = self.products[0]
-                print(self.product)
+                // ALTERAR OS PRODUTOS!!
+                self.savingTreeColor = treeColor
+                self.product = self.products[2]
                 BosqueProducts.store.buyProduct(self.product)
-                //////////////////////////////////////////
-                
             } else if treeColor == "blue" {
-                
-                
+                // ALTERAR OS PRODUTOS!!
+                self.savingTreeColor = treeColor
+                self.product = self.products[0]
+                BosqueProducts.store.buyProduct(self.product)
             } else if treeColor == "yellow" {
-                
+                // ALTERAR OS PRODUTOS!!
+                self.savingTreeColor = treeColor
+                self.product = self.products[3]
+                BosqueProducts.store.buyProduct(self.product)
             } else if treeColor == "green" {
-                
-            }
-            self.savingTreeColor = treeColor
-            if let scene = (self.mainSKView.scene as? MainScene) {
-                scene.randomNumber(areaSelected: areaSelectedGlobal)
-                scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
-                self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-                self.animateGreetingsView()
+                // ALTERAR OS PRODUTOS!!
+                self.savingTreeColor = treeColor
+                self.product = self.products[1]
+                BosqueProducts.store.buyProduct(self.product)
             }
         }))
-        alert.addAction(UIAlertAction(title: "Anúncio", style: .default, handler: {action in
-            
+        
+        alert.addAction(UIAlertAction(title: "Anúncio", style: .default, handler: { action in
             // Quem anúncio vai ser mostrado
             if areaSelected == 1 {
                 if self.rewardBasedVideoInArea1?.isReady == true {
@@ -321,8 +331,8 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                 }
             }
         }))
-        alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: {action in
-            
+        
+        alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: { action in
         }))
         
         // Adicionar imagem do alerta
