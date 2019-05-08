@@ -287,8 +287,26 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     // Função para criar alertas
     func createAlert(treeColor: String, areaSelected: Int) {
-        //Cria o alerta
-        let alert = UIAlertController(title: "Você escolheu \(treeColor)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
+        // Nome da árvore
+        var treeName = ""
+        var treeAlertImageName = ""
+        
+        if treeColor == "red" {
+            treeName = "o cedro"
+            treeAlertImageName = "treeRed"
+        } else if treeColor == "blue" {
+            treeName = "a cerejeira"
+            treeAlertImageName = "treeBlue"
+        } else if treeColor == "yellow" {
+            treeName = "o pinheiro"
+            treeAlertImageName = "treeYellow"
+        } else if treeColor == "green" {
+            treeName = "o ipê"
+            treeAlertImageName = "treeGreen"
+        }
+        
+        // Cria o alerta
+        let alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Pagar", style: .default, handler: { action in
             // Define a árvore e gera o pedido de compra
@@ -336,7 +354,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }))
         
         // Adicionar imagem do alerta
-        let imageAlert = UIImageView(image: UIImage(named: treeColor))
+        let imageAlert = UIImageView(image: UIImage(named: treeAlertImageName))
         alert.view.addSubview(imageAlert)
         imageAlert.translatesAutoresizingMaskIntoConstraints = false
         alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: alert.view, attribute: .centerX, multiplier: 1, constant: 0))

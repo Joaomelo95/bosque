@@ -33,34 +33,34 @@
                                 <rect key="frame" x="41" y="536" width="292" height="73"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mf6-Df-Fkx">
-                                        <rect key="frame" x="40" y="21" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mf6-Df-Fkx">
+                                        <rect key="frame" x="20" y="17.5" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Red"/>
+                                        <state key="normal" title="Red" image="treeRed"/>
                                         <connections>
                                             <action selector="redTreeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iOJ-2x-wfO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLq-MN-UUC">
-                                        <rect key="frame" x="99" y="21" width="31" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLq-MN-UUC">
+                                        <rect key="frame" x="94" y="17.5" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Blue"/>
+                                        <state key="normal" title="Blue" image="treeBlue"/>
                                         <connections>
                                             <action selector="blueTreeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZRQ-ds-b5h"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Arx-5T-MBB">
-                                        <rect key="frame" x="156" y="21" width="44" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Arx-5T-MBB">
+                                        <rect key="frame" x="161" y="17.5" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Yellow"/>
+                                        <state key="normal" title="Yellow" image="treeYellow"/>
                                         <connections>
                                             <action selector="yellowTreeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2cT-HC-gu9"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pd8-5r-oY9">
-                                        <rect key="frame" x="216" y="21" width="42" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pd8-5r-oY9">
+                                        <rect key="frame" x="235" y="17.5" width="37" height="37"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Green"/>
+                                        <state key="normal" image="treeGreen"/>
                                         <connections>
                                             <action selector="greenTreeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Lq-Se-E9o"/>
                                         </connections>
@@ -96,7 +96,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vO4-Sh-uEy">
+                            <visualEffectView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vO4-Sh-uEy">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Amr-dO-QwT">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -118,7 +118,7 @@
                                 <color key="backgroundColor" white="1" alpha="0.2131046660958904" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ovm-j9-Lsr">
+                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ovm-j9-Lsr">
                                 <rect key="frame" x="67" y="192" width="240" height="282"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -218,4 +218,10 @@
             <point key="canvasLocation" x="885.60000000000002" y="26.53673163418291"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="treeBlue" width="154" height="164.5"/>
+        <image name="treeGreen" width="154" height="164.5"/>
+        <image name="treeRed" width="154" height="164.5"/>
+        <image name="treeYellow" width="154" height="164.5"/>
+    </resources>
 </document>
