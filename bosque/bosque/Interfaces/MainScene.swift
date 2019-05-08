@@ -164,18 +164,24 @@ class MainScene: SKScene {
     
     // Função para gerar nós
     func createTree(color: String, x: Double, y: Double, area: Int) {
-        let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
+        //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
+        let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 37, height: 37))
+        treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
         treeNode.name = "tree"
         
         // Define a cor da árvore
         if color == "red" {
-            treeNode.fillColor = SKColor.red
+            //treeNode.fillColor = SKColor.red
+            treeNode.texture = SKTexture(imageNamed: "treeRed")
         } else if color == "blue" {
-            treeNode.fillColor = SKColor.blue
+            //treeNode.fillColor = SKColor.blue
+            treeNode.texture = SKTexture(imageNamed: "treeBlue")
         } else if color == "yellow" {
-            treeNode.fillColor = SKColor.yellow
+            //treeNode.fillColor = SKColor.yellow
+            treeNode.texture = SKTexture(imageNamed: "treeYellow")
         } else if color == "green" {
-            treeNode.fillColor = SKColor.green
+            //treeNode.fillColor = SKColor.green
+            treeNode.texture = SKTexture(imageNamed: "treeGreen")
         }
         
         // Define a posição da árvore
