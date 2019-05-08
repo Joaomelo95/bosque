@@ -163,7 +163,7 @@ class MainScene: SKScene {
     }
     
     // Função para gerar nós
-    func createTree(color: String, x: Double, y: Double, area: Int) {
+    func createTree(color: String, x: Double, y: Double, area: Int, new: Bool) {
         //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
         let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 37, height: 37))
         treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
@@ -188,11 +188,31 @@ class MainScene: SKScene {
         if area == 1 {
             treeNode.position = CGPoint(x: x, y: y)
             self.firstAreaNode.addChild(treeNode)
+            if new {
+                // Configura a câmera
+                let cam = self.childNode(withName: "camera")
+                
+                let camPositionX = treeNode.position.x + firstAreaNode.position.x
+                let camPositionY = treeNode.position.y + firstAreaNode.position.y + 100.0
+                let camPosition = CGPoint(x: camPositionX, y: camPositionY)
+                
+                cam?.run(SKAction.move(to: camPosition, duration: 0.0))
+            }
         }
         
         if area == 2 {
             treeNode.position = CGPoint(x: x, y: y)
             self.secondAreaNode.addChild(treeNode)
+            if new {
+                // Configura a câmera
+                let cam = self.childNode(withName: "camera")
+                
+                let camPositionX = treeNode.position.x + secondAreaNode.position.x
+                let camPositionY = treeNode.position.y + secondAreaNode.position.y + 100.0
+                let camPosition = CGPoint(x: camPositionX, y: camPositionY)
+                
+                cam?.run(SKAction.move(to: camPosition, duration: 0.0))
+            }
         }
     }
     

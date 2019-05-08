@@ -166,7 +166,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.savingTreeColor = self.treeColorForAd
         if let scene = (self.mainSKView.scene as? MainScene) {
             scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             self.animateGreetingsView()
         }
@@ -267,7 +267,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     self.loadingTreePositionY = tree["positionY"]!
                     areaSelectedGlobal = tree["areaSelected"]!
                     if let scene = (self.mainSKView.scene as? MainScene) {
-                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal)
+                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal, new: false)
                     }
                 }
             }
@@ -278,7 +278,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     func generateTrees(treeColor: String) {
         if let scene = (self.mainSKView.scene as? MainScene) {
             scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal)
+            scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             self.animateGreetingsView()
         }
@@ -306,9 +306,9 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
         
         // Cria o alerta
-        let alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, pague ou veja um anúncio", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, doe ou veja um anúncio", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Pagar", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Doar", style: .default, handler: { action in
             // Define a árvore e gera o pedido de compra
             if treeColor == "red" {
                 // ALTERAR OS PRODUTOS!!
@@ -333,7 +333,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Anúncio", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Ver anúncio", style: .default, handler: { action in
             // Quem anúncio vai ser mostrado
             if areaSelected == 1 {
                 if self.rewardBasedVideoInArea1?.isReady == true {
@@ -414,7 +414,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     print(records)
                     if let scene = (self.mainSKView.scene as? MainScene) {
                         scene.randomNumber(areaSelected: areaSelectedGlobal)
-                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal)
+                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal, new: false)
                     }
                 }
             }
