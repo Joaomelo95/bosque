@@ -14,8 +14,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var WKWebView: WKWebView!
     
     // Variáveis dos sites que vamos acessar
-    let URLONG1 = "https:www.omelete.com.br"
-    let URLONG2 = "https:www.globo.com"
+    let URLONG1 = "https://www.wwf.org.br"
+    let URLONG2 = "https://www.unicef.org/brazil/"
     
     private var activityIndicatorContainer: UIView!
     private var activityIndicator: UIActivityIndicatorView!

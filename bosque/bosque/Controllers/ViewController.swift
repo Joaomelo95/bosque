@@ -17,7 +17,7 @@ var areaSelectedGlobal: Int = 0
 
 class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
-    //////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
     var countDelete = 0
     
     @IBOutlet weak var deleteButton: UIButton!
@@ -41,7 +41,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             }
         }
     }
-    //////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
     
     // Variáveis do CloudKit
     var container = CKContainer.default()
@@ -73,13 +73,8 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.ONGAboutButtonLayout.alpha = 0
     }
     
-    // Função do "Veja mais" das ONGs
+    // Botão do "Veja mais" das ONGs
     @IBAction func ONGAboutButton(_ sender: Any) {
-        if areaSelectedGlobal == 1 {
-            print("funfou area 1")
-        } else if areaSelectedGlobal == 2 {
-            print("funfou area 2")
-        }
     }
     
     // Variáveis para o posicionamento das árvores
@@ -130,10 +125,10 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         
         if areaSelectedGlobal == 1 {
             self.greetingsImgView.image = UIImage(named: "ong1")
-            self.ONGNameGreetingsView.text = "ONG1"
+            self.ONGNameGreetingsView.text = "A WWF"
         } else if areaSelectedGlobal == 2 {
             self.greetingsImgView.image = UIImage(named: "ong2")
-            self.ONGNameGreetingsView.text = "ONG2"
+            self.ONGNameGreetingsView.text = "A Unicef"
         }
         
         UIView.animate(withDuration: 0.4) {
@@ -214,6 +209,16 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ////////////////////////////////////////////////////////////////////
+        if Reachability.isConnectedToNetwork(){
+            // DEIXA O APP ROLAR
+            print("Internet Connection Available!")
+        }else{
+            // NÃO DEIXA O APP ROLAR
+            print("Internet Connection not Available!")
+        }
+        ////////////////////////////////////////////////////////////////////
         
         // Faz o request para puxar os produtos do StoreKit
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)), name: .IAPHelperPurchaseNotification, object: nil)
@@ -388,6 +393,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     // Função para salvar árvores
     func saveTree(color: String, area: Int, positionX: Float, positionY: Float/*timeStamp: ?time?*/) {
+        print("chamou a save tree")
         // Cria o record da árvore
         let newTree = CKRecord(recordType: "Tree")
         newTree.setValue(color, forKey: "color")
@@ -396,11 +402,16 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         newTree.setValue(positionY, forKey: "positionY")
         //newTree.setValue(timeStamp, forKey: //insert time it was created)
         
+        ////////////////////////////////////////////////////////////////////
         // Salva na cloud
+        // DESCOBRIR COMO PEDIR PERMISSÃO
         self.publicDB.save(newTree) { (record, error) in
+            print(error)
             guard record != nil else { return }
             self.trees.append(record!)
+            print("salvou na cloud")
         }
+        ////////////////////////////////////////////////////////////////////
     }
     
     // Função para carregar as árvores

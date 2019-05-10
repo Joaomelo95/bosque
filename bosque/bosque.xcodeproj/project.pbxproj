@@ -16,6 +16,7 @@
 		B50CDCB12264CA8D00671642 /* bosque.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B50CDCAF2264CA8D00671642 /* bosque.xcdatamodeld */; };
 		B50CDCB32264CA8E00671642 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50CDCB22264CA8E00671642 /* Assets.xcassets */; };
 		B50CDCB62264CA8E00671642 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50CDCB42264CA8E00671642 /* LaunchScreen.storyboard */; };
+		B50F2F6B2285A9180005A08A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50F2F6A2285A9180005A08A /* Reachability.swift */; };
 		B53A0C84227CB8A700FF6743 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A0C83227CB8A700FF6743 /* DetailViewController.swift */; };
 		B5DB3B0F22772EC400DFE34C /* Main.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5DB3B0E22772EC400DFE34C /* Main.sks */; };
 		B5DB3B1122773D3F00DFE34C /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB3B1022773D3F00DFE34C /* MainScene.swift */; };
@@ -37,6 +38,7 @@
 		B50CDCB22264CA8E00671642 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B50CDCB52264CA8E00671642 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B50CDCB72264CA8E00671642 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B50F2F6A2285A9180005A08A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		B53A0C83227CB8A700FF6743 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = bosque/Controllers/DetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5DB3B0E22772EC400DFE34C /* Main.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Main.sks; sourceTree = "<group>"; };
 		B5DB3B1022773D3F00DFE34C /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				B50C9D882281A664001827ED /* IAPHelper.swift */,
+				B50F2F6A2285A9180005A08A /* Reachability.swift */,
 				B50C9D8A2281A68F001827ED /* BosqueProducts.swift */,
 				B50CDCA82264CA8D00671642 /* AppDelegate.swift */,
 			);
@@ -255,6 +258,7 @@
 				B53A0C84227CB8A700FF6743 /* DetailViewController.swift in Sources */,
 				B50CDCA92264CA8D00671642 /* AppDelegate.swift in Sources */,
 				B50C9D892281A664001827ED /* IAPHelper.swift in Sources */,
+				B50F2F6B2285A9180005A08A /* Reachability.swift in Sources */,
 				B50CDCB12264CA8D00671642 /* bosque.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
