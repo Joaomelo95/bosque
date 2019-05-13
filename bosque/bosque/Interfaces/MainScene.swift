@@ -44,12 +44,6 @@ class MainScene: SKScene {
         self.bgAreaNode = self.childNode(withName: "bg")!
         self.area1Plantable = self.childNode(withName: "area1Plantable")!
         self.area2Plantable = self.childNode(withName: "area2Plantable")!
-        
-         //////////////////////////////////////////
-        // Configura pinch gesture
-//        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
-//        self.view?.addGestureRecognizer(pinchGesture)
-         //////////////////////////////////////////
     }
     
     // Função do Back Button
@@ -58,11 +52,11 @@ class MainScene: SKScene {
         self.reverseAnimateAreaSelection()
         
         // Tira o zoom
-        let zoomAction = SKAction.scale(to: 1, duration: 0.5)
+        let zoomAction = SKAction.scale(to: 1, duration: 0.8)
         zoomAction.timingMode = .easeInEaseOut
         
         // Coloca a câmera no centro da cena
-        let moveAction = SKAction.move(to: viewCenter, duration: 0.5)
+        let moveAction = SKAction.move(to: viewCenter, duration: 0.8)
         moveAction.timingMode = .easeInEaseOut
         
         // Alpha das logos
@@ -138,17 +132,6 @@ class MainScene: SKScene {
         self.bgAreaIsTouchable = true
     }
     
-    // Função de pinch e zoom
-//    @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
-//        if  sender.scale <= 1 && sender.scale >= 0.2 && area1IsTouchable && area2IsTouchable {
-//            if sender.state == .began {
-//            } else if sender.state == .changed {
-//                camera?.setScale(sender.scale)
-//            } else if sender.state == .ended {
-//            }
-//        }
-//    }
-    
     // Função para animar os elementos entrando na tela
     func animateAreaSelection(area: Int) {
         // Ajusta a View Controller para ser acessada
@@ -196,7 +179,6 @@ class MainScene: SKScene {
         //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
         let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 20, height: 20))
         treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
-        treeNode.zPosition = 3
         treeNode.name = "tree"
         
         // Define a cor da árvore
@@ -219,16 +201,14 @@ class MainScene: SKScene {
             treeNode.position = CGPoint(x: x, y: y)
             self.area1Plantable.addChild(treeNode)
             if new {
-                //////////////////////////////////////////
-                print()
-                print()
-                print()
-                print()
-                print()
-                print(treeNode.position)
-                print(treeNode.position)
-                camera?.position = treeNode.position
-                //////////////////////////////////////////
+                // Câmera foca na árvore criada
+                var cameraPositionInitial = convert(treeNode.position, from: area1Plantable)
+                var cameraPositionX = cameraPositionInitial.x
+                var cameraPositionY = cameraPositionInitial.y + 37.0
+                var cameraPositionFinal = CGPoint(x: cameraPositionX, y: cameraPositionY)
+
+                camera?.position = cameraPositionFinal
+                camera?.setScale(0.1)
             }
         }
         
@@ -236,7 +216,14 @@ class MainScene: SKScene {
             treeNode.position = CGPoint(x: x, y: y)
             self.area2Plantable.addChild(treeNode)
             if new {
-                // CRIAR MOVIMENTAÇÃO DE CÂMERA PARA FOCAR NA ÁRVORE CRIADA
+                // Câmera foca na árvore criada
+                var cameraPositionInitial = convert(treeNode.position, from: area2Plantable)
+                var cameraPositionX = cameraPositionInitial.x
+                var cameraPositionY = cameraPositionInitial.y + 37.0
+                var cameraPositionFinal = CGPoint(x: cameraPositionX, y: cameraPositionY)
+                
+                camera?.position = cameraPositionFinal
+                camera?.setScale(0.1)
             }
         }
     }
@@ -251,4 +238,11 @@ class MainScene: SKScene {
             self.yMax = Float.random(in: -Float(self.area2Plantable.frame.height)/(Float(self.area2Plantable.yScale)*2) ... Float(self.area2Plantable.frame.height)/(Float(self.area2Plantable.yScale)*2))
         }
     }
+    
+    var whatArea: Int = 0
+    func randomNumberForPlanting() {
+        self.whatArea = Int.random(in: 0 ... 3)
+        print(whatArea)
+    }
+    
 }
