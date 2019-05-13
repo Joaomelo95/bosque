@@ -47,9 +47,6 @@ class MainScene: SKScene {
         // Tira os elementos da tela
         self.reverseAnimateAreaSelection()
         
-        // Configura a câmera
-        //let cam = self.childNode(withName: "camera")
-        
         // Tira o zoom
         let zoomAction = SKAction.scale(to: 1, duration: 0.5)
         zoomAction.timingMode = .easeInEaseOut
@@ -179,7 +176,7 @@ class MainScene: SKScene {
     // Função para gerar nós
     func createTree(color: String, x: Double, y: Double, area: Int, new: Bool) {
         //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
-        let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 50, height: 50))
+        let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 100, height: 100))
         treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
         treeNode.zPosition = 3
         treeNode.name = "tree"

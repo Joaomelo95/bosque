@@ -73,8 +73,21 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.ONGAboutButtonLayout.alpha = 0
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if Reachability.isConnectedToNetwork() {
+            return true
+        } else {
+            let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return false
+        }
+    }
+    
     // Botão do "Veja mais" das ONGs
     @IBAction func ONGAboutButton(_ sender: Any) {
+        
     }
     
     // Variáveis para o posicionamento das árvores
