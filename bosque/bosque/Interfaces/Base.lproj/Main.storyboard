@@ -89,7 +89,6 @@
                                     <color key="titleColor" red="1" green="0.4059008708411469" blue="0.18785867989194849" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="ONGAboutButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yNe-zL-kgl"/>
                                     <segue destination="dQC-WU-5g6" kind="presentation" id="SjI-ME-J8t"/>
                                 </connections>
                             </button>
