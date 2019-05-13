@@ -27,6 +27,8 @@ class MainScene: SKScene {
     // Variáves dos Nodes na Scene
     var firstAreaNode = SKNode()
     var secondAreaNode = SKNode()
+    var wwfLogoNode = SKNode()
+    var unicefLogoNode = SKNode()
     var bgAreaNode = SKNode()
     
     // Inicializador
@@ -35,6 +37,8 @@ class MainScene: SKScene {
         
         self.firstAreaNode = self.childNode(withName: "area1")!
         self.secondAreaNode = self.childNode(withName: "area2")!
+        self.wwfLogoNode = self.childNode(withName: "wwfLogo")!
+        self.unicefLogoNode = self.childNode(withName: "unicefLogo")!
         self.bgAreaNode = self.childNode(withName: "bg")!
     }
     
@@ -44,7 +48,7 @@ class MainScene: SKScene {
         self.reverseAnimateAreaSelection()
         
         // Configura a câmera
-        let cam = self.childNode(withName: "camera")
+        //let cam = self.childNode(withName: "camera")
         
         // Tira o zoom
         let zoomAction = SKAction.scale(to: 1, duration: 0.5)
@@ -54,9 +58,14 @@ class MainScene: SKScene {
         let moveAction = SKAction.move(to: viewCenter, duration: 0.5)
         moveAction.timingMode = .easeInEaseOut
         
+        // Alpha das logos
+        let restoreAlpha = SKAction.fadeAlpha(to: 0.3, duration: 0.2)
+        self.wwfLogoNode.run(restoreAlpha)
+        self.unicefLogoNode.run(restoreAlpha)
+        
         // Roda as ações
-        cam?.run(zoomAction)
-        cam?.run(moveAction)
+        camera!.run(zoomAction)
+        camera!.run(moveAction)
         
         // Permite clicar as áreas novamente
         self.area1IsTouchable = true
@@ -93,7 +102,7 @@ class MainScene: SKScene {
     // Função para ajustar o que acontece quando tocar na área selecionada
     func selectingArea(area: Int, position: CGPoint) {
         // Configuração da câmera
-        let cam = self.childNode(withName: "camera")
+        //let cam = self.childNode(withName: "camera")
         
         // Ação de Zoom In
         let zoomAction = SKAction.scale(to: 0.45, duration: 0.5)
@@ -108,13 +117,18 @@ class MainScene: SKScene {
         
         self.animateAreaSelection(area: area)
         
+        // Alpha das logos
+        let removeAlpha = SKAction.fadeAlpha(to: 0.0, duration: 0.2)
+        self.wwfLogoNode.run(removeAlpha)
+        self.unicefLogoNode.run(removeAlpha)
+        
         // Ação de movimento
         let moveAction = SKAction.move(to: position, duration: 0.5)
         moveAction.timingMode = .easeInEaseOut
         
         // Rodar ações
-        cam?.run(moveAction)
-        cam?.run(zoomAction)
+        camera!.run(moveAction)
+        camera!.run(zoomAction)
         
         // Ativa a possibilidade de tocar no background
         self.bgAreaIsTouchable = true
@@ -136,10 +150,10 @@ class MainScene: SKScene {
             
             if area == 1 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong1")
-                viewController.ONGDescriptionLabel.text = "Essa é a ONG 1"
+                viewController.ONGDescriptionLabel.text = "Essa é a WWF"
             } else if area == 2 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong2")
-                viewController.ONGDescriptionLabel.text = "Essa é a ONG 2"
+                viewController.ONGDescriptionLabel.text = "Essa é a Unicef"
             }
         }
         UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
@@ -163,30 +177,43 @@ class MainScene: SKScene {
     }
     
     // Função para gerar nós
-    func createTree(color: String, x: Double, y: Double, area: Int) {
-        let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
+    func createTree(color: String, x: Double, y: Double, area: Int, new: Bool) {
+        //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
+        let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 50, height: 50))
+        treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
+        treeNode.zPosition = 3
         treeNode.name = "tree"
         
         // Define a cor da árvore
         if color == "red" {
-            treeNode.fillColor = SKColor.red
+            //treeNode.fillColor = SKColor.red
+            treeNode.texture = SKTexture(imageNamed: "treeRed")
         } else if color == "blue" {
-            treeNode.fillColor = SKColor.blue
+            //treeNode.fillColor = SKColor.blue
+            treeNode.texture = SKTexture(imageNamed: "treeBlue")
         } else if color == "yellow" {
-            treeNode.fillColor = SKColor.yellow
+            //treeNode.fillColor = SKColor.yellow
+            treeNode.texture = SKTexture(imageNamed: "treeYellow")
         } else if color == "green" {
-            treeNode.fillColor = SKColor.green
+            //treeNode.fillColor = SKColor.green
+            treeNode.texture = SKTexture(imageNamed: "treeGreen")
         }
         
         // Define a posição da árvore
         if area == 1 {
             treeNode.position = CGPoint(x: x, y: y)
             self.firstAreaNode.addChild(treeNode)
+            if new {
+                // CRIAR MOVIMENTAÇÃO DE CÂMERA PARA FOCAR NA ÁRVORE CRIADA
+            }
         }
         
         if area == 2 {
             treeNode.position = CGPoint(x: x, y: y)
             self.secondAreaNode.addChild(treeNode)
+            if new {
+                // CRIAR MOVIMENTAÇÃO DE CÂMERA PARA FOCAR NA ÁRVORE CRIADA
+            }
         }
     }
     
