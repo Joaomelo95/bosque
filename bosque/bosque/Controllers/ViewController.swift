@@ -201,6 +201,8 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.generateTrees(treeColor: self.savingTreeColor)
     }
     
+
+    
     // viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
         self.reload()
@@ -235,6 +237,8 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                 self.present(alert, animated: true, completion: nil)
             }
         }
+        
+
         
         // Faz o request para puxar os produtos do StoreKit
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)), name: .IAPHelperPurchaseNotification, object: nil)

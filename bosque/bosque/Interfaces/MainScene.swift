@@ -40,9 +40,32 @@ class MainScene: SKScene {
         self.wwfLogoNode = self.childNode(withName: "wwfLogo")!
         self.unicefLogoNode = self.childNode(withName: "unicefLogo")!
         self.bgAreaNode = self.childNode(withName: "bg")!
+        
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+            self.view?.addGestureRecognizer(pinchGesture)
+        
     }
     
     // Função do Back Button
+    
+    @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
+        print("is piching!")
+        if sender.scale >= 0.2 && sender.scale <= 1 && area1IsTouchable && area2IsTouchable {
+//                    let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
+//                    firstAreaNode.run(pinch)
+            
+            if sender.state == .began {
+                
+            } else if sender.state == .changed {
+                
+                camera?.setScale(sender.scale)
+                
+            } else if sender.state == .ended {
+                
+            }
+        }
+    }
+    
     func backButtonAction() {
         // Tira os elementos da tela
         self.reverseAnimateAreaSelection()
