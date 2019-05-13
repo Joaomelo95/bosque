@@ -383,7 +383,6 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         alert.addAction(UIAlertAction(title: "Ver anúncio", style: .default, handler: { action in
             // Testa se está conectado na internet
             if Reachability.isConnectedToNetwork() && self.isICloudContainerAvailable() {
-                print("Pode mostrar o fucking anúncio")
                 // Quem anúncio vai ser mostrado
                 if areaSelected == 1 {
                     if self.rewardBasedVideoInArea1?.isReady == true {

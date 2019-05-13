@@ -30,16 +30,26 @@ class MainScene: SKScene {
     var wwfLogoNode = SKNode()
     var unicefLogoNode = SKNode()
     var bgAreaNode = SKNode()
+    var area1Plantable = SKNode()
+    var area2Plantable = SKNode()
     
-    // Inicializador
+    // MARK: didMove
     override func didMove(to view: SKView) {
         super.didMove(to: view)
-        
+        // Configura nodes na tela
         self.firstAreaNode = self.childNode(withName: "area1")!
         self.secondAreaNode = self.childNode(withName: "area2")!
         self.wwfLogoNode = self.childNode(withName: "wwfLogo")!
         self.unicefLogoNode = self.childNode(withName: "unicefLogo")!
         self.bgAreaNode = self.childNode(withName: "bg")!
+        self.area1Plantable = self.childNode(withName: "area1Plantable")!
+        self.area2Plantable = self.childNode(withName: "area2Plantable")!
+        
+         //////////////////////////////////////////
+        // Configura pinch gesture
+//        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
+//        self.view?.addGestureRecognizer(pinchGesture)
+         //////////////////////////////////////////
     }
     
     // Função do Back Button
@@ -76,12 +86,12 @@ class MainScene: SKScene {
         let touchLocation = touch!.location(in: self)
         
         // Posição dos Nodes na Scene
-        let firstAreaPositionX = firstAreaNode.position.x
-        let firstAreaPositionY = firstAreaNode.position.y + 120
-        let firstAreaPosition:CGPoint = CGPoint(x: firstAreaPositionX, y: firstAreaPositionY)
-        let secondAreaPositionX = secondAreaNode.position.x
-        let secondAreaPositionY = secondAreaNode.position.y + 120
-        let secondAreaPosition:CGPoint = CGPoint(x: secondAreaPositionX, y: secondAreaPositionY)
+        let area1PlantableX = area1Plantable.position.x
+        let area1PlantableY = area1Plantable.position.y + 120
+        let firstAreaPosition:CGPoint = CGPoint(x: area1PlantableX, y: area1PlantableY)
+        let area2PlantableX = area2Plantable.position.x
+        let area2PlantableY = area2Plantable.position.y + 120
+        let secondAreaPosition:CGPoint = CGPoint(x: area2PlantableX, y: area2PlantableY)
         
         if firstAreaNode.contains(touchLocation) && area1IsTouchable {
             self.selectingArea(area: 1, position: firstAreaPosition)
@@ -91,16 +101,13 @@ class MainScene: SKScene {
         }
         //////////////////////////////////////////
         if bgAreaNode.contains(touchLocation) && bgAreaIsTouchable {
-            // RESOLVER OQ FAZER NO FUTURO
+            // RESOLVER OQ FAZER NO FUTURO QND TOCAR NO BG
         }
         //////////////////////////////////////////
     }
     
     // Função para ajustar o que acontece quando tocar na área selecionada
     func selectingArea(area: Int, position: CGPoint) {
-        // Configuração da câmera
-        //let cam = self.childNode(withName: "camera")
-        
         // Ação de Zoom In
         let zoomAction = SKAction.scale(to: 0.45, duration: 0.5)
         zoomAction.timingMode = .easeInEaseOut
@@ -130,6 +137,17 @@ class MainScene: SKScene {
         // Ativa a possibilidade de tocar no background
         self.bgAreaIsTouchable = true
     }
+    
+    // Função de pinch e zoom
+//    @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
+//        if  sender.scale <= 1 && sender.scale >= 0.2 && area1IsTouchable && area2IsTouchable {
+//            if sender.state == .began {
+//            } else if sender.state == .changed {
+//                camera?.setScale(sender.scale)
+//            } else if sender.state == .ended {
+//            }
+//        }
+//    }
     
     // Função para animar os elementos entrando na tela
     func animateAreaSelection(area: Int) {
@@ -176,7 +194,7 @@ class MainScene: SKScene {
     // Função para gerar nós
     func createTree(color: String, x: Double, y: Double, area: Int, new: Bool) {
         //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
-        let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 100, height: 100))
+        let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 20, height: 20))
         treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
         treeNode.zPosition = 3
         treeNode.name = "tree"
@@ -199,15 +217,24 @@ class MainScene: SKScene {
         // Define a posição da árvore
         if area == 1 {
             treeNode.position = CGPoint(x: x, y: y)
-            self.firstAreaNode.addChild(treeNode)
+            self.area1Plantable.addChild(treeNode)
             if new {
-                // CRIAR MOVIMENTAÇÃO DE CÂMERA PARA FOCAR NA ÁRVORE CRIADA
+                //////////////////////////////////////////
+                print()
+                print()
+                print()
+                print()
+                print()
+                print(treeNode.position)
+                print(treeNode.position)
+                camera?.position = treeNode.position
+                //////////////////////////////////////////
             }
         }
         
         if area == 2 {
             treeNode.position = CGPoint(x: x, y: y)
-            self.secondAreaNode.addChild(treeNode)
+            self.area2Plantable.addChild(treeNode)
             if new {
                 // CRIAR MOVIMENTAÇÃO DE CÂMERA PARA FOCAR NA ÁRVORE CRIADA
             }
@@ -217,11 +244,11 @@ class MainScene: SKScene {
     // Função para gerar números aleatórios
     func randomNumber(areaSelected: Int) {
         if areaSelected == 1 {
-            self.xMax = Float.random(in: -Float(self.firstAreaNode.frame.width)/(Float(self.firstAreaNode.xScale)*2) ... Float(self.firstAreaNode.frame.width)/(Float(self.firstAreaNode.xScale)*2))
-            self.yMax = Float.random(in: -Float(self.firstAreaNode.frame.height)/(Float(self.firstAreaNode.yScale)*2) ... Float(self.firstAreaNode.frame.height)/(Float(self.firstAreaNode.yScale)*2))
+            self.xMax = Float.random(in: -Float(self.area1Plantable.frame.width)/(Float(self.area1Plantable.xScale)*2) ... Float(self.area1Plantable.frame.width)/(Float(self.area1Plantable.xScale)*2))
+            self.yMax = Float.random(in: -Float(self.area1Plantable.frame.height)/(Float(self.area1Plantable.yScale)*2) ... Float(self.area1Plantable.frame.height)/(Float(self.area1Plantable.yScale)*2))
         } else if areaSelected == 2 {
-            self.xMax = Float.random(in: -Float(self.secondAreaNode.frame.width)/(Float(self.secondAreaNode.xScale)*2) ... Float(self.secondAreaNode.frame.width)/(Float(self.secondAreaNode.xScale)*2))
-            self.yMax = Float.random(in: -Float(self.secondAreaNode.frame.height)/(Float(self.secondAreaNode.yScale)*2) ... Float(self.secondAreaNode.frame.height)/(Float(self.secondAreaNode.yScale)*2))
+            self.xMax = Float.random(in: -Float(self.area2Plantable.frame.width)/(Float(self.area2Plantable.xScale)*2) ... Float(self.area2Plantable.frame.width)/(Float(self.area2Plantable.xScale)*2))
+            self.yMax = Float.random(in: -Float(self.area2Plantable.frame.height)/(Float(self.area2Plantable.yScale)*2) ... Float(self.area2Plantable.frame.height)/(Float(self.area2Plantable.yScale)*2))
         }
     }
 }
