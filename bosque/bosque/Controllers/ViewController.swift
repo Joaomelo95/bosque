@@ -209,16 +209,32 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Ajustes dos efeitos visuais
+        effect = visualEffectsView.effect
+        visualEffectsView.effect = nil
         
-        ////////////////////////////////////////////////////////////////////
+        // Ajustes da greetingsView
+        self.setGreetingsView()
+        
+        // Verifica a conexão de rede
         if Reachability.isConnectedToNetwork(){
             // DEIXA O APP ROLAR
             print("Internet Connection Available!")
         }else{
             // NÃO DEIXA O APP ROLAR
             print("Internet Connection not Available!")
+            
+            self.visualEffectsView.alpha = 1
+            self.visualEffectsView.effect = self.effect
+            
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    UIControl().sendAction(#selector(NSXPCConnection.suspend), to: UIApplication.shared, for: nil)
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
-        ////////////////////////////////////////////////////////////////////
         
         // Faz o request para puxar os produtos do StoreKit
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.handlePurchaseNotification(_:)), name: .IAPHelperPurchaseNotification, object: nil)
@@ -236,13 +252,6 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         
         // Ajustes da treeSelectionView
         self.setTreeSelectionView()
-        
-        // Ajustes da greetingsView
-        self.setGreetingsView()
-        
-        // Ajustes dos efeitos visuais
-        effect = visualEffectsView.effect
-        visualEffectsView.effect = nil
         
         // Ajustes das infos das ONGs
         self.setONGInfos()
@@ -314,44 +323,62 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         let alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, doe ou veja um anúncio", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Doar", style: .default, handler: { action in
-            // Define a árvore e gera o pedido de compra
-            if treeColor == "red" {
-                // ALTERAR OS PRODUTOS!!
-                self.savingTreeColor = treeColor
-                self.product = self.products[2]
-                BosqueProducts.store.buyProduct(self.product)
-            } else if treeColor == "blue" {
-                // ALTERAR OS PRODUTOS!!
-                self.savingTreeColor = treeColor
-                self.product = self.products[0]
-                BosqueProducts.store.buyProduct(self.product)
-            } else if treeColor == "yellow" {
-                // ALTERAR OS PRODUTOS!!
-                self.savingTreeColor = treeColor
-                self.product = self.products[3]
-                BosqueProducts.store.buyProduct(self.product)
-            } else if treeColor == "green" {
-                // ALTERAR OS PRODUTOS!!
-                self.savingTreeColor = treeColor
-                self.product = self.products[1]
-                BosqueProducts.store.buyProduct(self.product)
+            // Testa se está conectado na internet
+            if Reachability.isConnectedToNetwork() {
+                // Define a árvore e gera o pedido de compra
+                if treeColor == "red" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[2]
+                    BosqueProducts.store.buyProduct(self.product)
+                } else if treeColor == "blue" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[0]
+                    BosqueProducts.store.buyProduct(self.product)
+                } else if treeColor == "yellow" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[3]
+                    BosqueProducts.store.buyProduct(self.product)
+                } else if treeColor == "green" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[1]
+                    BosqueProducts.store.buyProduct(self.product)
+                }
+            } else {
+                let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
         }))
         
         alert.addAction(UIAlertAction(title: "Ver anúncio", style: .default, handler: { action in
-            // Quem anúncio vai ser mostrado
-            if areaSelected == 1 {
-                if self.rewardBasedVideoInArea1?.isReady == true {
-                    self.rewardBasedVideoInArea1?.present(fromRootViewController: self)
-                    print("anúncio da area 1")
-                    self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea1!)
+            // Testa se está conectado na internet
+            if Reachability.isConnectedToNetwork() {
+                // Quem anúncio vai ser mostrado
+                if areaSelected == 1 {
+                    if self.rewardBasedVideoInArea1?.isReady == true {
+                        self.rewardBasedVideoInArea1?.present(fromRootViewController: self)
+                        print("anúncio da area 1")
+                        self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea1!)
+                    }
+                } else if areaSelected == 2 {
+                    if self.rewardBasedVideoInArea2?.isReady == true {
+                        self.rewardBasedVideoInArea2?.present(fromRootViewController: self)
+                        print("anúncio da area 2")
+                        self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea2!)
+                    }
                 }
-            } else if areaSelected == 2 {
-                if self.rewardBasedVideoInArea2?.isReady == true {
-                    self.rewardBasedVideoInArea2?.present(fromRootViewController: self)
-                    print("anúncio da area 2")
-                    self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea2!)
-                }
+            } else {
+                let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
         }))
         

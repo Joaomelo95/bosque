@@ -51,11 +51,11 @@ class MainScene: SKScene {
         //let cam = self.childNode(withName: "camera")
         
         // Tira o zoom
-        let zoomAction = SKAction.scale(to: 1, duration: 5)
+        let zoomAction = SKAction.scale(to: 1, duration: 0.5)
         zoomAction.timingMode = .easeInEaseOut
         
         // Coloca a câmera no centro da cena
-        let moveAction = SKAction.move(to: viewCenter, duration: 5)
+        let moveAction = SKAction.move(to: viewCenter, duration: 0.5)
         moveAction.timingMode = .easeInEaseOut
         
         // Alpha das logos
