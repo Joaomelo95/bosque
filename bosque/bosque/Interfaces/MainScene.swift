@@ -137,6 +137,9 @@ class MainScene: SKScene {
         // Ajusta a View Controller para ser acessada
         let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
         
+        // Tira o counter local
+        viewController.treesPlantedLabel.alpha = 0
+        
         UIView.animate(withDuration: 0.5) {
             // Faz as infos das ONGs aparecerem
             viewController.ONGIconImageView.alpha = 1
@@ -171,6 +174,7 @@ class MainScene: SKScene {
             viewController.ONGDescriptionLabel.alpha = 0
             viewController.ONGAboutButtonLayout.alpha = 0
             viewController.treeSelectionView.alpha = 0
+            viewController.treesPlantedLabel.alpha = 1
         }
     }
     

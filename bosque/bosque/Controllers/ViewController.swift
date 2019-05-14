@@ -172,6 +172,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             scene.randomNumber(areaSelected: areaSelectedGlobal)
             scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
+            self.savingTreesPlantedToUserDefaults()
             self.animateGreetingsView()
         }
     }
@@ -210,14 +211,24 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.generateTrees(treeColor: self.savingTreeColor)
     }
     
-    ////////////////////////////////////////////////////////////////////
     // Função que checa se está conectado no iCloud
     func isICloudContainerAvailable() -> Bool
     {
         if FileManager.default.ubiquityIdentityToken != nil {return true}
         else {return false}
     }
-    ////////////////////////////////////////////////////////////////////
+    
+    // Configurações de quantas árvores o usuário plantou
+    @IBOutlet weak var treesPlantedLabel: UILabel!
+    
+    func savingTreesPlantedToUserDefaults() {
+        var plantedTrees = UserDefaults.standard.integer(forKey: "treesPlanted")
+        plantedTrees += 1
+        self.treesPlantedLabel.text = "\(plantedTrees)"
+        UserDefaults.standard.set(plantedTrees, forKey: "treesPlanted")
+        print(UserDefaults.standard.integer(forKey: "treesPlanted"))
+    }
+    
     
     // viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
@@ -289,6 +300,10 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.mainSKView.scene?.camera = cam
         cam?.name = "camera"
         self.mainSKView.scene?.addChild(cam!)
+        
+        // Carrega a quantidade de árvores plantadas localmente
+        var plantedTrees = UserDefaults.standard.integer(forKey: "treesPlanted")
+        self.treesPlantedLabel.text = "\(plantedTrees)"
         
         // Carregar as árvores
         self.loadTrees(createTree: false, completion: { () in

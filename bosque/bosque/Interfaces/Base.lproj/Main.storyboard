@@ -99,7 +99,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vO4-Sh-uEy">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ho-sJ-Zp1">
+                                <rect key="frame" x="30" y="40" width="11" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <visualEffectView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vO4-Sh-uEy">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Amr-dO-QwT">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -121,7 +128,7 @@
                                 <color key="backgroundColor" white="1" alpha="0.2131046660958904" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ovm-j9-Lsr">
+                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ovm-j9-Lsr">
                                 <rect key="frame" x="67" y="192" width="240" height="282"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -179,6 +186,7 @@
                         <outlet property="greetingsView" destination="Ovm-j9-Lsr" id="GMu-TO-rlm"/>
                         <outlet property="mainSKView" destination="28C-UX-xXl" id="bYy-ei-EkR"/>
                         <outlet property="treeSelectionView" destination="zgE-fe-3zW" id="lIs-er-VrU"/>
+                        <outlet property="treesPlantedLabel" destination="5ho-sJ-Zp1" id="YvG-PT-zOZ"/>
                         <outlet property="visualEffectsView" destination="vO4-Sh-uEy" id="O5y-47-yJD"/>
                     </connections>
                 </viewController>
