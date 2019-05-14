@@ -22,6 +22,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBAction func deleteButtonAction(_ sender: Any) {
+        UserDefaults.standard.removeObject(forKey: "treesPlanted")
         let querry = CKQuery(recordType: "Tree", predicate: NSPredicate(value: true))
         self.publicDB.perform(querry, inZoneWith: nil) { (records, error) in
             if error == nil {
@@ -177,11 +178,16 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////////////////
     // Função que recarrega os vídeos
     func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
+        
+        //COLOCAR O OUTRO AD TB
+        
         print("vídeos recarregados")
     }
+    /////////////////////////////////////////////////////////////////////////////////
     
     // Variável de produtos do StoreKit
     var product: SKProduct!
@@ -247,10 +253,8 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         
         // Verifica a conexão de rede
         if Reachability.isConnectedToNetwork(){
-            // DEIXA O APP ROLAR
             print("Internet Connection Available!")
         }else{
-            // NÃO DEIXA O APP ROLAR
             print("Internet Connection not Available!")
             
             self.visualEffectsView.alpha = 1
@@ -332,6 +336,74 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
 
     }
     
+    // Configurações para só mostrar o alerta quando os vídeos estiverem carregados
+    var timer = Timer()
+    var adIsLoaded = false
+    
+    // Configurações do indicador de carregamento
+    var activityIndicatorContainer: UIView!
+    var activityIndicator: UIActivityIndicatorView!
+    func setActivityIndicator() {
+        // Configurar o containerView de background para o indicador
+        activityIndicatorContainer = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        activityIndicatorContainer.center.x = self.view.frame.midX
+        activityIndicatorContainer.center.y = self.view.frame.midY
+        activityIndicatorContainer.backgroundColor = UIColor.black
+        activityIndicatorContainer.alpha = 0.8
+        activityIndicatorContainer.layer.cornerRadius = 10
+
+        // Configurar o indicador de atividade
+        activityIndicator = UIActivityIndicatorView()
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorContainer.addSubview(activityIndicator)
+        self.view.addSubview(activityIndicatorContainer)
+
+        // Constraints
+        activityIndicator.centerXAnchor.constraint(equalTo: activityIndicatorContainer.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: activityIndicatorContainer.centerYAnchor).isActive = true
+    }
+    
+    // Função que mostra o indicador de carregamento
+    func showActivityIndicator(show: Bool) {
+        if show {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+            activityIndicatorContainer.removeFromSuperview()
+        }
+    }
+    
+    // Função para checar se os anúncios estão carregados
+    @objc func checkIfIsLoaded() {
+        print(self.adIsLoaded)
+        if adIsLoaded == false {
+            self.showActivityIndicator(show: true)
+            if areaSelectedGlobal == 1 {
+                if rewardBasedVideoInArea1!.isReady {
+                    self.adIsLoaded = true
+                }
+            } else if areaSelectedGlobal == 2 {
+                if rewardBasedVideoInArea2!.isReady {
+                    self.adIsLoaded = true
+                }
+            }
+        } else {
+            self.showActivityIndicator(show: false)
+            timer.invalidate()
+            self.insertAlert(alert: self.alert)
+        }
+    }
+    
+    // Função para inserir o alerta na tela
+    func insertAlert(alert: UIAlertController) {
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // Cria o alerta
+    var alert = UIAlertController()
+    
     // Função para criar alertas
     func createAlert(treeColor: String, areaSelected: Int) {
         // Nome da árvore
@@ -352,10 +424,9 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             treeAlertImageName = "treeGreen"
         }
         
-        // Cria o alerta
-        let alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, doe ou veja um anúncio", preferredStyle: .alert)
+        self.alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, doe ou veja um anúncio", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Doar", style: .default, handler: { action in
+        self.alert.addAction(UIAlertAction(title: "Doar", style: .default, handler: { action in
             // Testa se está conectado na internet
             if Reachability.isConnectedToNetwork() && self.isICloudContainerAvailable() {
                 // Define a árvore e gera o pedido de compra
@@ -383,7 +454,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             } else if !Reachability.isConnectedToNetwork() {
                 let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                
+                    
                 }))
                 self.present(alert, animated: true, completion: nil)
             } else if Reachability.isConnectedToNetwork() && !self.isICloudContainerAvailable() {
@@ -395,7 +466,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Ver anúncio", style: .default, handler: { action in
+        self.alert.addAction(UIAlertAction(title: "Ver anúncio", style: .default, handler: { action in
             // Testa se está conectado na internet
             if Reachability.isConnectedToNetwork() && self.isICloudContainerAvailable() {
                 // Quem anúncio vai ser mostrado
@@ -427,19 +498,25 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             }
         }))
         
-        alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: { action in
+        self.alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: { action in
         }))
         
         // Adicionar imagem do alerta
         let imageAlert = UIImageView(image: UIImage(named: treeAlertImageName))
-        alert.view.addSubview(imageAlert)
+        self.alert.view.addSubview(imageAlert)
         imageAlert.translatesAutoresizingMaskIntoConstraints = false
-        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: alert.view, attribute: .centerX, multiplier: 1, constant: 0))
-        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: alert.view, attribute: .centerY, multiplier: 1, constant: -64))
-        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
-        alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+        self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: self.alert.view, attribute: .centerX, multiplier: 1, constant: 0))
+        self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: self.alert.view, attribute: .centerY, multiplier: 1, constant: -64))
+        self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+        self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
         
-        self.present(alert, animated: true, completion: nil)
+        // Coloca o indicador de carregamento na tela
+        if adIsLoaded == false {
+            self.setActivityIndicator()
+        }
+        
+        // Roda o timer
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: Selector("checkIfIsLoaded"), userInfo: nil, repeats: true)
     }
     
     // Funções dos botões de árvores
@@ -474,16 +551,13 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         newTree.setValue(positionY, forKey: "positionY")
         //newTree.setValue(timeStamp, forKey: //insert time it was created)
         
-        ////////////////////////////////////////////////////////////////////
         // Salva na cloud
-        // DESCOBRIR COMO PEDIR PERMISSÃO
         self.publicDB.save(newTree) { (record, error) in
             print(error)
             guard record != nil else { return }
             self.trees.append(record!)
             print("salvou na cloud")
         }
-        ////////////////////////////////////////////////////////////////////
     }
     
     // Função para carregar as árvores
