@@ -79,10 +79,10 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         if Reachability.isConnectedToNetwork() {
             return true
         } else {
-            let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+            let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
             }))
-            self.present(alert, animated: true, completion: nil)
+            self.present(alertNoConnection, animated: true, completion: nil)
             return false
         }
     }
@@ -159,6 +159,37 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
     }
     
+    // Função do alerta de agradecimento
+    func thankUAlert(areaSelected: Int) {
+        if areaSelected == 1 {
+            let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A Unicef agradece a sua ajuda!", preferredStyle: .alert)
+            alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
+            }))
+            self.present(alertThankU, animated: true, completion: nil)
+            
+//            let imageAlert = UIImageView(image: UIImage(named: "ong2"))
+//            self.alert.view.addSubview(imageAlert)
+//            imageAlert.translatesAutoresizingMaskIntoConstraints = false
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: self.alert.view, attribute: .centerX, multiplier: 1, constant: 0))
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: self.alert.view, attribute: .centerY, multiplier: 1, constant: -64))
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+        } else if areaSelected == 2 {
+            let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A WWF agradece a sua ajuda!", preferredStyle: .alert)
+            alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
+            }))
+            self.present(alertThankU, animated: true, completion: nil)
+            
+//            let imageAlert = UIImageView(image: UIImage(named: "ong1"))
+//            self.alert.view.addSubview(imageAlert)
+//            imageAlert.translatesAutoresizingMaskIntoConstraints = false
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: self.alert.view, attribute: .centerX, multiplier: 1, constant: 0))
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: self.alert.view, attribute: .centerY, multiplier: 1, constant: -64))
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+        }
+    }
+    
     // Variáveis do Google Ad Mob
     var rewardBasedVideoInArea1: GADRewardBasedVideoAd?
     var rewardBasedVideoInArea2: GADRewardBasedVideoAd?
@@ -174,9 +205,9 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             self.savingTreesPlantedToUserDefaults()
-            self.animateGreetingsView()
         }
     }
+    
     
     /////////////////////////////////////////////////////////////////////////////////
     // Função que recarrega os vídeos
@@ -185,6 +216,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         
         //COLOCAR O OUTRO AD TB
         
+        self.thankUAlert(areaSelected: areaSelectedGlobal)
         print("vídeos recarregados")
     }
     /////////////////////////////////////////////////////////////////////////////////
@@ -261,11 +293,11 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             self.visualEffectsView.effect = self.effect
             
             DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     UIControl().sendAction(#selector(NSXPCConnection.suspend), to: UIApplication.shared, for: nil)
                 }))
-                self.present(alert, animated: true, completion: nil)
+                self.present(alertNoConnection, animated: true, completion: nil)
             }
         }
         
@@ -331,7 +363,11 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             scene.randomNumber(areaSelected: areaSelectedGlobal)
             scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
-            self.animateGreetingsView()
+            
+            ////////////////////////////////////////////////////////////////
+            // VER SE VAI DAR EM MERDA
+            self.thankUAlert(areaSelected: areaSelectedGlobal)
+            ////////////////////////////////////////////////////////////////
         }
 
     }
@@ -452,17 +488,17 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     BosqueProducts.store.buyProduct(self.product)
                 }
             } else if !Reachability.isConnectedToNetwork() {
-                let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     
                 }))
-                self.present(alert, animated: true, completion: nil)
+                self.present(alertNoConnection, animated: true, completion: nil)
             } else if Reachability.isConnectedToNetwork() && !self.isICloudContainerAvailable() {
-                let alert = UIAlertController(title: "Você não está conectado ao iCloud", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                let alertNoConnection = UIAlertController(title: "Você não está conectado ao iCloud", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     
                 }))
-                self.present(alert, animated: true, completion: nil)
+                self.present(alertNoConnection, animated: true, completion: nil)
             }
         }))
         
@@ -484,17 +520,17 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     }
                 }
             } else if !Reachability.isConnectedToNetwork() {
-                let alert = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     
                 }))
-                self.present(alert, animated: true, completion: nil)
+                self.present(alertNoConnection, animated: true, completion: nil)
             } else if Reachability.isConnectedToNetwork() && !self.isICloudContainerAvailable() {
-                let alert = UIAlertController(title: "Você não está conectado ao iCloud", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                let alertNoConnection = UIAlertController(title: "Você não está conectado ao iCloud", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                     
                 }))
-                self.present(alert, animated: true, completion: nil)
+                self.present(alertNoConnection, animated: true, completion: nil)
             }
         }))
         
