@@ -128,39 +128,6 @@
                                 <color key="backgroundColor" white="1" alpha="0.2131046660958904" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ovm-j9-Lsr">
-                                <rect key="frame" x="67" y="192" width="240" height="282"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uHt-wZ-QaM">
-                                        <rect key="frame" x="49" y="31" width="143" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agradece a sua ajuda!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQC-d3-0jG">
-                                        <rect key="frame" x="36" y="196" width="169" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9f-sR-5uU">
-                                        <rect key="frame" x="87" y="244" width="67" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Continuar"/>
-                                        <connections>
-                                            <action selector="continueGreetingsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iX0-xD-uv5"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4F-ba-dfe">
-                                        <rect key="frame" x="67" y="167" width="106" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -179,11 +146,8 @@
                         <outlet property="ONGAboutButtonLayout" destination="5c9-lB-n5k" id="ts6-Z5-llm"/>
                         <outlet property="ONGDescriptionLabel" destination="dl7-6m-MKP" id="f7N-hm-rMG"/>
                         <outlet property="ONGIconImageView" destination="CJP-ES-aY6" id="H21-wB-DsL"/>
-                        <outlet property="ONGNameGreetingsView" destination="l4F-ba-dfe" id="MEa-lv-Vv8"/>
                         <outlet property="backButtonLayout" destination="3TF-JR-d3X" id="Uew-MI-0oj"/>
                         <outlet property="deleteButton" destination="Rxd-fQ-sym" id="NWz-Ac-Rtt"/>
-                        <outlet property="greetingsImgView" destination="uHt-wZ-QaM" id="mPt-Rq-fUT"/>
-                        <outlet property="greetingsView" destination="Ovm-j9-Lsr" id="GMu-TO-rlm"/>
                         <outlet property="mainSKView" destination="28C-UX-xXl" id="bYy-ei-EkR"/>
                         <outlet property="treeSelectionView" destination="zgE-fe-3zW" id="lIs-er-VrU"/>
                         <outlet property="treesPlantedLabel" destination="5ho-sJ-Zp1" id="YvG-PT-zOZ"/>

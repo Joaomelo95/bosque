@@ -107,86 +107,61 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.treeSelectionView.alpha = 0
     }
     
+    ////////////////////////////////////////////////////////////////////////////////////
+    // VER A UTILIDADE DO BLUR NO FUTURO
+    
     // Variáveis dos efeitos visuais
     @IBOutlet weak var visualEffectsView: UIVisualEffectView!
     var effect: UIVisualEffect!
     
-    
-    // Variáveis da greetingsView
-    @IBOutlet weak var greetingsView: UIView!
-    @IBOutlet weak var greetingsImgView: UIImageView!
-    @IBOutlet weak var ONGNameGreetingsView: UILabel!
-    @IBAction func continueGreetingsButton(_ sender: Any) {
-        self.reverseAnimateGreetingsView()
-    }
-    
-    // Ajustes da greetingsView
-    func setGreetingsView() {
-        self.greetingsView.layer.cornerRadius = 15
-        self.greetingsView.layer.masksToBounds = true
-        self.greetingsView.alpha = 0
+    // Ajustes da blurView
+    func setBlurView() {
         self.visualEffectsView.alpha = 0
     }
     
-    // Função de animação do greetingsView
-    func animateGreetingsView() {
-        self.greetingsView.transform = CGAffineTransform.init(scaleX:1.3, y: 1.3)
-        self.greetingsView.alpha = 0
-        
-        if areaSelectedGlobal == 1 {
-            self.greetingsImgView.image = UIImage(named: "ong1")
-            self.ONGNameGreetingsView.text = "A WWF"
-        } else if areaSelectedGlobal == 2 {
-            self.greetingsImgView.image = UIImage(named: "ong2")
-            self.ONGNameGreetingsView.text = "A Unicef"
-        }
-        
-        UIView.animate(withDuration: 0.4) {
-            self.visualEffectsView.alpha = 1
-            self.visualEffectsView.effect = self.effect
-            self.greetingsView.alpha = 1
-            self.greetingsView.transform = CGAffineTransform.identity
-        }
+    // Função de animação do blurView
+    func animateBlurView() {
+        self.visualEffectsView.alpha = 1
+        self.visualEffectsView.effect = self.effect
     }
     
-    // Função que desfaz animações do greetingsView
-    func reverseAnimateGreetingsView() {
-        UIView.animate(withDuration: 0.3) {
-            self.greetingsView.transform = CGAffineTransform.init(scaleX:1.3, y: 1.3)
-            self.greetingsView.alpha = 0
+    // Função que desfaz animações do blurView
+    func reverseBlurView() {
+        UIView.animate(withDuration: 0.1) {
             self.visualEffectsView.effect = nil
             self.visualEffectsView.alpha = 0
         }
     }
+    ////////////////////////////////////////////////////////////////////////////////////
     
     // Função do alerta de agradecimento
     func thankUAlert(areaSelected: Int) {
         if areaSelected == 1 {
-            let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A Unicef agradece a sua ajuda!", preferredStyle: .alert)
-            alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
-            }))
-            self.present(alertThankU, animated: true, completion: nil)
-            
-//            let imageAlert = UIImageView(image: UIImage(named: "ong2"))
-//            self.alert.view.addSubview(imageAlert)
-//            imageAlert.translatesAutoresizingMaskIntoConstraints = false
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: self.alert.view, attribute: .centerX, multiplier: 1, constant: 0))
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: self.alert.view, attribute: .centerY, multiplier: 1, constant: -64))
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
-        } else if areaSelected == 2 {
             let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A WWF agradece a sua ajuda!", preferredStyle: .alert)
             alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
             }))
-            self.present(alertThankU, animated: true, completion: nil)
+            self.present(alertThankU, animated: false, completion: nil)
             
-//            let imageAlert = UIImageView(image: UIImage(named: "ong1"))
-//            self.alert.view.addSubview(imageAlert)
-//            imageAlert.translatesAutoresizingMaskIntoConstraints = false
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: self.alert.view, attribute: .centerX, multiplier: 1, constant: 0))
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: self.alert.view, attribute: .centerY, multiplier: 1, constant: -64))
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
-//            self.alert.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 64.0))
+            let imageAlert = UIImageView(image: UIImage(named: "ong1"))
+            alertThankU.view.addSubview(imageAlert)
+            imageAlert.translatesAutoresizingMaskIntoConstraints = false
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: alertThankU.view, attribute: .centerX, multiplier: 1, constant: 0))
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: alertThankU.view, attribute: .centerY, multiplier: 1, constant: -40))
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 100.0))
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 148.0))
+        } else if areaSelected == 2 {
+            let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A Unicef agradece a sua ajuda!", preferredStyle: .alert)
+            alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
+            }))
+            self.present(alertThankU, animated: false, completion: nil)
+            
+            let imageAlert = UIImageView(image: UIImage(named: "ong2"))
+            alertThankU.view.addSubview(imageAlert)
+            imageAlert.translatesAutoresizingMaskIntoConstraints = false
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerX, relatedBy: .equal, toItem: alertThankU.view, attribute: .centerX, multiplier: 1, constant: 0))
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .centerY, relatedBy: .equal, toItem: alertThankU.view, attribute: .centerY, multiplier: 1, constant: -40))
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 150.0))
+            alertThankU.view.addConstraint(NSLayoutConstraint(item: imageAlert, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 138.0))
         }
     }
     
@@ -195,6 +170,9 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     var rewardBasedVideoInArea2: GADRewardBasedVideoAd?
     var treeColorForAd = ""
     
+    // Variável que indica se viu o vídeo
+    var canBeRewarded = false
+    
     // Função que configura a premiação do anúncio
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
                             didRewardUserWith reward: GADAdReward) {
@@ -202,12 +180,12 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.savingTreeColor = self.treeColorForAd
         if let scene = (self.mainSKView.scene as? MainScene) {
             scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
+            scene.createTree(color: self.treeColorForAd, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true, animate: false)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             self.savingTreesPlantedToUserDefaults()
+            self.canBeRewarded = true
         }
     }
-    
     
     /////////////////////////////////////////////////////////////////////////////////
     // Função que recarrega os vídeos
@@ -216,7 +194,11 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         
         //COLOCAR O OUTRO AD TB
         
-        self.thankUAlert(areaSelected: areaSelectedGlobal)
+        // SE FECHA O VÍDEO ANTES DA HORA ELE MOSTRA O ALERTA MESMO SEM PREMIAR!!!!
+        if canBeRewarded {
+            self.thankUAlert(areaSelected: areaSelectedGlobal)
+            self.canBeRewarded = false
+        }
         print("vídeos recarregados")
     }
     /////////////////////////////////////////////////////////////////////////////////
@@ -267,7 +249,6 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         print(UserDefaults.standard.integer(forKey: "treesPlanted"))
     }
     
-    
     // viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
         self.reload()
@@ -280,8 +261,8 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         effect = visualEffectsView.effect
         visualEffectsView.effect = nil
         
-        // Ajustes da greetingsView
-        self.setGreetingsView()
+        // Ajustes da blurView
+        self.setBlurView()
         
         // Verifica a conexão de rede
         if Reachability.isConnectedToNetwork(){
@@ -350,7 +331,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     self.loadingTreePositionY = tree["positionY"]!
                     areaSelectedGlobal = tree["areaSelected"]!
                     if let scene = (self.mainSKView.scene as? MainScene) {
-                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal, new: false)
+                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal, new: false, animate: true)
                     }
                 }
             }
@@ -361,7 +342,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     func generateTrees(treeColor: String) {
         if let scene = (self.mainSKView.scene as? MainScene) {
             scene.randomNumber(areaSelected: areaSelectedGlobal)
-            scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true)
+            scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true, animate: false)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             
             ////////////////////////////////////////////////////////////////
@@ -607,7 +588,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     print(records)
                     if let scene = (self.mainSKView.scene as? MainScene) {
                         scene.randomNumber(areaSelected: areaSelectedGlobal)
-                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal, new: false)
+                        scene.createTree(color: self.loadingTreeColor, x: self.loadingTreePositionX, y: self.loadingTreePositionY, area: areaSelectedGlobal, new: false, animate: false)
                     }
                 }
             }

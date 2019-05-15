@@ -179,7 +179,7 @@ class MainScene: SKScene {
     }
     
     // Função para gerar nós
-    func createTree(color: String, x: Double, y: Double, area: Int, new: Bool) {
+    func createTree(color: String, x: Double, y: Double, area: Int, new: Bool, animate: Bool) {
         //let treeNode = SKShapeNode(rectOf: CGSize(width: 10, height: 20))
         let treeNode = SKSpriteNode(color: .black, size: CGSize(width: 20, height: 20))
         treeNode.anchorPoint = CGPoint(x: 0.5, y: 0.0)
@@ -229,6 +229,13 @@ class MainScene: SKScene {
                 camera?.position = cameraPositionFinal
                 camera?.setScale(0.1)
             }
+        }
+        
+        if animate {
+            treeNode.alpha = 0
+            treeNode.run(SKAction.fadeIn(withDuration: 0.2))
+        } else {
+            treeNode.alpha = 1
         }
     }
     
