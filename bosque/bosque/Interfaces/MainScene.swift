@@ -44,6 +44,10 @@ class MainScene: SKScene {
         self.bgAreaNode = self.childNode(withName: "bg")!
         self.area1Plantable = self.childNode(withName: "area1Plantable")!
         self.area2Plantable = self.childNode(withName: "area2Plantable")!
+        
+        if UserDefaults.standard.bool(forKey: "watched") == false {
+            addLabels()
+        }
     }
     
     // Função do Back Button
@@ -132,6 +136,18 @@ class MainScene: SKScene {
         self.bgAreaIsTouchable = true
     }
     
+    // Primeira parte do onboarding
+    var touchLabel = SKLabelNode()
+    func addLabels() {
+        touchLabel = SKLabelNode(text: "toque uma área\n para ajudar uma ONG")
+        touchLabel.fontName = "AvenirNext-Bold"
+        touchLabel.fontSize = 35.0
+        touchLabel.fontColor = UIColor.black
+        touchLabel.position = CGPoint(x: frame.midX, y: frame.midY + 400)
+        addChild(touchLabel)
+        UserDefaults.standard.set(true, forKey: "watched")
+    }
+    
     // Função para animar os elementos entrando na tela
     func animateAreaSelection(area: Int) {
         // Ajusta a View Controller para ser acessada
@@ -152,9 +168,11 @@ class MainScene: SKScene {
             if area == 1 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong1")
                 viewController.ONGDescriptionLabel.text = "Essa é a WWF"
+                self.touchLabel.removeFromParent()
             } else if area == 2 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong2")
                 viewController.ONGDescriptionLabel.text = "Essa é a Unicef"
+                self.touchLabel.removeFromParent()
             }
         }
         UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
