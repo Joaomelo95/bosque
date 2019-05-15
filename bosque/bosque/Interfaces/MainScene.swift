@@ -31,6 +31,10 @@ class MainScene: SKScene {
     var unicefLogoNode = SKNode()
     var bgAreaNode = SKNode()
     
+    // Variáveis do Onboarding
+    var touchLabel : SKLabelNode!
+
+    
     // Inicializador
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -40,32 +44,86 @@ class MainScene: SKScene {
         self.wwfLogoNode = self.childNode(withName: "wwfLogo")!
         self.unicefLogoNode = self.childNode(withName: "unicefLogo")!
         self.bgAreaNode = self.childNode(withName: "bg")!
-        
+//        pinch alternativa
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinchFrom(_:)))
             self.view?.addGestureRecognizer(pinchGesture)
+        if UserDefaults.standard.bool(forKey: "watched") == false {
+            addLabels()
+        }
+    }
+    
+    //adicionar onboarding dicas
+    func addLabels() {
+
+        touchLabel = SKLabelNode(text: "toque uma área\n para ajudar uma ONG")
+        touchLabel.fontName = "AvenirNext-Bold"
+        touchLabel.fontSize = 35.0
+        touchLabel.fontColor = UIColor.black
+        touchLabel.position = CGPoint(x: frame.midX, y: frame.midY + 400)
+        addChild(touchLabel)
+
+        UserDefaults.standard.set(true, forKey: "watched")
         
     }
     
-    // Função do Back Button
+
+//    UserDefaults.standard.integer(forKey: "watch"
     
+//    função de pinch
+//    @objc private func pinchHandler(gesture: UIPinchGestureRecognizer) {
+//        if let view = gesture.view {
+//
+//            switch gesture.state {
+//            case .changed:
+//                let pinchCenter = CGPoint(x: gesture.location(in: view).x - view.bounds.midX,
+//                                          y: gesture.location(in: view).y - view.bounds.midY)
+//                let transform = view.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
+//                    .scaledBy(x: gesture.scale, y: gesture.scale)
+//                    .translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
+//                view.transform = transform
+//                gesture.scale = 1.0
+//            case .ended:
+//                UIView.animate(withDuration: 0.2, animations: {
+//                    view.transform = CGAffineTransform.identity
+//
+//                })
+//            default:
+//                return
+//            }
+//        }
+//    }
+
     @objc func handlePinchFrom(_ sender: UIPinchGestureRecognizer) {
         print("is piching!")
         if sender.scale >= 0.2 && sender.scale <= 1 && area1IsTouchable && area2IsTouchable {
-//                    let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
-//                    firstAreaNode.run(pinch)
-            
-            if sender.state == .began {
+            if let view = sender.view {
                 
-            } else if sender.state == .changed {
-                
-                camera?.setScale(sender.scale)
-                
-            } else if sender.state == .ended {
-                
+                if sender.state == .began {
+                    
+                } else if sender.state == .changed {
+                    let pinchCenter = CGPoint(x: sender.location(in: view).x - view.bounds.midX,
+                                              y: sender.location(in: view).y - view.bounds.midY)
+                    let transform = view.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
+                        
+                        .scaledBy(x: sender.scale, y: sender.scale)
+                        .translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
+                    view.transform = transform
+                    //                                sender.scale = 1.0
+                    
+                    
+                    camera?.setScale(sender.scale)
+                    //                let pinch = SKAction.scale(by: sender.scale, duration: 0.0)
+                    //                camera?.run(pinch)
+                    
+                    
+                } else if sender.state == .ended {
+                    
+                }
             }
         }
     }
     
+    // Função do Back Button
     func backButtonAction() {
         // Tira os elementos da tela
         self.reverseAnimateAreaSelection()
@@ -174,6 +232,7 @@ class MainScene: SKScene {
             if area == 1 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong1")
                 viewController.ONGDescriptionLabel.text = "Essa é a WWF"
+                self.touchLabel.removeFromParent()
             } else if area == 2 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong2")
                 viewController.ONGDescriptionLabel.text = "Essa é a Unicef"
