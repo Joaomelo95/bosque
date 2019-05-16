@@ -33,6 +33,64 @@ class MainScene: SKScene {
     var area1Plantable = SKNode()
     var area2Plantable = SKNode()
     
+    // Pinch gesture
+    var previousCameraScale = CGFloat()
+    let pinchGesture = UIPinchGestureRecognizer()
+    
+    @objc func pinchGestureAction(_ sender: UIPinchGestureRecognizer) {
+        guard let camera = self.camera else {
+            return
+        }
+        if sender.state == .began {
+            previousCameraScale = camera.xScale
+        }
+        camera.setScale(previousCameraScale * 1 / sender.scale)
+    }
+    
+    func pointSubtract(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
+        let subtractedX = pointA.x - pointB.x
+        let subtractedY = pointA.y - pointB.y
+        return CGPoint(x: subtractedX, y: subtractedY)
+    }
+    
+    func pointAdd(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
+        let addedX = pointA.x + pointB.x
+        let addedY = pointA.y + pointB.y
+        return CGPoint(x: addedX, y: addedY)
+    }
+    
+    @objc func handlePinch(sender: UIPinchGestureRecognizer) {
+        if sender.numberOfTouches == 2 {
+            let locationInView = sender.location(in: self.view)
+            let location = self.convertPoint(fromView: locationInView)
+            if sender.state == .changed {
+                let deltaScale = (sender.scale - 1.0)*2
+                let convertedScale = sender.scale - deltaScale
+                let newScale = camera!.xScale*convertedScale
+                camera!.setScale(newScale)
+                
+                let locationAfterScale = self.convertPoint(fromView: locationInView)
+                let locationDelta = pointSubtract(pointA: location, pointB: locationAfterScale)
+                let newPoint = pointAdd(pointA: camera!.position, pointB: locationDelta)
+                camera!.position = newPoint
+                sender.scale = 1.0
+            }
+        }
+    }
+    
+    // Pan gesture
+    var lastSwipeBeginningPoint: CGPoint?
+    var panRec: UIPanGestureRecognizer!
+    
+    @objc func handlePan(recognizer:UIPanGestureRecognizer) {
+        let translation = recognizer.translation(in: self.view)
+        if let view = recognizer.view {
+            camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
+                                       y:((camera?.position.y)! + translation.y))
+        }
+        recognizer.setTranslation(CGPoint.zero, in: self.view)
+    }
+    
     // MARK: didMove
     override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -48,6 +106,14 @@ class MainScene: SKScene {
         if UserDefaults.standard.bool(forKey: "watched") == false {
             addLabels()
         }
+        
+        // Pan gesture
+        self.panRec = UIPanGestureRecognizer(target: self, action: #selector(MainScene.handlePan(recognizer:)))
+        self.view!.addGestureRecognizer(panRec)
+        
+        // Pinch gesture
+        pinchGesture.addTarget(self, action: #selector(handlePinch(sender:)))
+        self.view?.addGestureRecognizer(pinchGesture)
     }
     
     // Função do Back Button
@@ -73,8 +139,8 @@ class MainScene: SKScene {
         camera!.run(moveAction)
         
         // Permite clicar as áreas novamente
-        self.area1IsTouchable = true
-        self.area2IsTouchable = true
+//        self.area1IsTouchable = true
+//        self.area2IsTouchable = true
         self.bgAreaIsTouchable = false
     }
     
@@ -114,8 +180,8 @@ class MainScene: SKScene {
         areaSelectedGlobal = area
         
         // Desativa a possibilidade de tocar em outra área
-        self.area1IsTouchable = false
-        self.area2IsTouchable = false
+//        self.area1IsTouchable = false
+//        self.area2IsTouchable = false
         
         self.animateAreaSelection(area: area)
         
