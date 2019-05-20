@@ -63,12 +63,14 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     }
     
     // Variáveis das infos das ONGs
+    @IBOutlet weak var ONGInfoView: UIView!
     @IBOutlet weak var ONGIconImageView: UIImageView!
     @IBOutlet weak var ONGDescriptionLabel: UILabel!
     @IBOutlet weak var ONGAboutButtonLayout: UIButton!
     
     // Ajustes das infos das ONGs
     func setONGInfos() {
+        self.ONGInfoView.alpha = 0
         self.ONGIconImageView.alpha = 0
         self.ONGDescriptionLabel.alpha = 0
         self.ONGAboutButtonLayout.alpha = 0
@@ -100,8 +102,11 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     // Variável da treeSelectionView
     @IBOutlet weak var treeSelectionView: UIView!
     
-    // Ajustes da treeSelectionView
-    func setTreeSelectionView() {
+    // Ajustes da treeSelectionView e da ONGInfoView
+    func setGraphicViews() {
+        self.ONGInfoView.layer.cornerRadius = 15
+        self.ONGInfoView.layer.masksToBounds = true
+        
         self.treeSelectionView.layer.cornerRadius = 15
         self.treeSelectionView.layer.masksToBounds = true
         self.treeSelectionView.alpha = 0
@@ -194,7 +199,6 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         
         //COLOCAR O OUTRO AD TB
         
-        // SE FECHA O VÍDEO ANTES DA HORA ELE MOSTRA O ALERTA MESMO SEM PREMIAR!!!!
         if canBeRewarded {
             self.thankUAlert(areaSelected: areaSelectedGlobal)
             self.canBeRewarded = false
@@ -228,6 +232,10 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         })
         else { return }
         
+        self.ONGInfoView.alpha = 0
+        self.ONGIconImageView.alpha = 0
+        self.ONGDescriptionLabel.alpha = 0
+        self.ONGAboutButtonLayout.alpha = 0
         self.generateTrees(treeColor: self.savingTreeColor)
     }
     
@@ -240,6 +248,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     // Configurações de quantas árvores o usuário plantou
     @IBOutlet weak var treesPlantedLabel: UILabel!
+    @IBOutlet weak var treesPlantedIcon: UIImageView!
     
     func savingTreesPlantedToUserDefaults() {
         var plantedTrees = UserDefaults.standard.integer(forKey: "treesPlanted")
@@ -297,7 +306,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         rewardBasedVideoInArea2?.load(GADRequest(), withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
         
         // Ajustes da treeSelectionView
-        self.setTreeSelectionView()
+        self.setGraphicViews()
         
         // Ajustes das infos das ONGs
         self.setONGInfos()
@@ -345,10 +354,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             scene.createTree(color: treeColor, x: Double(scene.xMax), y: Double(scene.yMax), area: areaSelectedGlobal, new: true, animate: false)
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             
-            ////////////////////////////////////////////////////////////////
-            // VER SE VAI DAR EM MERDA
             self.thankUAlert(areaSelected: areaSelectedGlobal)
-            ////////////////////////////////////////////////////////////////
         }
 
     }
@@ -441,7 +447,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             treeAlertImageName = "treeGreen"
         }
         
-        self.alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para inserir, doe ou veja um anúncio", preferredStyle: .alert)
+        self.alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para plantar, doe ou veja um anúncio", preferredStyle: .alert)
         
         self.alert.addAction(UIAlertAction(title: "Doar", style: .default, handler: { action in
             // Testa se está conectado na internet
@@ -491,12 +497,20 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     if self.rewardBasedVideoInArea1?.isReady == true {
                         self.rewardBasedVideoInArea1?.present(fromRootViewController: self)
                         print("anúncio da area 1")
+                        self.ONGInfoView.alpha = 0
+                        self.ONGIconImageView.alpha = 0
+                        self.ONGDescriptionLabel.alpha = 0
+                        self.ONGAboutButtonLayout.alpha = 0
                         self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea1!)
                     }
                 } else if areaSelected == 2 {
                     if self.rewardBasedVideoInArea2?.isReady == true {
                         self.rewardBasedVideoInArea2?.present(fromRootViewController: self)
                         print("anúncio da area 2")
+                        self.ONGInfoView.alpha = 0
+                        self.ONGIconImageView.alpha = 0
+                        self.ONGDescriptionLabel.alpha = 0
+                        self.ONGAboutButtonLayout.alpha = 0
                         self.rewardBasedVideoAdDidClose(self.rewardBasedVideoInArea2!)
                     }
                 }

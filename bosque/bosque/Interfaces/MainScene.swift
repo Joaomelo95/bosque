@@ -45,6 +45,7 @@ class MainScene: SKScene {
             previousCameraScale = camera.xScale
         }
         camera.setScale(previousCameraScale * 1 / sender.scale)
+        self.setCameraConstraint()
     }
     
     func pointSubtract(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
@@ -78,15 +79,36 @@ class MainScene: SKScene {
         }
     }
     
+    // Cria as constraints da câmera
+    func setCameraConstraint() {
+        let scaledSize = CGSize(width: size.width * camera!.xScale, height: size.height * camera!.yScale)
+        let sceneContentRect = self.calculateAccumulatedFrame()
+        
+        let xInset = min((scaledSize.width / 2) + 232, sceneContentRect.width / 2)
+        let yInset = min((scaledSize.height / 2) + 130, sceneContentRect.height / 2)
+        let insetContentRect = sceneContentRect.insetBy(dx: xInset, dy: yInset)
+        
+        let xRange = SKRange(lowerLimit: insetContentRect.minX, upperLimit: insetContentRect.maxX)
+        let yRange = SKRange(lowerLimit: insetContentRect.minY, upperLimit: insetContentRect.maxY)
+        let levelEdgeConstraint = SKConstraint.positionX(xRange, y: yRange)
+        levelEdgeConstraint.referenceNode = self
+        camera?.constraints = [levelEdgeConstraint]
+    }
+    
     // Pan gesture
     var lastSwipeBeginningPoint: CGPoint?
     var panRec: UIPanGestureRecognizer!
     
     @objc func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
+        
+        self.setCameraConstraint()
+        
         if let view = recognizer.view {
-            camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
-                                       y:((camera?.position.y)! + translation.y))
+            if camera?.xScale != 1.0 {
+                camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
+                                           y:((camera?.position.y)! + translation.y))
+            }
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
@@ -134,8 +156,18 @@ class MainScene: SKScene {
         self.wwfLogoNode.run(restoreAlpha)
         self.unicefLogoNode.run(restoreAlpha)
         
+        let resetConstraints = SKAction.run {
+            self.camera!.constraints = []
+        }
+        
+        let constAction = SKAction.run {
+            self.setCameraConstraint()
+        }
+        
+        let seqAction = SKAction.sequence([resetConstraints, constAction, zoomAction])
+        
         // Roda as ações
-        camera!.run(zoomAction)
+        camera!.run(seqAction)
         camera!.run(moveAction)
         
         // Permite clicar as áreas novamente
@@ -194,9 +226,19 @@ class MainScene: SKScene {
         let moveAction = SKAction.move(to: position, duration: 0.5)
         moveAction.timingMode = .easeInEaseOut
         
+        let resetConstraints = SKAction.run {
+            self.camera!.constraints = []
+        }
+        
+        let constAction = SKAction.run {
+            self.setCameraConstraint()
+        }
+        
+        let seqAction = SKAction.sequence([resetConstraints, zoomAction, constAction])
+        
         // Rodar ações
         camera!.run(moveAction)
-        camera!.run(zoomAction)
+        camera!.run(seqAction)
         
         // Ativa a possibilidade de tocar no background
         self.bgAreaIsTouchable = true
@@ -221,9 +263,11 @@ class MainScene: SKScene {
         
         // Tira o counter local
         viewController.treesPlantedLabel.alpha = 0
+        viewController.treesPlantedIcon.alpha = 0
         
         UIView.animate(withDuration: 0.5) {
             // Faz as infos das ONGs aparecerem
+            viewController.ONGInfoView.alpha = 0.8
             viewController.ONGIconImageView.alpha = 1
             viewController.ONGDescriptionLabel.alpha = 1
             viewController.ONGAboutButtonLayout.alpha = 1
@@ -243,7 +287,7 @@ class MainScene: SKScene {
         }
         UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
             // Faz a treeSelectionView aparecer
-            viewController.treeSelectionView.alpha = 1
+            viewController.treeSelectionView.alpha = 0.8
         })
     }
     
@@ -254,11 +298,13 @@ class MainScene: SKScene {
         
         UIView.animate(withDuration: 0.2) {
             self.backButtonLayout.alpha = 0
+            viewController.ONGInfoView.alpha = 0
             viewController.ONGIconImageView.alpha = 0
             viewController.ONGDescriptionLabel.alpha = 0
             viewController.ONGAboutButtonLayout.alpha = 0
             viewController.treeSelectionView.alpha = 0
             viewController.treesPlantedLabel.alpha = 1
+            viewController.treesPlantedIcon.alpha = 1
         }
     }
     
