@@ -33,7 +33,10 @@ class MainScene: SKScene {
     
     // Variáveis do Onboarding
     var touchLabel : SKLabelNode!
+    var touch2Label : SKLabelNode!
+    var touch3Label : SKLabelNode!
 
+    
     
     // Inicializador
     override func didMove(to view: SKView) {
@@ -54,18 +57,47 @@ class MainScene: SKScene {
     
     //adicionar onboarding dicas
     func addLabels() {
-
-        touchLabel = SKLabelNode(text: "toque uma área\n para ajudar uma ONG")
-        touchLabel.fontName = "AvenirNext-Bold"
+        touchLabel = SKLabelNode(text: "toque uma área para ajudar uma ONG")
+        touchLabel.fontName = "AvenirNext-Regular"
         touchLabel.fontSize = 35.0
         touchLabel.fontColor = UIColor.black
-        touchLabel.position = CGPoint(x: frame.midX, y: frame.midY + 400)
+        touchLabel.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(touchLabel)
-
         UserDefaults.standard.set(true, forKey: "watched")
-        
     }
-    
+        
+        func addLabels2() {
+            touch2Label = SKLabelNode(text: "clique em saiba mais para ir ao site deles")
+            touch2Label.fontName = "AvenirNext-Regular"
+            touch2Label.fontSize = 12.0
+            touch2Label.fontColor = UIColor.black
+            touch2Label.zPosition = 5
+//            if areaSelectedGlobal == 1 {
+                touch2Label.position = firstAreaNode.position
+                print(touch2Label.position)
+                print(self.viewCenter)
+//            } else if areaSelectedGlobal == 2 {
+//                touch2Label.position = secondAreaNode.position
+//            }
+            addChild(touch2Label)
+            UserDefaults.standard.set(true, forKey: "watched2")
+        }
+    func addLabels3() {
+        touch3Label = SKLabelNode(text: "clique em saiba mais para ir ao site deles")
+        touch3Label.fontName = "AvenirNext-Regular"
+        touch3Label.fontSize = 12.0
+        touch3Label.fontColor = UIColor.black
+        touch3Label.zPosition = 5
+//        if areaSelectedGlobal == 1 {
+            touch3Label.position = secondAreaNode.position
+            print(touch2Label.position)
+            print(self.viewCenter)
+//        } else if areaSelectedGlobal == 2 {
+//            touch3Label.position = secondAreaNode.position
+//        }
+        addChild(touch3Label)
+        UserDefaults.standard.set(true, forKey: "watched2")
+    }
 
 //    UserDefaults.standard.integer(forKey: "watch"
     
@@ -156,6 +188,8 @@ class MainScene: SKScene {
     
     // Função para selecionar a área desejada
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+
         let touch = touches.first
         let touchLocation = touch!.location(in: self)
         
@@ -192,6 +226,11 @@ class MainScene: SKScene {
         // Define a área que está sendo selecionada
         areaSelectedGlobal = area
         
+        if UserDefaults.standard.bool(forKey: "watched2") == false && UserDefaults.standard.bool(forKey: "watched") == true {
+            addLabels2()
+            addLabels3()
+        }
+        
         // Desativa a possibilidade de tocar em outra área
         self.area1IsTouchable = false
         self.area2IsTouchable = false
@@ -202,6 +241,9 @@ class MainScene: SKScene {
         let removeAlpha = SKAction.fadeAlpha(to: 0.0, duration: 0.2)
         self.wwfLogoNode.run(removeAlpha)
         self.unicefLogoNode.run(removeAlpha)
+//        if UserDefaults.standard.bool(forKey: "watched2") == true {
+//            self.touch2Label.removeFromParent()
+//        }
         
         // Ação de movimento
         let moveAction = SKAction.move(to: position, duration: 0.5)
@@ -225,6 +267,9 @@ class MainScene: SKScene {
             viewController.ONGIconImageView.alpha = 1
             viewController.ONGDescriptionLabel.alpha = 1
             viewController.ONGAboutButtonLayout.alpha = 1
+            self.touch2Label?.alpha = 1
+            self.touch3Label?.alpha = 1
+    
             
             // Back Button surge
             self.backButtonLayout.alpha = 1
@@ -232,10 +277,18 @@ class MainScene: SKScene {
             if area == 1 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong1")
                 viewController.ONGDescriptionLabel.text = "Essa é a WWF"
-                self.touchLabel.removeFromParent()
-            } else if area == 2 {
+                self.touch2Label?.alpha = 1
+                
+                }
+            else if area == 2 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong2")
                 viewController.ONGDescriptionLabel.text = "Essa é a Unicef"
+                self.touch2Label?.alpha = 1
+
+//                if UserDefaults.standard.bool(forKey: "watched") == false {
+//                    self.addLabels2()
+//                }
+                
             }
         }
         UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
@@ -255,6 +308,10 @@ class MainScene: SKScene {
             viewController.ONGDescriptionLabel.alpha = 0
             viewController.ONGAboutButtonLayout.alpha = 0
             viewController.treeSelectionView.alpha = 0
+            self.touch2Label?.alpha = 0
+            self.touch3Label?.alpha = 0
+
+            
         }
     }
     
