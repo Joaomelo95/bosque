@@ -62,6 +62,39 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         }
     }
     
+    
+    // SKView das nuvens
+    var cloudScene:cloudsScene?
+    var cloudTimer = Timer()
+    var cloudSelector: Int = 0
+    
+    // Função para gerar nuvens
+    @objc func formClouds() {
+        if let mainScene = self.mainSKView.scene as? MainScene {
+            self.cloudScene = mainScene.cloudSKNode
+        }
+        self.cloudSelector = Int.random(in: 1 ... 6)
+        if let cloudScene = self.cloudScene {
+            if self.cloudSelector == 1 {
+                cloudScene.moveClouds(cloudName: "nuvem1", width: 270, height: 96, speed: 40)
+            } else if self.cloudSelector == 2 {
+                cloudScene.moveClouds(cloudName: "nuvem2", width: 306, height: 106, speed: 40)
+            } else if self.cloudSelector == 3 {
+                cloudScene.moveClouds(cloudName: "nuvem3", width: 176, height: 80, speed: 40)
+            } else if self.cloudSelector == 4 {
+                cloudScene.moveClouds(cloudName: "nuvem4", width: 784, height: 358, speed: 30)
+            } else if self.cloudSelector == 5 {
+                cloudScene.moveClouds(cloudName: "nuvem5", width: 1151, height: 398, speed: 20)
+            } else if self.cloudSelector == 6 {
+                cloudScene.moveClouds(cloudName: "nuvem6", width: 1406, height: 504, speed: 20)
+            }
+        }
+    }
+    
+    func randomCloud() {
+        self.cloudTimer = Timer.scheduledTimer(timeInterval: 7, target: self, selector: Selector("formClouds"), userInfo: nil, repeats: true)
+    }
+    
     // Variáveis das infos das ONGs
     @IBOutlet weak var ONGInfoView: UIView!
     @IBOutlet weak var ONGIconImageView: UIImageView!
@@ -102,7 +135,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     // Variável da treeSelectionView
     @IBOutlet weak var treeSelectionView: UIView!
     
-    // Ajustes da treeSelectionView e da ONGInfoView
+    // Ajustes das views adjacentes
     func setGraphicViews() {
         self.ONGInfoView.layer.cornerRadius = 15
         self.ONGInfoView.layer.masksToBounds = true
@@ -110,6 +143,9 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.treeSelectionView.layer.cornerRadius = 15
         self.treeSelectionView.layer.masksToBounds = true
         self.treeSelectionView.alpha = 0
+        
+        self.treesPlantedView.layer.cornerRadius = 15
+        self.treesPlantedView.layer.masksToBounds = true
     }
     
     ////////////////////////////////////////////////////////////////////////////////////
@@ -247,6 +283,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     }
     
     // Configurações de quantas árvores o usuário plantou
+    @IBOutlet weak var treesPlantedView: UIView!
     @IBOutlet weak var treesPlantedLabel: UILabel!
     @IBOutlet weak var treesPlantedIcon: UIImageView!
     
@@ -260,7 +297,10 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     
     // viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.reload()
+        self.randomCloud()
+        self.formClouds()
     }
     
     // MARK: ViewDidLoad
@@ -447,47 +487,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             treeAlertImageName = "treeGreen"
         }
         
-        self.alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para plantar, doe ou veja um anúncio", preferredStyle: .alert)
-        
-        self.alert.addAction(UIAlertAction(title: "Doar", style: .default, handler: { action in
-            // Testa se está conectado na internet
-            if Reachability.isConnectedToNetwork() && self.isICloudContainerAvailable() {
-                // Define a árvore e gera o pedido de compra
-                if treeColor == "red" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[2]
-                    BosqueProducts.store.buyProduct(self.product)
-                } else if treeColor == "blue" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[0]
-                    BosqueProducts.store.buyProduct(self.product)
-                } else if treeColor == "yellow" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[3]
-                    BosqueProducts.store.buyProduct(self.product)
-                } else if treeColor == "green" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[1]
-                    BosqueProducts.store.buyProduct(self.product)
-                }
-            } else if !Reachability.isConnectedToNetwork() {
-                let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                    
-                }))
-                self.present(alertNoConnection, animated: true, completion: nil)
-            } else if Reachability.isConnectedToNetwork() && !self.isICloudContainerAvailable() {
-                let alertNoConnection = UIAlertController(title: "Você não está conectado ao iCloud", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
-                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
-                    
-                }))
-                self.present(alertNoConnection, animated: true, completion: nil)
-            }
-        }))
+        self.alert = UIAlertController(title: "Você escolheu \(treeName)!\n\n\n\n\n\n\n", message: "Para plantar, compre ou veja um anúncio", preferredStyle: .alert)
         
         self.alert.addAction(UIAlertAction(title: "Ver anúncio", style: .default, handler: { action in
             // Testa se está conectado na internet
@@ -529,7 +529,47 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             }
         }))
         
-        self.alert.addAction(UIAlertAction(title: "Cancelar", style: .destructive, handler: { action in
+        self.alert.addAction(UIAlertAction(title: "Comprar", style: .default, handler: { action in
+            // Testa se está conectado na internet
+            if Reachability.isConnectedToNetwork() && self.isICloudContainerAvailable() {
+                // Define a árvore e gera o pedido de compra
+                if treeColor == "red" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[2]
+                    BosqueProducts.store.buyProduct(self.product)
+                } else if treeColor == "blue" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[0]
+                    BosqueProducts.store.buyProduct(self.product)
+                } else if treeColor == "yellow" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[3]
+                    BosqueProducts.store.buyProduct(self.product)
+                } else if treeColor == "green" {
+                    // ALTERAR OS PRODUTOS!!
+                    self.savingTreeColor = treeColor
+                    self.product = self.products[1]
+                    BosqueProducts.store.buyProduct(self.product)
+                }
+            } else if !Reachability.isConnectedToNetwork() {
+                let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    
+                }))
+                self.present(alertNoConnection, animated: true, completion: nil)
+            } else if Reachability.isConnectedToNetwork() && !self.isICloudContainerAvailable() {
+                let alertNoConnection = UIAlertController(title: "Você não está conectado ao iCloud", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)
+                alertNoConnection.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
+                    
+                }))
+                self.present(alertNoConnection, animated: true, completion: nil)
+            }
+        }))
+        
+        self.alert.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: { action in
         }))
         
         // Adicionar imagem do alerta

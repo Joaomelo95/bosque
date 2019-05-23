@@ -25,6 +25,7 @@ class MainScene: SKScene {
     var backButtonLayout: UIButton!
     
     // Variáves dos Nodes na Scene
+    var cloudSKNode = cloudsScene()
     var firstAreaNode = SKNode()
     var secondAreaNode = SKNode()
     var wwfLogoNode = SKNode()
@@ -124,6 +125,10 @@ class MainScene: SKScene {
         self.bgAreaNode = self.childNode(withName: "bg")!
         self.area1Plantable = self.childNode(withName: "area1Plantable")!
         self.area2Plantable = self.childNode(withName: "area2Plantable")!
+        
+        self.cloudSKNode.position = CGPoint(x: self.frame.minX, y: self.frame.maxY-500)
+        self.cloudSKNode.size = CGSize(width: self.frame.size.width, height: 350)
+        self.addChild(cloudSKNode)
         
         if UserDefaults.standard.bool(forKey: "watched") == false {
             addLabels()
@@ -262,6 +267,7 @@ class MainScene: SKScene {
         let viewController = UIApplication.shared.keyWindow!.rootViewController as! ViewController
         
         // Tira o counter local
+        viewController.treesPlantedView.alpha = 0
         viewController.treesPlantedLabel.alpha = 0
         viewController.treesPlantedIcon.alpha = 0
         
@@ -303,6 +309,7 @@ class MainScene: SKScene {
             viewController.ONGDescriptionLabel.alpha = 0
             viewController.ONGAboutButtonLayout.alpha = 0
             viewController.treeSelectionView.alpha = 0
+            viewController.treesPlantedView.alpha = 0.8
             viewController.treesPlantedLabel.alpha = 1
             viewController.treesPlantedIcon.alpha = 1
         }

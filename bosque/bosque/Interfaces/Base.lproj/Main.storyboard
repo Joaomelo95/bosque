@@ -100,17 +100,23 @@
                                     <action selector="deleteButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4wu-ag-iv8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ho-sJ-Zp1">
-                                <rect key="frame" x="50" y="40" width="40" height="21"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rTe-E7-dA8">
+                                <rect key="frame" x="-28" y="40" width="80" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="treeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="5DF-lK-1mY">
-                                <rect key="frame" x="25" y="41" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="treeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="5DF-lK-1mY">
+                                        <rect key="frame" x="30" y="5" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ho-sJ-Zp1">
+                                        <rect key="frame" x="50" y="5" width="40" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SnP-Wg-rbY">
                                 <rect key="frame" x="87" y="80" width="200" height="230"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -164,6 +170,7 @@
                         <outlet property="treeSelectionView" destination="zgE-fe-3zW" id="lIs-er-VrU"/>
                         <outlet property="treesPlantedIcon" destination="5DF-lK-1mY" id="D75-GH-3GC"/>
                         <outlet property="treesPlantedLabel" destination="5ho-sJ-Zp1" id="YvG-PT-zOZ"/>
+                        <outlet property="treesPlantedView" destination="rTe-E7-dA8" id="Hgc-34-HM3"/>
                         <outlet property="visualEffectsView" destination="vO4-Sh-uEy" id="O5y-47-yJD"/>
                     </connections>
                 </viewController>
