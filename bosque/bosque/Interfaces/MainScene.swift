@@ -34,6 +34,22 @@ class MainScene: SKScene {
     var area1Plantable = SKNode()
     var area2Plantable = SKNode()
     
+    // Variáveis do onboarding
+    var touchLabel: SKLabelNode?
+    var touchLabelGambiarra: SKLabelNode?
+    var touch2Label: SKLabelNode?
+    var touch3Label: SKLabelNode?
+    var touch4Label: SKLabelNode?
+    var touch5Label: SKLabelNode?
+    
+    // Função de remover labels do onboarding
+    func removeLabelAction() {
+        self.touch2Label?.removeAllActions()
+        self.touch3Label?.removeAllActions()
+        self.touchLabel?.removeAllActions()
+        self.touchLabelGambiarra?.removeAllActions()
+    }
+    
     // Pinch gesture
     var previousCameraScale = CGFloat()
     let pinchGesture = UIPinchGestureRecognizer()
@@ -82,7 +98,7 @@ class MainScene: SKScene {
     
     // Cria as constraints da câmera
     func setCameraConstraint() {
-        let scaledSize = CGSize(width: size.width * camera!.xScale, height: size.height * camera!.yScale)
+        let scaledSize = CGSize(width: self.frame.size.width * camera!.xScale, height: self.frame.size.height * camera!.yScale)
         let sceneContentRect = self.calculateAccumulatedFrame()
         
         let xInset = min((scaledSize.width / 2) + 232, sceneContentRect.width / 2)
@@ -125,10 +141,10 @@ class MainScene: SKScene {
         self.bgAreaNode = self.childNode(withName: "bg")!
         self.area1Plantable = self.childNode(withName: "area1Plantable")!
         self.area2Plantable = self.childNode(withName: "area2Plantable")!
-        
         self.cloudSKNode.position = CGPoint(x: self.frame.minX, y: self.frame.maxY-500)
         self.cloudSKNode.size = CGSize(width: self.frame.size.width, height: 350)
         self.addChild(cloudSKNode)
+        
         
         if UserDefaults.standard.bool(forKey: "watched") == false {
             addLabels()
@@ -161,14 +177,13 @@ class MainScene: SKScene {
         self.wwfLogoNode.run(restoreAlpha)
         self.unicefLogoNode.run(restoreAlpha)
         
+        // Muda as constraints da câmera
         let resetConstraints = SKAction.run {
             self.camera!.constraints = []
         }
-        
         let constAction = SKAction.run {
             self.setCameraConstraint()
         }
-        
         let seqAction = SKAction.sequence([resetConstraints, constAction, zoomAction])
         
         // Roda as ações
@@ -179,6 +194,9 @@ class MainScene: SKScene {
 //        self.area1IsTouchable = true
 //        self.area2IsTouchable = true
         self.bgAreaIsTouchable = false
+        
+        // Funções do onboarding
+        self.removeLabelAction()
     }
     
     // Função para selecionar a área desejada
@@ -220,6 +238,13 @@ class MainScene: SKScene {
 //        self.area1IsTouchable = false
 //        self.area2IsTouchable = false
         
+        
+        // UserDefaults do onboarding
+        if UserDefaults.standard.bool(forKey: "watched2") == false && UserDefaults.standard.bool(forKey: "watched") == true {
+            addLabels2()
+            addLabels3()
+        }
+        
         self.animateAreaSelection(area: area)
         
         // Alpha das logos
@@ -231,14 +256,13 @@ class MainScene: SKScene {
         let moveAction = SKAction.move(to: position, duration: 0.5)
         moveAction.timingMode = .easeInEaseOut
         
+        // Constraints da câmera
         let resetConstraints = SKAction.run {
             self.camera!.constraints = []
         }
-        
         let constAction = SKAction.run {
             self.setCameraConstraint()
         }
-        
         let seqAction = SKAction.sequence([resetConstraints, zoomAction, constAction])
         
         // Rodar ações
@@ -249,16 +273,56 @@ class MainScene: SKScene {
         self.bgAreaIsTouchable = true
     }
     
-    // Primeira parte do onboarding
-    var touchLabel = SKLabelNode()
+    // Onboarding
     func addLabels() {
-        touchLabel = SKLabelNode(text: "toque uma área\n para ajudar uma ONG")
-        touchLabel.fontName = "AvenirNext-Bold"
-        touchLabel.fontSize = 35.0
-        touchLabel.fontColor = UIColor.black
-        touchLabel.position = CGPoint(x: frame.midX, y: frame.midY + 400)
-        addChild(touchLabel)
+        touchLabel = SKLabelNode(text: "Cada colina pertence a uma ong.")
+        touchLabel!.fontName = "Marker Felt Thin"
+        touchLabel!.fontSize = 42.0
+        touchLabel!.fontColor = UIColor.black
+        touchLabel!.position = CGPoint(x: frame.midX, y: frame.midY - 210.0)
+        addChild(touchLabel!)
         UserDefaults.standard.set(true, forKey: "watched")
+        let animateLabels = SKAction.sequence([SKAction.fadeAlpha(to: 0.4, duration: 2.0), SKAction.fadeAlpha(to: 1.0, duration: 1.0), SKAction.wait(forDuration: 0.5)])
+        touchLabel!.run(SKAction.repeatForever(animateLabels))
+        
+        touchLabelGambiarra = SKLabelNode(text: "Qual delas você quer ajudar hoje?")
+        touchLabelGambiarra!.fontName = "Marker Felt Thin"
+        touchLabelGambiarra!.fontSize = 42.0
+        touchLabelGambiarra!.fontColor = UIColor.black
+        touchLabelGambiarra!.position = CGPoint(x: frame.midX, y: frame.midY - 260.0)
+        addChild(touchLabelGambiarra!)
+        UserDefaults.standard.set(true, forKey: "watched")
+        touchLabelGambiarra!.run(SKAction.repeatForever(animateLabels))
+        
+    }
+    func addLabels2() {
+        touch2Label = SKLabelNode(text: "escolha uma árvore para plantar na colina")
+        touch2Label!.fontName = "Marker Felt Thin"
+        touch2Label!.fontSize = 13.0
+        touch2Label!.fontColor = UIColor.gray
+        touch2Label!.zPosition = 5
+        touch2Label!.position = CGPoint(x: firstAreaNode.position.x, y: firstAreaNode.position.y - 50.0)
+        addChild(touch2Label!)
+        
+        UserDefaults.standard.set(true, forKey: "watched2")
+        
+        let animateLabels2 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
+        touch2Label!.run(SKAction.repeatForever(animateLabels2))
+        
+    }
+    func addLabels3() {
+        touch3Label = SKLabelNode(text: "escolha uma árvore para plantar na colina")
+        touch3Label!.fontName = "Marker Felt Thin"
+        touch3Label!.fontSize = 13.0
+        touch3Label!.fontColor = UIColor.gray
+        touch3Label!.zPosition = 5
+        touch3Label!.position = CGPoint(x: secondAreaNode.position.x, y: secondAreaNode.position.y - 50.0)
+        addChild(touch3Label!)
+        
+        UserDefaults.standard.set(true, forKey: "watched2")
+        
+        let animateLabels3 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
+        touch3Label!.run(SKAction.repeatForever(animateLabels3))
     }
     
     // Função para animar os elementos entrando na tela
@@ -284,11 +348,23 @@ class MainScene: SKScene {
             if area == 1 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong1")
                 viewController.ONGDescriptionLabel.text = "Essa é a WWF"
-                self.touchLabel.removeFromParent()
+                self.touch2Label?.run(SKAction.fadeIn(withDuration: 0.9))
+                self.touch3Label?.run(SKAction.fadeIn(withDuration: 0.9))
+                let animateLabels2 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
+                self.touch2Label?.run(SKAction.repeatForever(animateLabels2))
+                self.touchLabel?.removeAllActions()
+                self.touchLabelGambiarra?.removeAllActions()
+                self.touchLabel?.alpha = 0
+                self.touchLabelGambiarra?.alpha = 0
             } else if area == 2 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong2")
                 viewController.ONGDescriptionLabel.text = "Essa é a Unicef"
-                self.touchLabel.removeFromParent()
+                self.touch2Label?.run(SKAction.fadeIn(withDuration: 0.9))
+                self.touch3Label?.run(SKAction.fadeIn(withDuration: 0.9))
+                self.touchLabel?.removeAllActions()
+                self.touchLabelGambiarra?.removeAllActions()
+                self.touchLabel?.alpha = 0
+                self.touchLabelGambiarra?.alpha = 0
             }
         }
         UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
@@ -312,6 +388,8 @@ class MainScene: SKScene {
             viewController.treesPlantedView.alpha = 0.8
             viewController.treesPlantedLabel.alpha = 1
             viewController.treesPlantedIcon.alpha = 1
+            self.touch2Label?.alpha = 0
+            self.touch3Label?.alpha = 0
         }
     }
     

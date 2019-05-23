@@ -594,21 +594,33 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     @IBAction func redTreeButton(_ sender: Any) {
         self.treeColorForAd = "red"
         self.createAlert(treeColor: "red", areaSelected: areaSelectedGlobal)
+        if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.removeLabelAction()
+        }
     }
     
     @IBAction func blueTreeButton(_ sender: Any) {
         self.treeColorForAd = "blue"
         self.createAlert(treeColor: "blue", areaSelected: areaSelectedGlobal)
+        if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.removeLabelAction()
+        }
     }
     
     @IBAction func yellowTreeButton(_ sender: Any) {
         self.treeColorForAd = "yellow"
         self.createAlert(treeColor: "yellow", areaSelected: areaSelectedGlobal)
+        if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.removeLabelAction()
+        }
     }
     
     @IBAction func greenTreeButton(_ sender: Any) {
         self.treeColorForAd = "green"
         self.createAlert(treeColor: "green", areaSelected: areaSelectedGlobal)
+        if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.removeLabelAction()
+        }
     }
     
     // Função para salvar árvores

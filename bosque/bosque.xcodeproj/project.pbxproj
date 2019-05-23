@@ -44,6 +44,7 @@
 		B53A0C83227CB8A700FF6743 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = bosque/Controllers/DetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5DB3B0E22772EC400DFE34C /* Main.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Main.sks; sourceTree = "<group>"; };
 		B5DB3B1022773D3F00DFE34C /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		B5EFA63E2296DC3700212BBF /* Marker Felt Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt Thin.ttf"; sourceTree = "<group>"; };
 		B5FCDD4822665E5500D60558 /* bosque.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bosque.entitlements; sourceTree = "<group>"; };
 		B5FCDD4A22665E5A00D60558 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		D118BAB579F6A8D503E14659 /* Pods_bosque.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bosque.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +92,7 @@
 				B55A0B1722788AB700DE04A3 /* Interfaces */,
 				B55A0B1622788A7A00DE04A3 /* Controllers */,
 				B50CDCB22264CA8E00671642 /* Assets.xcassets */,
+				B5EFA63E2296DC3700212BBF /* Marker Felt Thin.ttf */,
 			);
 			path = bosque;
 			sourceTree = "<group>";
