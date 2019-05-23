@@ -44,6 +44,7 @@
 		B5DB3B1022773D3F00DFE34C /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		B5FCDD4822665E5500D60558 /* bosque.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bosque.entitlements; sourceTree = "<group>"; };
 		B5FCDD4A22665E5A00D60558 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B8F805702296C98B00B872B0 /* Marker Felt Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt Thin.ttf"; sourceTree = "<group>"; };
 		D118BAB579F6A8D503E14659 /* Pods_bosque.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bosque.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -85,6 +86,7 @@
 				B5FCDD4822665E5500D60558 /* bosque.entitlements */,
 				B50CDCAF2264CA8D00671642 /* bosque.xcdatamodeld */,
 				B50CDCB72264CA8E00671642 /* Info.plist */,
+				B8F805702296C98B00B872B0 /* Marker Felt Thin.ttf */,
 				B55A0B1522788A5D00DE04A3 /* Application */,
 				B55A0B1722788AB700DE04A3 /* Interfaces */,
 				B55A0B1622788A7A00DE04A3 /* Controllers */,

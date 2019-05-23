@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
     let URLONG1 = "https://www.wwf.org.br"
     let URLONG2 = "https://www.unicef.org/brazil/"
     
+    
     private var activityIndicatorContainer: UIView!
     private var activityIndicator: UIActivityIndicatorView!
     
@@ -30,6 +31,8 @@ class DetailViewController: UIViewController {
         }
         
         setToolBar()
+        
+
         
         WKWebView.navigationDelegate = self
     }
