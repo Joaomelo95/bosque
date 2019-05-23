@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B5086E832295788400C6F83C /* cloudsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5086E822295788400C6F83C /* cloudsScene.swift */; };
 		B50C9D892281A664001827ED /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C9D882281A664001827ED /* IAPHelper.swift */; };
 		B50C9D8B2281A68F001827ED /* BosqueProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50C9D8A2281A68F001827ED /* BosqueProducts.swift */; };
 		B50C9D8D2281B2F0001827ED /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50C9D8C2281B2F0001827ED /* StoreKit.framework */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		4D548AF8C3FAA69A0200E098 /* Pods-bosque.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bosque.debug.xcconfig"; path = "Pods/Target Support Files/Pods-bosque/Pods-bosque.debug.xcconfig"; sourceTree = "<group>"; };
 		6E869CA94F01999F55AA1CF1 /* Pods-bosque.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bosque.release.xcconfig"; path = "Pods/Target Support Files/Pods-bosque/Pods-bosque.release.xcconfig"; sourceTree = "<group>"; };
+		B5086E822295788400C6F83C /* cloudsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cloudsScene.swift; sourceTree = "<group>"; };
 		B50C9D882281A664001827ED /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		B50C9D8A2281A68F001827ED /* BosqueProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BosqueProducts.swift; sourceTree = "<group>"; };
 		B50C9D8C2281B2F0001827ED /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -42,6 +44,7 @@
 		B53A0C83227CB8A700FF6743 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = bosque/Controllers/DetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		B5DB3B0E22772EC400DFE34C /* Main.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Main.sks; sourceTree = "<group>"; };
 		B5DB3B1022773D3F00DFE34C /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		B5EFA63E2296DC3700212BBF /* Marker Felt Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt Thin.ttf"; sourceTree = "<group>"; };
 		B5FCDD4822665E5500D60558 /* bosque.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bosque.entitlements; sourceTree = "<group>"; };
 		B5FCDD4A22665E5A00D60558 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B8F805702296C98B00B872B0 /* Marker Felt Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt Thin.ttf"; sourceTree = "<group>"; };
@@ -91,6 +94,7 @@
 				B55A0B1722788AB700DE04A3 /* Interfaces */,
 				B55A0B1622788A7A00DE04A3 /* Controllers */,
 				B50CDCB22264CA8E00671642 /* Assets.xcassets */,
+				B5EFA63E2296DC3700212BBF /* Marker Felt Thin.ttf */,
 			);
 			path = bosque;
 			sourceTree = "<group>";
@@ -120,6 +124,7 @@
 			children = (
 				B50CDCB42264CA8E00671642 /* LaunchScreen.storyboard */,
 				B50CDCAC2264CA8D00671642 /* Main.storyboard */,
+				B5086E822295788400C6F83C /* cloudsScene.swift */,
 				B5DB3B0E22772EC400DFE34C /* Main.sks */,
 				B5DB3B1022773D3F00DFE34C /* MainScene.swift */,
 			);
@@ -282,6 +287,7 @@
 				B50C9D8B2281A68F001827ED /* BosqueProducts.swift in Sources */,
 				B50CDCAB2264CA8D00671642 /* ViewController.swift in Sources */,
 				B5DB3B1122773D3F00DFE34C /* MainScene.swift in Sources */,
+				B5086E832295788400C6F83C /* cloudsScene.swift in Sources */,
 				B53A0C84227CB8A700FF6743 /* DetailViewController.swift in Sources */,
 				B50CDCA92264CA8D00671642 /* AppDelegate.swift in Sources */,
 				B50C9D892281A664001827ED /* IAPHelper.swift in Sources */,
