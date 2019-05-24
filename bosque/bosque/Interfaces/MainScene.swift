@@ -33,6 +33,9 @@ class MainScene: SKScene {
     var bgAreaNode = SKNode()
     var area1Plantable = SKNode()
     var area2Plantable = SKNode()
+    var touchGambiarra1 = SKNode()
+    var touchGambiarra2 = SKNode()
+    var touchGambiarra3 = SKNode()
     
     // Variáveis do onboarding
     var touchLabel: SKLabelNode?
@@ -119,10 +122,8 @@ class MainScene: SKScene {
     @objc func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         
-        self.setCameraConstraint()
-        
-        if let view = recognizer.view {
-            if camera?.xScale != 1.0 {
+        if recognizer.view != nil {
+            if camera!.xScale != 1.0 {
                 camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
                                            y:((camera?.position.y)! + translation.y))
             }
@@ -141,6 +142,9 @@ class MainScene: SKScene {
         self.bgAreaNode = self.childNode(withName: "bg")!
         self.area1Plantable = self.childNode(withName: "area1Plantable")!
         self.area2Plantable = self.childNode(withName: "area2Plantable")!
+        self.touchGambiarra1 = self.childNode(withName: "touchGambiarra1")!
+        self.touchGambiarra2 = self.childNode(withName: "touchGambiarra2")!
+        self.touchGambiarra3 = self.childNode(withName: "touchGambiarra3")!
         self.cloudSKNode.position = CGPoint(x: self.frame.minX, y: self.frame.maxY-500)
         self.cloudSKNode.size = CGSize(width: self.frame.size.width, height: 350)
         self.addChild(cloudSKNode)
@@ -212,21 +216,27 @@ class MainScene: SKScene {
         let area2PlantableY = area2Plantable.position.y + 120
         let secondAreaPosition:CGPoint = CGPoint(x: area2PlantableX, y: area2PlantableY)
         
-        if firstAreaNode.contains(touchLocation) && area1IsTouchable {
-            self.selectingArea(area: 1, position: firstAreaPosition)
-        }
-        if secondAreaNode.contains(touchLocation) && area2IsTouchable {
+        //////////////////////////////////////////////////////////////
+        if touchGambiarra1.contains(touchLocation) {
             self.selectingArea(area: 2, position: secondAreaPosition)
         }
+        else if touchGambiarra2.contains(touchLocation) {
+            self.selectingArea(area: 2, position: secondAreaPosition)
+        }
+        else if touchGambiarra3.contains(touchLocation) {
+            self.selectingArea(area: 2, position: secondAreaPosition)
+        }
+        //////////////////////////////////////////////////////////////
         
-        if firstAreaNode.contains(touchLocation) && secondAreaNode.contains(touchLocation) {
+        else if firstAreaNode.contains(touchLocation) && area1IsTouchable {
             self.selectingArea(area: 1, position: firstAreaPosition)
         }
-        //////////////////////////////////////////
-        if bgAreaNode.contains(touchLocation) && bgAreaIsTouchable {
-            // RESOLVER OQ FAZER NO FUTURO QND TOCAR NO BG
+        else if secondAreaNode.contains(touchLocation) && area2IsTouchable {
+            self.selectingArea(area: 2, position: secondAreaPosition)
         }
-        //////////////////////////////////////////
+        else if firstAreaNode.contains(touchLocation) && secondAreaNode.contains(touchLocation) {
+            self.selectingArea(area: 1, position: firstAreaPosition)
+        }
     }
     
     // Função para ajustar o que acontece quando tocar na área selecionada
@@ -267,11 +277,12 @@ class MainScene: SKScene {
         let constAction = SKAction.run {
             self.setCameraConstraint()
         }
-        let seqAction = SKAction.sequence([resetConstraints, zoomAction, constAction])
+        let groupAction = SKAction.group([zoomAction, moveAction])
+        let seqAction = SKAction.sequence([resetConstraints, groupAction, constAction])
         
         // Rodar ações
-        camera!.run(moveAction)
         camera!.run(seqAction)
+        //camera!.run(moveAction)
         
         // Ativa a possibilidade de tocar no background
         self.bgAreaIsTouchable = true
@@ -427,7 +438,7 @@ class MainScene: SKScene {
                 // Câmera foca na árvore criada
                 var cameraPositionInitial = convert(treeNode.position, from: area1Plantable)
                 var cameraPositionX = cameraPositionInitial.x
-                var cameraPositionY = cameraPositionInitial.y + 37.0
+                var cameraPositionY = cameraPositionInitial.y + 20
                 var cameraPositionFinal = CGPoint(x: cameraPositionX, y: cameraPositionY)
 
                 camera?.position = cameraPositionFinal
@@ -442,7 +453,7 @@ class MainScene: SKScene {
                 // Câmera foca na árvore criada
                 var cameraPositionInitial = convert(treeNode.position, from: area2Plantable)
                 var cameraPositionX = cameraPositionInitial.x
-                var cameraPositionY = cameraPositionInitial.y + 37.0
+                var cameraPositionY = cameraPositionInitial.y + 20
                 var cameraPositionFinal = CGPoint(x: cameraPositionX, y: cameraPositionY)
                 
                 camera?.position = cameraPositionFinal

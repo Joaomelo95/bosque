@@ -354,6 +354,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         // Carregar a SKScene
         let scene = SKScene(fileNamed: "Main.sks")
         scene?.scaleMode = .aspectFill
+        self.mainSKView.showsPhysics = true
         self.mainSKView.presentScene(scene)
         
         // Inicialização para o Back Button
