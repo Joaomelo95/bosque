@@ -99,21 +99,24 @@ class MainScene: SKScene {
         }
     }
     
+    //////////////////////////////////////////////////////////////
     // Cria as constraints da câmera
     func setCameraConstraint() {
         let scaledSize = CGSize(width: self.frame.size.width * camera!.xScale, height: self.frame.size.height * camera!.yScale)
         let sceneContentRect = self.calculateAccumulatedFrame()
+        print(sceneContentRect.width, sceneContentRect.height)
         
         let xInset = min((scaledSize.width / 2) + 232, sceneContentRect.width / 2)
-        let yInset = min((scaledSize.height / 2) + 130, sceneContentRect.height / 2)
+        let yInset = min((scaledSize.height / 2) + 330, sceneContentRect.height / 2)
         let insetContentRect = sceneContentRect.insetBy(dx: xInset, dy: yInset)
         
-        let xRange = SKRange(lowerLimit: insetContentRect.minX, upperLimit: insetContentRect.maxX)
+        let xRange = SKRange(lowerLimit: secondAreaNode.frame.minX + 200, upperLimit: firstAreaNode.frame.maxX - 200)
         let yRange = SKRange(lowerLimit: insetContentRect.minY, upperLimit: insetContentRect.maxY)
         let levelEdgeConstraint = SKConstraint.positionX(xRange, y: yRange)
         levelEdgeConstraint.referenceNode = self
         camera?.constraints = [levelEdgeConstraint]
     }
+    //////////////////////////////////////////////////////////////
     
     // Pan gesture
     var lastSwipeBeginningPoint: CGPoint?

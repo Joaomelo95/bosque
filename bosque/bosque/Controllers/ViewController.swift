@@ -233,7 +233,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
     func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
         GADRewardBasedVideoAd.sharedInstance().load(GADRequest(), withAdUnitID: "ca-app-pub-3940256099942544/1712485313")
         
-        //COLOCAR O OUTRO AD TB
+        // FIXME: COLOCAR O OUTRO AD TB
         
         if canBeRewarded {
             self.thankUAlert(areaSelected: areaSelectedGlobal)
