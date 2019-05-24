@@ -218,6 +218,10 @@ class MainScene: SKScene {
         if secondAreaNode.contains(touchLocation) && area2IsTouchable {
             self.selectingArea(area: 2, position: secondAreaPosition)
         }
+        
+        if firstAreaNode.contains(touchLocation) && secondAreaNode.contains(touchLocation) {
+            self.selectingArea(area: 1, position: firstAreaPosition)
+        }
         //////////////////////////////////////////
         if bgAreaNode.contains(touchLocation) && bgAreaIsTouchable {
             // RESOLVER OQ FAZER NO FUTURO QND TOCAR NO BG
