@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import GoogleMobileAds
 import UserNotifications
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -71,6 +72,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print(error)
             }
         }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        let subscription = CKQuerySubscription(recordType: "Notification", predicate: NSPredicate(format: "TRUEPREDICATE"), options: .firesOnRecordCreation)
+        
+        let info = CKSubscription.NotificationInfo()
+        
+        info.titleLocalizationKey = "%1$@"
+        info.titleLocalizationArgs = ["Title"]
+        
+        info.alertLocalizationKey = "%1$@"
+        info.alertLocalizationArgs = ["Subtitle"]
+        
+        info.soundName = "default"
+        
+        subscription.notificationInfo = info
+        
+        CKContainer.default().publicCloudDatabase.save(subscription, completionHandler: { subscription, error in
+            if error == nil {
+                print("saved to privateDB")
+            } else {
+                print(error)
+            }
+        })
+        
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
