@@ -110,7 +110,11 @@ class MainScene: SKScene {
                 let deltaScale = (sender.scale - 1.0)*2
                 let convertedScale = sender.scale - deltaScale
                 let newScale = camera!.xScale*convertedScale
-                camera!.setScale(newScale)
+                
+                // Define limte da câmera
+                if newScale < 1 && newScale > 0.1 {
+                    camera!.setScale(newScale)
+                }
                 
                 let locationAfterScale = self.convertPoint(fromView: locationInView)
                 let locationDelta = pointSubtract(pointA: location, pointB: locationAfterScale)
