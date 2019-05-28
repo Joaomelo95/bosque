@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import GoogleMobileAds
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,11 +20,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // Notifications
+        UNUserNotificationCenter.current().delegate = (self as! UNUserNotificationCenterDelegate)
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound], completionHandler:  { authorized, error in
+            if authorized {
+                DispatchQueue.main.async(execute: {
+                    application.registerForRemoteNotifications()
+                })
+            }
+        })
+        
         // Initialize the Google Mobile Ads SDK.
         GADMobileAds.configure(withApplicationID: "ca-app-pub-9302346933117667~9819510191")
         
         return true
     }
+    
+    let center = UNUserNotificationCenter.current()
+    let content = UNMutableNotificationContent()
+    let gregorian = Calendar(identifier: .gregorian)
+    let now = Date()
+    let identifier = "MorningNotification"
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -33,6 +50,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        content.title = "Olá!"
+        content.body = "Que tal plantar uma árvore hoje?"
+        content.sound = UNNotificationSound.default
+        
+        var components = gregorian.dateComponents([.year, .month, .hour, .minute, .second], from: now)
+        
+        components.hour = 12
+        components.minute = 30
+        components.second = 0
+        
+        let date = gregorian.date(from: components)!
+        
+        let triggerDaily = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: true)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        center.add(request) { (error) in
+            if let error = error {
+                print(error)
+            }
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -97,3 +135,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate{
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        completionHandler()
+    }
+}

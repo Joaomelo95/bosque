@@ -267,11 +267,11 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             product.productIdentifier == productID
         })
         else { return }
-        
         self.ONGInfoView.alpha = 0
         self.ONGIconImageView.alpha = 0
         self.ONGDescriptionLabel.alpha = 0
         self.ONGAboutButtonLayout.alpha = 0
+        self.savingTreesPlantedToUserDefaults()
         self.generateTrees(treeColor: self.savingTreeColor)
     }
     
@@ -533,27 +533,51 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         self.alert.addAction(UIAlertAction(title: "Comprar", style: .default, handler: { action in
             // Testa se está conectado na internet
             if Reachability.isConnectedToNetwork() && self.isICloudContainerAvailable() {
-                // Define a árvore e gera o pedido de compra
-                if treeColor == "red" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[2]
-                    BosqueProducts.store.buyProduct(self.product)
-                } else if treeColor == "blue" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[0]
-                    BosqueProducts.store.buyProduct(self.product)
-                } else if treeColor == "yellow" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[3]
-                    BosqueProducts.store.buyProduct(self.product)
-                } else if treeColor == "green" {
-                    // ALTERAR OS PRODUTOS!!
-                    self.savingTreeColor = treeColor
-                    self.product = self.products[1]
-                    BosqueProducts.store.buyProduct(self.product)
+                if areaSelectedGlobal == 1 {
+                    // Define a árvore e gera o pedido de compra
+                    if treeColor == "red" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[4]
+                        BosqueProducts.store.buyProduct(self.product)
+                    } else if treeColor == "blue" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[0]
+                        BosqueProducts.store.buyProduct(self.product)
+                    } else if treeColor == "yellow" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[6]
+                        BosqueProducts.store.buyProduct(self.product)
+                    } else if treeColor == "green" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[2]
+                        BosqueProducts.store.buyProduct(self.product)
+                    }
+                } else if areaSelectedGlobal == 2 {
+                    if treeColor == "red" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[5]
+                        BosqueProducts.store.buyProduct(self.product)
+                    } else if treeColor == "blue" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[1]
+                        BosqueProducts.store.buyProduct(self.product)
+                    } else if treeColor == "yellow" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[7]
+                        BosqueProducts.store.buyProduct(self.product)
+                    } else if treeColor == "green" {
+                        // ALTERAR OS PRODUTOS!!
+                        self.savingTreeColor = treeColor
+                        self.product = self.products[3]
+                        BosqueProducts.store.buyProduct(self.product)
+                    }
                 }
             } else if !Reachability.isConnectedToNetwork() {
                 let alertNoConnection = UIAlertController(title: "Você não está conectado à internet!", message: "Conecte-se para poder acessar o bosque!", preferredStyle: .alert)

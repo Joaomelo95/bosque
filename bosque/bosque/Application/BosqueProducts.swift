@@ -18,7 +18,15 @@ public struct BosqueProducts {
     
     public static let Mandacaru = "com.Joao.bosq.greentree"
     
-    private static let productIdentifiers: Set<ProductIdentifier> = [BosqueProducts.Cerejeira, BosqueProducts.Laranjeira, BosqueProducts.Pinheiro, BosqueProducts.Mandacaru]
+    public static let Cerejeira2 = "com.Joao.bosq.redtree2post"
+    
+    public static let Laranjeira2 = "com.Joao.bosq.bluetree2"
+    
+    public static let Pinheiro2 = "com.Joao.bosq.yellowtree2"
+    
+    public static let Mandacaru2 = "com.Joao.bosq.greentree2"
+    
+    private static let productIdentifiers: Set<ProductIdentifier> = [BosqueProducts.Cerejeira, BosqueProducts.Laranjeira, BosqueProducts.Pinheiro, BosqueProducts.Mandacaru, BosqueProducts.Cerejeira2, BosqueProducts.Laranjeira2, BosqueProducts.Pinheiro2, BosqueProducts.Mandacaru2]
     
     public static let store = IAPHelper(productIds: BosqueProducts.productIdentifiers)
 }

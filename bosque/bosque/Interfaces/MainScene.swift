@@ -117,18 +117,24 @@ class MainScene: SKScene {
         camera?.constraints = [levelEdgeConstraint]
     }
     //////////////////////////////////////////////////////////////
-    
     // Pan gesture
     var lastSwipeBeginningPoint: CGPoint?
     var panRec: UIPanGestureRecognizer!
+    var canPan = true
     
     @objc func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         
         if recognizer.view != nil {
-            if camera!.xScale != 1.0 {
-                camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
-                                           y:((camera?.position.y)! + translation.y))
+            if canPan {
+                if camera!.xScale != 1.0 {
+                    camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
+                                               y:((camera?.position.y)! + translation.y))
+                }
+            } else {
+                print("can't pan")
+                self.setCameraConstraint()
+                self.canPan = true
             }
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
@@ -204,6 +210,8 @@ class MainScene: SKScene {
         
         // Funções do onboarding
         self.removeLabelAction()
+        
+        self.canPan = true
     }
     
     // Função para selecionar a área desejada
@@ -444,7 +452,19 @@ class MainScene: SKScene {
                 var cameraPositionY = cameraPositionInitial.y + 20
                 var cameraPositionFinal = CGPoint(x: cameraPositionX, y: cameraPositionY)
 
-                camera?.position = cameraPositionFinal
+                let cameraMovement = SKAction.move(to: cameraPositionFinal, duration: 0.2)
+                cameraMovement.timingMode = .easeInEaseOut
+                let resetConstraints = SKAction.run {
+                    self.camera!.constraints = []
+                }
+                let constAction = SKAction.run {
+                    self.setCameraConstraint()
+                }
+                let cameraSeq = SKAction.sequence([resetConstraints, cameraMovement/*, constAction*/])
+                
+                self.canPan = false
+                
+                camera?.run(cameraSeq)
                 camera?.setScale(0.1)
             }
         }
@@ -459,7 +479,19 @@ class MainScene: SKScene {
                 var cameraPositionY = cameraPositionInitial.y + 20
                 var cameraPositionFinal = CGPoint(x: cameraPositionX, y: cameraPositionY)
                 
-                camera?.position = cameraPositionFinal
+                let cameraMovement = SKAction.move(to: cameraPositionFinal, duration: 0.2)
+                cameraMovement.timingMode = .easeInEaseOut
+                let resetConstraints = SKAction.run {
+                    self.camera!.constraints = []
+                }
+                let constAction = SKAction.run {
+                    self.setCameraConstraint()
+                }
+                let cameraSeq = SKAction.sequence([resetConstraints, cameraMovement/*, constAction*/])
+                
+                self.canPan = false
+                
+                camera?.run(cameraSeq)
                 camera?.setScale(0.1)
             }
         }
