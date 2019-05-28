@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class MainScene: SKScene {
     // Variáveis para o posicionamento das árvores
@@ -42,8 +43,25 @@ class MainScene: SKScene {
     var touchLabelGambiarra: SKLabelNode?
     var touch2Label: SKLabelNode?
     var touch3Label: SKLabelNode?
-    var touch4Label: SKLabelNode?
-    var touch5Label: SKLabelNode?
+    var touch6Label: SKLabelNode?
+    var touch7Label: SKLabelNode?
+    
+    // Variáveis trilha sonora
+    var sound = AVAudioPlayer()
+    var sound2 = AVAudioPlayer()
+    var sound3 = AVAudioPlayer()
+    
+    // Função para parar os sons
+    func stopSounds() {
+        self.sound.volume = 0
+        self.sound2.volume = 0
+    }
+    
+    //Função para reiniciar os sons
+    func restartSound() {
+        self.sound.volume = 0.5
+        self.sound2.volume = 1
+    }
     
     // Função de remover labels do onboarding
     func removeLabelAction() {
@@ -51,6 +69,10 @@ class MainScene: SKScene {
         self.touch3Label?.removeAllActions()
         self.touchLabel?.removeAllActions()
         self.touchLabelGambiarra?.removeAllActions()
+        self.touch2Label?.removeFromParent()
+        self.touch3Label?.removeFromParent()
+        self.touch6Label?.removeFromParent()
+        self.touch7Label?.removeFromParent()
     }
     
     // Pinch gesture
@@ -158,6 +180,25 @@ class MainScene: SKScene {
         self.cloudSKNode.size = CGSize(width: self.frame.size.width, height: 350)
         self.addChild(cloudSKNode)
         
+        do {
+            self.sound = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "musicBosque", ofType: "mp3")!))
+            self.sound.prepareToPlay()
+            
+            self.sound2 = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "arvoresBosque", ofType: "wav")!))
+            self.sound2.prepareToPlay()
+            
+            self.sound3 = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "zooms", ofType: "mp3")!))
+            self.sound3.prepareToPlay()
+        }
+        catch {
+            print(error)
+        }
+        
+        self.sound.play()
+        self.sound2.play()
+        self.sound.numberOfLoops = -1
+        self.sound2.numberOfLoops = -1
+        self.sound.volume = 0.5
         
         if UserDefaults.standard.bool(forKey: "watched") == false {
             addLabels()
@@ -267,7 +308,6 @@ class MainScene: SKScene {
         // UserDefaults do onboarding
         if UserDefaults.standard.bool(forKey: "watched2") == false && UserDefaults.standard.bool(forKey: "watched") == true {
             addLabels2()
-            addLabels3()
         }
         
         self.animateAreaSelection(area: area)
@@ -324,31 +364,49 @@ class MainScene: SKScene {
     func addLabels2() {
         touch2Label = SKLabelNode(text: "escolha uma árvore para plantar na colina")
         touch2Label!.fontName = "Marker Felt Thin"
-        touch2Label!.fontSize = 13.0
-        touch2Label!.fontColor = UIColor.gray
+        touch2Label!.fontSize = 33.0
+        touch2Label!.fontColor = UIColor.black
         touch2Label!.zPosition = 5
-        touch2Label!.position = CGPoint(x: firstAreaNode.position.x, y: firstAreaNode.position.y - 50.0)
-        addChild(touch2Label!)
-        
+        touch2Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 180.0)
+        self.camera?.addChild(touch2Label!)
         UserDefaults.standard.set(true, forKey: "watched2")
-        
         let animateLabels2 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
         touch2Label!.run(SKAction.repeatForever(animateLabels2))
-        
     }
     func addLabels3() {
         touch3Label = SKLabelNode(text: "escolha uma árvore para plantar na colina")
         touch3Label!.fontName = "Marker Felt Thin"
-        touch3Label!.fontSize = 13.0
-        touch3Label!.fontColor = UIColor.gray
+        touch3Label!.fontSize = 42.0
+        touch3Label!.fontColor = UIColor.black
         touch3Label!.zPosition = 5
-        touch3Label!.position = CGPoint(x: secondAreaNode.position.x, y: secondAreaNode.position.y - 50.0)
-        addChild(touch3Label!)
+        touch3Label!.position = CGPoint(x: secondAreaNode.position.x + 40.0, y: secondAreaNode.position.y - 20.0)
+        //        self.camera?.addChild(touch3Label!)
+        UserDefaults.standard.set(true, forKey: "watched2")
+        let animateLabels3 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
+        touch3Label!.run(SKAction.repeatForever(animateLabels3))
+    }
+    func addLabels4() {
+        touch6Label = SKLabelNode(text: "o dinheiro desse anúncio foi convertido para WWF")
+        touch6Label!.fontName = "Marker Felt Thin"
+        touch6Label!.fontSize = 33.0
+        touch6Label!.fontColor = UIColor.black
+        touch6Label!.zPosition = 5
+        touch6Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 900.0)
+        self.camera?.addChild(touch6Label!)
         
         UserDefaults.standard.set(true, forKey: "watched2")
         
-        let animateLabels3 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
-        touch3Label!.run(SKAction.repeatForever(animateLabels3))
+        let animateLabels4 = SKAction.sequence([SKAction.fadeIn(withDuration: 1.0), SKAction.wait(forDuration: 0.5), SKAction.fadeOut(withDuration: 0.5)])
+        touch6Label!.run(SKAction.repeatForever(animateLabels4))
+        
+        touch7Label = SKLabelNode(text: "plante mais árvores para continuar ajudando")
+        touch7Label!.fontName = "Marker Felt Thin"
+        touch7Label!.fontSize = 33.0
+        touch7Label!.fontColor = UIColor.black
+        touch7Label!.zPosition = 5
+        touch7Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 860.0)
+        self.camera?.addChild(touch7Label!)
+        touch7Label!.run(SKAction.repeatForever(animateLabels4))
     }
     
     // Função para animar os elementos entrando na tela
@@ -382,6 +440,8 @@ class MainScene: SKScene {
                 self.touchLabelGambiarra?.removeAllActions()
                 self.touchLabel?.alpha = 0
                 self.touchLabelGambiarra?.alpha = 0
+                self.sound3.volume = 0.4
+                self.sound3.play()
             } else if area == 2 {
                 viewController.ONGIconImageView.image = UIImage(named: "ong2")
                 viewController.ONGDescriptionLabel.text = "Essa é a Unicef"
@@ -391,6 +451,8 @@ class MainScene: SKScene {
                 self.touchLabelGambiarra?.removeAllActions()
                 self.touchLabel?.alpha = 0
                 self.touchLabelGambiarra?.alpha = 0
+                self.sound3.volume = 0.4
+                self.sound3.play()
             }
         }
         UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
@@ -416,6 +478,8 @@ class MainScene: SKScene {
             viewController.treesPlantedIcon.alpha = 1
             self.touch2Label?.alpha = 0
             self.touch3Label?.alpha = 0
+            self.touch2Label?.removeFromParent()
+            self.touch3Label?.removeFromParent()
         }
     }
     
