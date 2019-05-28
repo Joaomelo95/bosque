@@ -180,6 +180,9 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
         if areaSelected == 1 {
             let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A WWF agradece a sua ajuda!", preferredStyle: .alert)
             alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
+                if let scene = (self.mainSKView.scene as? MainScene) {
+                    scene.addLabels4()
+                }
             }))
             self.present(alertThankU, animated: false, completion: nil)
 
@@ -225,6 +228,16 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             self.savingTreesPlantedToUserDefaults()
             self.canBeRewarded = true
+            if let scene = (self.mainSKView.scene as? MainScene) {
+            scene.self.touch2Label?.removeFromParent()
+            }
+            if let scene = (self.mainSKView.scene as? MainScene) {
+                scene.self.touch6Label?.removeFromParent()
+        
+        }
+            if let scene = (self.mainSKView.scene as? MainScene) {
+                scene.self.touch7Label?.removeFromParent()
+    }
         }
     }
 

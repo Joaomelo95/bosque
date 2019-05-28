@@ -22,6 +22,9 @@
 		B5DB3B0F22772EC400DFE34C /* Main.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5DB3B0E22772EC400DFE34C /* Main.sks */; };
 		B5DB3B1122773D3F00DFE34C /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB3B1022773D3F00DFE34C /* MainScene.swift */; };
 		B5FCDD4B22665E5A00D60558 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5FCDD4A22665E5A00D60558 /* CloudKit.framework */; };
+		B8092FFD229D56B90020FB2A /* zooms.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8092FFC229D56B90020FB2A /* zooms.mp3 */; };
+		B8632FC222983874003AC676 /* arvoresBosque.wav in Resources */ = {isa = PBXBuildFile; fileRef = B8632FC122983874003AC676 /* arvoresBosque.wav */; };
+		B8C48B21229C2A790026B5CE /* musicBosque.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8C48B20229C2A790026B5CE /* musicBosque.mp3 */; };
 		C8FB1103463B87B276EFB5C0 /* Pods_bosque.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D118BAB579F6A8D503E14659 /* Pods_bosque.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +50,9 @@
 		B5EFA63E2296DC3700212BBF /* Marker Felt Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt Thin.ttf"; sourceTree = "<group>"; };
 		B5FCDD4822665E5500D60558 /* bosque.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = bosque.entitlements; sourceTree = "<group>"; };
 		B5FCDD4A22665E5A00D60558 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B8092FFC229D56B90020FB2A /* zooms.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = zooms.mp3; sourceTree = "<group>"; };
+		B8632FC122983874003AC676 /* arvoresBosque.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = arvoresBosque.wav; sourceTree = "<group>"; };
+		B8C48B20229C2A790026B5CE /* musicBosque.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = musicBosque.mp3; sourceTree = "<group>"; };
 		B8F805702296C98B00B872B0 /* Marker Felt Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt Thin.ttf"; sourceTree = "<group>"; };
 		D118BAB579F6A8D503E14659 /* Pods_bosque.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bosque.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -90,6 +96,9 @@
 				B50CDCAF2264CA8D00671642 /* bosque.xcdatamodeld */,
 				B50CDCB72264CA8E00671642 /* Info.plist */,
 				B8F805702296C98B00B872B0 /* Marker Felt Thin.ttf */,
+				B8C48B20229C2A790026B5CE /* musicBosque.mp3 */,
+				B8632FC122983874003AC676 /* arvoresBosque.wav */,
+				B8092FFC229D56B90020FB2A /* zooms.mp3 */,
 				B55A0B1522788A5D00DE04A3 /* Application */,
 				B55A0B1722788AB700DE04A3 /* Interfaces */,
 				B55A0B1622788A7A00DE04A3 /* Controllers */,
@@ -222,9 +231,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B50CDCB62264CA8E00671642 /* LaunchScreen.storyboard in Resources */,
+				B8632FC222983874003AC676 /* arvoresBosque.wav in Resources */,
+				B8C48B21229C2A790026B5CE /* musicBosque.mp3 in Resources */,
 				B50CDCB32264CA8E00671642 /* Assets.xcassets in Resources */,
 				B5DB3B0F22772EC400DFE34C /* Main.sks in Resources */,
 				B50CDCAE2264CA8D00671642 /* Main.storyboard in Resources */,
+				B8092FFD229D56B90020FB2A /* zooms.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
