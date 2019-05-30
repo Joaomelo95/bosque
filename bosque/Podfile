@@ -7,6 +7,6 @@ target 'bosque' do
 
   # Pods for bosque
 
-pod 'Google-Mobile-Ads-SDK'
+  pod 'Google-Mobile-Ads-SDK'
 
 end
