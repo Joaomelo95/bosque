@@ -37,6 +37,7 @@ class MainScene: SKScene {
     var touchGambiarra1 = SKNode()
     var touchGambiarra2 = SKNode()
     var touchGambiarra3 = SKNode()
+    var cameraSize = SKNode()
     
     // Variáveis do onboarding
     var touchLabel: SKLabelNode?
@@ -75,96 +76,117 @@ class MainScene: SKScene {
         self.touch7Label?.removeFromParent()
     }
     
-    // Pinch gesture
-    var previousCameraScale = CGFloat()
-    let pinchGesture = UIPinchGestureRecognizer()
-    
-    @objc func pinchGestureAction(_ sender: UIPinchGestureRecognizer) {
-        guard let camera = self.camera else {
-            return
-        }
-        if sender.state == .began {
-            previousCameraScale = camera.xScale
-        }
-        camera.setScale(previousCameraScale * 1 / sender.scale)
-        self.setCameraConstraint()
-    }
-    
-    func pointSubtract(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
-        let subtractedX = pointA.x - pointB.x
-        let subtractedY = pointA.y - pointB.y
-        return CGPoint(x: subtractedX, y: subtractedY)
-    }
-    
-    func pointAdd(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
-        let addedX = pointA.x + pointB.x
-        let addedY = pointA.y + pointB.y
-        return CGPoint(x: addedX, y: addedY)
-    }
-    
-    @objc func handlePinch(sender: UIPinchGestureRecognizer) {
-        if sender.numberOfTouches == 2 {
-            let locationInView = sender.location(in: self.view)
-            let location = self.convertPoint(fromView: locationInView)
-            if sender.state == .changed {
-                let deltaScale = (sender.scale - 1.0)*2
-                let convertedScale = sender.scale - deltaScale
-                let newScale = camera!.xScale*convertedScale
-                
-                // Define limte da câmera
-                if newScale < 1 && newScale > 0.1 {
-                    camera!.setScale(newScale)
-                }
-                
-                let locationAfterScale = self.convertPoint(fromView: locationInView)
-                let locationDelta = pointSubtract(pointA: location, pointB: locationAfterScale)
-                let newPoint = pointAdd(pointA: camera!.position, pointB: locationDelta)
-                camera!.position = newPoint
-                sender.scale = 1.0
-            }
-        }
-    }
-    
+//    // Pinch gesture
+//    var previousCameraScale = CGFloat()
+//    let pinchGesture = UIPinchGestureRecognizer()
+//
+//    @objc func pinchGestureAction(_ sender: UIPinchGestureRecognizer) {
+//        guard let camera = self.camera else {
+//            return
+//        }
+//        if sender.state == .began {
+//            previousCameraScale = camera.xScale
+//        }
+//        camera.setScale(previousCameraScale * 1 / sender.scale)
+//        //self.setCameraConstraint()
+//    }
+//
+//    func pointSubtract(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
+//        let subtractedX = pointA.x - pointB.x
+//        let subtractedY = pointA.y - pointB.y
+//        return CGPoint(x: subtractedX, y: subtractedY)
+//    }
+//
+//    func pointAdd(pointA: CGPoint, pointB: CGPoint) -> CGPoint {
+//        let addedX = pointA.x + pointB.x
+//        let addedY = pointA.y + pointB.y
+//        return CGPoint(x: addedX, y: addedY)
+//    }
+//
+//    @objc func handlePinch(sender: UIPinchGestureRecognizer) {
+//        if sender.numberOfTouches == 2 {
+//            let locationInView = sender.location(in: self.view)
+//            let location = self.convertPoint(fromView: locationInView)
+//            if sender.state == .changed {
+//                let deltaScale = (sender.scale - 1.0)*2
+//                let convertedScale = sender.scale - deltaScale
+//                let newScale = camera!.xScale*convertedScale
+//
+//                // Define limte da câmera
+//                if newScale < 1 && newScale > 0.1 {
+//                    camera!.setScale(newScale)
+//                    self.cameraSize.setScale(newScale)
+//                }
+//
+//                let locationAfterScale = self.convertPoint(fromView: locationInView)
+//                let locationDelta = pointSubtract(pointA: location, pointB: locationAfterScale)
+//                let newPoint = pointAdd(pointA: camera!.position, pointB: locationDelta)
+//                camera!.position = newPoint
+//                sender.scale = 1.0
+//            }
+//        }
+//    }
+//
     //////////////////////////////////////////////////////////////
     // Cria as constraints da câmera
-    func setCameraConstraint() {
-        let scaledSize = CGSize(width: self.frame.size.width * camera!.xScale, height: self.frame.size.height * camera!.yScale)
-        let sceneContentRect = self.calculateAccumulatedFrame()
-        print(sceneContentRect.width, sceneContentRect.height)
-        
-        let xInset = min((scaledSize.width / 2) + 232, sceneContentRect.width / 2)
-        let yInset = min((scaledSize.height / 2) + 330, sceneContentRect.height / 2)
-        let insetContentRect = sceneContentRect.insetBy(dx: xInset, dy: yInset)
-        
-        let xRange = SKRange(lowerLimit: secondAreaNode.frame.minX + 200, upperLimit: firstAreaNode.frame.maxX - 200)
-        let yRange = SKRange(lowerLimit: insetContentRect.minY, upperLimit: insetContentRect.maxY)
-        let levelEdgeConstraint = SKConstraint.positionX(xRange, y: yRange)
-        levelEdgeConstraint.referenceNode = self
-        camera?.constraints = [levelEdgeConstraint]
-    }
+//    func setCameraConstraint() {
+//        let scaledSize = CGSize(width: self.frame.size.width * camera!.xScale, height: self.frame.size.height * camera!.yScale)
+//        let sceneContentRect = self.calculateAccumulatedFrame()
+//        print(sceneContentRect.width, sceneContentRect.height)
+//
+//        let xInset = min((scaledSize.width / 2) + 232, sceneContentRect.width / 2)
+//        let yInset = min((scaledSize.height / 2) + 330, sceneContentRect.height / 2)
+//        let insetContentRect = sceneContentRect.insetBy(dx: xInset, dy: yInset)
+//
+//        let xRange = SKRange(lowerLimit: secondAreaNode.frame.minX + 200, upperLimit: firstAreaNode.frame.maxX - 200)
+//        let yRange = SKRange(lowerLimit: insetContentRect.minY, upperLimit: insetContentRect.maxY)
+//        let levelEdgeConstraint = SKConstraint.positionX(xRange, y: yRange)
+//        levelEdgeConstraint.referenceNode = self
+//        camera?.constraints = [levelEdgeConstraint]
+//    }
     //////////////////////////////////////////////////////////////
     // Pan gesture
-    var lastSwipeBeginningPoint: CGPoint?
-    var panRec: UIPanGestureRecognizer!
-    var canPan = true
-    
-    @objc func handlePan(recognizer:UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.view)
-        
-        if recognizer.view != nil {
-            if canPan {
-                if camera!.xScale != 1.0 {
-                    camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
-                                               y:((camera?.position.y)! + translation.y))
-                }
-            } else {
-                print("can't pan")
-                self.setCameraConstraint()
-                self.canPan = true
-            }
-        }
-        recognizer.setTranslation(CGPoint.zero, in: self.view)
-    }
+//    var lastSwipeBeginningPoint: CGPoint?
+//    var panRec: UIPanGestureRecognizer!
+//    var canPan = true
+//
+//    @objc func handlePan(recognizer:UIPanGestureRecognizer) {
+//        let translation = recognizer.translation(in: self.view)
+//
+//        if recognizer.view != nil {
+//            if canPan {
+//                if camera!.xScale != 1 {
+//                    camera!.position = CGPoint(x:(camera?.position.x)! - translation.x,
+//                                               y:((camera?.position.y)! + translation.y))
+//
+//                    self.cameraSize.position = camera!.position
+//
+//                    var cameraXMaxLimit = cameraSize.position.x + (cameraSize.frame.width/2)
+//                    var cameraXMinLimit = cameraSize.position.x - (cameraSize.frame.width/2)
+//                    var cameraYMaxLimit = cameraSize.position.y + (cameraSize.frame.height/2)
+//
+//                    if cameraXMaxLimit >= firstAreaNode.frame.maxX - 5 {
+//                        print("out of bounds")
+//                        var cameraY = camera?.position.y
+//                        var cameraX = (camera?.position.x)! - 20
+//                        var cameraCorrection = CGPoint(x: cameraX, y: cameraY!)
+//                        camera?.run(SKAction.move(to: cameraCorrection, duration: 0.1))
+//                    } else if cameraXMinLimit <= secondAreaNode.frame.minX + 5 {
+//                        print("out of bounds")
+//                        var cameraY = camera?.position.y
+//                        var cameraX = (camera?.position.x)! + 20
+//                        var cameraCorrection = CGPoint(x: cameraX, y: cameraY!)
+//                        camera?.run(SKAction.move(to: cameraCorrection, duration: 0.1))
+//                    }
+//                }
+//            } else {
+//                print("can't pan")
+//                //self.setCameraConstraint()
+//                self.canPan = true
+//            }
+//        }
+//        recognizer.setTranslation(CGPoint.zero, in: self.view)
+//    }
     
     // MARK: didMove
     override func didMove(to view: SKView) {
@@ -180,6 +202,7 @@ class MainScene: SKScene {
         self.touchGambiarra1 = self.childNode(withName: "touchGambiarra1")!
         self.touchGambiarra2 = self.childNode(withName: "touchGambiarra2")!
         self.touchGambiarra3 = self.childNode(withName: "touchGambiarra3")!
+        self.cameraSize = self.childNode(withName: "cameraSize")!
         self.cloudSKNode.position = CGPoint(x: self.frame.minX, y: self.frame.maxY-500)
         self.cloudSKNode.size = CGSize(width: self.frame.size.width, height: 350)
         self.addChild(cloudSKNode)
@@ -208,13 +231,13 @@ class MainScene: SKScene {
             addLabels()
         }
         
-        // Pan gesture
-        self.panRec = UIPanGestureRecognizer(target: self, action: #selector(MainScene.handlePan(recognizer:)))
-        self.view!.addGestureRecognizer(panRec)
-        
-        // Pinch gesture
-        pinchGesture.addTarget(self, action: #selector(handlePinch(sender:)))
-        self.view?.addGestureRecognizer(pinchGesture)
+//        // Pan gesture
+//        self.panRec = UIPanGestureRecognizer(target: self, action: #selector(MainScene.handlePan(recognizer:)))
+//        self.view!.addGestureRecognizer(panRec)
+//
+//        // Pinch gesture
+//        pinchGesture.addTarget(self, action: #selector(handlePinch(sender:)))
+//        self.view?.addGestureRecognizer(pinchGesture)
     }
     
     // Função do Back Button
@@ -240,7 +263,7 @@ class MainScene: SKScene {
             self.camera!.constraints = []
         }
         let constAction = SKAction.run {
-            self.setCameraConstraint()
+            //self.setCameraConstraint()
         }
         let seqAction = SKAction.sequence([resetConstraints, constAction, zoomAction])
         
@@ -256,7 +279,7 @@ class MainScene: SKScene {
         // Funções do onboarding
         self.removeLabelAction()
         
-        self.canPan = true
+//        self.canPan = true
     }
     
     // Função para selecionar a área desejada
@@ -330,7 +353,7 @@ class MainScene: SKScene {
             self.camera!.constraints = []
         }
         let constAction = SKAction.run {
-            self.setCameraConstraint()
+            //self.setCameraConstraint()
         }
         let groupAction = SKAction.group([zoomAction, moveAction])
         let seqAction = SKAction.sequence([resetConstraints, groupAction, constAction])
@@ -526,11 +549,11 @@ class MainScene: SKScene {
                     self.camera!.constraints = []
                 }
                 let constAction = SKAction.run {
-                    self.setCameraConstraint()
+                    //self.setCameraConstraint()
                 }
                 let cameraSeq = SKAction.sequence([resetConstraints, cameraMovement/*, constAction*/])
                 
-                self.canPan = false
+//                self.canPan = false
                 
                 camera?.run(cameraSeq)
                 camera?.setScale(0.1)
@@ -553,11 +576,11 @@ class MainScene: SKScene {
                     self.camera!.constraints = []
                 }
                 let constAction = SKAction.run {
-                    self.setCameraConstraint()
+                    //self.setCameraConstraint()
                 }
                 let cameraSeq = SKAction.sequence([resetConstraints, cameraMovement/*, constAction*/])
                 
-                self.canPan = false
+//                self.canPan = false
                 
                 camera?.run(cameraSeq)
                 camera?.setScale(0.1)
