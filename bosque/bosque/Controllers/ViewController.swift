@@ -227,6 +227,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             self.saveTree(color: self.savingTreeColor, area: areaSelectedGlobal, positionX: scene.xMax, positionY: scene.yMax)
             self.savingTreesPlantedToUserDefaults()
             self.canBeRewarded = true
+            (self.mainSKView.scene as? MainScene)?.restartSound()
             if let scene = (self.mainSKView.scene as? MainScene) {
                 scene.self.touch2Label?.removeFromParent()
             }
@@ -507,6 +508,7 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                 // Quem anúncio vai ser mostrado
                 if areaSelected == 1 {
                     if self.rewardBasedVideoInArea1?.isReady == true {
+                        (self.mainSKView.scene as? MainScene)?.stopSounds()
                         self.rewardBasedVideoInArea1?.present(fromRootViewController: self)
                         print("anúncio da area 1")
                         self.ONGInfoView.alpha = 0
