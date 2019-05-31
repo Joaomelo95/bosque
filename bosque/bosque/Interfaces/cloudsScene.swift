@@ -37,11 +37,7 @@ class cloudsScene: SKSpriteNode {
         self.addChild(cloud)
         
         var distanceToCover = self.frame.size.width + cloud.size.width
-        
-        if rightToLeft {
-            distanceToCover *= -1
-        }
-        
+                
         // Definir o tempo para cada tipo de nuvem
         
         var timeVar = speed

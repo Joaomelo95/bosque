@@ -43,10 +43,11 @@
                             <skView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="28C-UX-xXl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </skView>
-                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3TF-JR-d3X">
-                                <rect key="frame" x="19" y="40" width="41" height="30"/>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3TF-JR-d3X">
+                                <rect key="frame" x="-18" y="10" width="98" height="90"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Voltar">
+                                <size key="titleShadowOffset" width="15" height="0.0"/>
+                                <state key="normal" image="backOrange.png">
                                     <color key="titleColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
                                 </state>
                                 <connections>
@@ -112,10 +113,11 @@
                                         <rect key="frame" x="50" y="5" width="40" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="0.99942404029999998" green="0.54302595158908729" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SnP-Wg-rbY">
                                 <rect key="frame" x="87" y="80" width="200" height="230"/>
@@ -214,6 +216,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="backOrange.png" width="48" height="48"/>
         <image name="treeBlue" width="158" height="185.5"/>
         <image name="treeGreen" width="158" height="185.5"/>
         <image name="treeIcon" width="58.5" height="78.5"/>

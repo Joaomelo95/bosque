@@ -184,8 +184,13 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
                     scene.addLabels4()
                 }
             }))
-            self.present(alertThankU, animated: false, completion: nil)
-
+            
+            let when = DispatchTime.now() + 3
+            DispatchQueue.main.asyncAfter(deadline: when){
+//                alertThankU.dismiss(animated: true, completion: nil)
+            self.present(alertThankU, animated: true, completion: nil)
+            }
+            
             let imageAlert = UIImageView(image: UIImage(named: "ong1"))
             alertThankU.view.addSubview(imageAlert)
             imageAlert.translatesAutoresizingMaskIntoConstraints = false
@@ -197,7 +202,12 @@ class ViewController: UIViewController, GADRewardBasedVideoAdDelegate {
             let alertThankU = UIAlertController(title: "\n\n\n\n\n\n\n", message: "A Unicef agradece a sua ajuda!", preferredStyle: .alert)
             alertThankU.addAction(UIAlertAction(title: "Continuar", style: .default, handler: { action in
             }))
-            self.present(alertThankU, animated: false, completion: nil)
+            
+            let when = DispatchTime.now() + 3
+            DispatchQueue.main.asyncAfter(deadline: when){
+                //                alertThankU.dismiss(animated: true, completion: nil)
+                self.present(alertThankU, animated: true, completion: nil)
+            }
 
             let imageAlert = UIImageView(image: UIImage(named: "ong2"))
             alertThankU.view.addSubview(imageAlert)

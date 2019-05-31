@@ -401,7 +401,7 @@ class MainScene: SKScene {
         touch6Label!.fontSize = 33.0
         touch6Label!.fontColor = UIColor.black
         touch6Label!.zPosition = 5
-        touch6Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 900.0)
+        touch6Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 1000.0)
         self.camera?.addChild(touch6Label!)
         
         UserDefaults.standard.set(true, forKey: "watched2")
@@ -414,7 +414,7 @@ class MainScene: SKScene {
         touch7Label!.fontSize = 33.0
         touch7Label!.fontColor = UIColor.black
         touch7Label!.zPosition = 5
-        touch7Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 860.0)
+        touch7Label!.position = CGPoint(x: firstAreaNode.position.x - 190.0, y: firstAreaNode.position.y + 960.0)
         self.camera?.addChild(touch7Label!)
         touch7Label!.run(SKAction.repeatForever(animateLabels4))
     }
